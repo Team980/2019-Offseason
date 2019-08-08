@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import frc.robot.Robot;
+import frc.robot.commands.lift.HoldLift;
 
 public class Lift extends Subsystem {
 
@@ -22,9 +23,6 @@ public class Lift extends Subsystem {
 		liftMotor = Robot.robotMap.liftMotor;
 		liftEncoder = Robot.robotMap.liftEncoder;
 	}
-
-	@Override
-	public void initDefaultCommand() {}
 
 	public void set(double input) {
 		liftMotor.set(input);
@@ -42,7 +40,21 @@ public class Lift extends Subsystem {
 		} else {
 			liftMotor.set(0);
 		}
- 	}
+	}
 
+	public boolean getter(int targetPosition) { //This method doesn't make the lift do anything. Rather, it's a form of "get" method that returns true when you have reached the desired position.
+		// when does setPosition() stop the lift? When we have reached the target position
+		// Yes, so that is when this method should return true. 
+		//so we are writing a getter?
+		// In a sense. You're "getting" a property of the system that isn't actually represented by a variable.
+
+		// try using an if statement here
+	}
+
+	@Override
+	public void initDefaultCommand() {
+		setDefaultCommand(new HoldLift());
+	}
+ 
 	// TODO STOP/DISABLE METHOD?  - if added, every subsystem should have one...
 }

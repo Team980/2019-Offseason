@@ -8,19 +8,21 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.Lift;
 
 public class Robot extends TimedRobot {
 
 	public static RobotMap robotMap;
 
-	public Lift liftSystem;
+	public static DriveSystem driveSystem; //These don't have to be static
+	public static Lift liftSystem;
 
   	@Override
   	public void robotInit() {
     	robotMap = new RobotMap();
 
-		liftSystem = new Lift();
+		liftSystem = new Lift(); //drive system?
   	}
 
   	@Override
