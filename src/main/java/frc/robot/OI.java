@@ -8,8 +8,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.lift.ManualLiftControl;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -21,13 +20,24 @@ public class OI {
 	public Joystick wheel; 
 	public XboxController xBox;
 
-	private JoystickButton button; //what is the purpose of this?
+	private static final double LIFT_DEADBAND = 0.1;
 
 	public OI () { 
-		throttle = new Joystick(0);
-		xBox = new XboxController(2);
+		throttle = new Joystick(0); 
+		wheel = new Joystick(1);
+		xBox = new XboxController(2); 
+	}
 
-		XboxController xBox = new XboxController(4); // what is this for?- this is the xbox control for manual lift
-		XboxController.whenPressed(new ManualLiftControl()); //do you know what the error is for whenPressed? 
+	public double getMove() {
+		return -throttle.getY();
+	}
+
+	public double getTurn() {
+		return wheel.getX();
+	}
+
+	public double getLiftJoystickValue() {
+		double value = -xBox.getY(Hand.kLeft);
+		return (Math.abs(value) < LIFT_DEADBAND)? 0 : value; 
 	}
 }

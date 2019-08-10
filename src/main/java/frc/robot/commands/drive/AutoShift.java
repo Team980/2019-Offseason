@@ -5,42 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.lift;
+package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.DriveSystem;
+import frc.robot.subsystems.DriveSystem.Gear;
 
-public class HoldLift extends Command {
-	
-	private int targetPosition;
+public class AutoShift extends Command {
+  
+	private DriveSystem driveSystem;
 
-	private Lift lift;
-
-	public HoldLift() {
-		lift = Robot.liftSystem;
-		requires(lift);
+	public AutoShift() {
+		driveSystem = Robot.driveSystem;
 	}
 
-	@Override
-	protected void initialize() {
-		targetPosition = lift.currentPosition();
-	}
-
+	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		lift.moveTowards(targetPosition);
-	}
+		if (driveSystem.getLeftSpeed() > 4.5 || driveSystem.getRightSpeed() > 4.5) {
+			driveSystem.setGear(Gear.HIGH);
 
+		} else if (driveSystem.getLeftSpeed() < 3.75 && driveSystem.getRightSpeed() < 3.75) {
+			driveSystem.setGear(Gear.LOW);
+		}
+	}
+  
+	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
 		return false;
 	}
 
+	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		lift.stopMotors();
 	}
+
 }
-
-

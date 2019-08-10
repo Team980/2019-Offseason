@@ -8,31 +8,37 @@
 package frc.robot.commands.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.OI;
+import frc.robot.Robot;
+import frc.robot.subsystems.Lift;
 
 public class ManualLiftControl extends Command {
 
-	public ManualLiftControl() {
+    private Lift lift;
+    private OI oi;
 
-	}
+    public ManualLiftControl() {
+        lift = Robot.liftSystem;
+        oi = Robot.oi;
+        
+        requires(lift);
+    }
 
-	@Override
-	protected void initialize() {
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        lift.set(oi.getLiftJoystickValue());
+    }
 
-	}
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
+    protected boolean isFinished() {
+        return false;
+    }
 
-	@Override
-	protected void execute() {
-
-	}
-
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
-
-	@Override
-	protected void end() {
-
-	}
-
+    // Called once after isFinished returns true
+    @Override
+    protected void end() {
+        lift.stopMotors();
+    }
 }

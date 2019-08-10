@@ -16,45 +16,54 @@ import frc.robot.commands.lift.HoldLift;
 
 public class Lift extends Subsystem {
 
-	private SpeedController liftMotor;
-	private Encoder liftEncoder;
+    private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: change this value later to trashpanda's map
+    private static final double DEADBAND = 2_000;
+	
+    private Encoder liftEncoder; 
+    private SpeedController liftMotor; 
 
-	public Lift() {
-		liftMotor = Robot.robotMap.liftMotor;
-		liftEncoder = Robot.robotMap.liftEncoder;
+	public Lift()  {
+        liftEncoder = Robot.robotMap.liftEncoder;
+        liftMotor = Robot.robotMap.liftMotor;
 	}
 
-	public void set(double input) {
+	public void set(double input) { 
 		liftMotor.set(input);
 	}
 
-	public void setPosition(int targetPosition) {
-		var currentPosition = liftEncoder.getRaw();
+	public boolean isAtTargetPosition(int targetPosition) {
+		double distance = targetPosition - currentPosition();
+		return distance < DEADBAND;
+	}
 
-		if (currentPosition < targetPosition - 1000) {
-			liftMotor.set(1);
 
-		} else if (currentPosition > targetPosition + 1000) {
-			liftMotor.set(-1);
+	public void moveTowards(int targetPosition) {
+		double distance = targetPosition - currentPosition();
+		double input; // figure out which velocity we want to be
 
-		} else {
-			liftMotor.set(0);
+		if (isAtTargetPosition(targetPosition)) {
+			input = 0;
+
+		} else if (distance > 0) {
+			input = 0.5;
+
+		} else { // distance is less than 0
+			input = -0.5;
 		}
+
+		set(input);
 	}
 
-	public boolean getter(int targetPosition) { //This method doesn't make the lift do anything. Rather, it's a form of "get" method that returns true when you have reached the desired position.
-		// when does setPosition() stop the lift? When we have reached the target position
-		// Yes, so that is when this method should return true. 
-		//so we are writing a getter?
-		// In a sense. You're "getting" a property of the system that isn't actually represented by a variable.
+	public int currentPosition() {
+		return liftEncoder.getRaw();
+	} 
 
-		// try using an if statement here
+	public void stopMotors() {
+		liftMotor.stopMotor();
 	}
 
-	@Override
-	public void initDefaultCommand() {
-		setDefaultCommand(new HoldLift());
-	}
- 
-	// TODO STOP/DISABLE METHOD?  - if added, every subsystem should have one...
+    @Override
+    public void initDefaultCommand() {
+        setDefaultCommand(new HoldLift());
+    }
 }

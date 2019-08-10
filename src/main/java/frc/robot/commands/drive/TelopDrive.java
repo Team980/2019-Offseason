@@ -5,27 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.lift;
-
+package frc.robot.commands.drive;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.subsystems.DriveSystem;
 
-public class DriveCommand extends Command {
-	
-	public DriveCommand() {
-		requires(Robot.driveSystem);
-	}
+public class TelopDrive extends Command {
 
-	// Called just before this Command runs the first time
-	@Override
-	protected void initialize() {
+	private DriveSystem driveSystem;
+	private OI oi;
 
+	public TelopDrive() {
+		driveSystem  = Robot.driveSystem;
+		oi = Robot.oi;
+		
+		requires(driveSystem);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-
+		driveSystem.driveRobot(oi.getMove(), oi.getTurn());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -37,6 +38,6 @@ public class DriveCommand extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-
+		driveSystem.stopMotors();
 	}
 }
