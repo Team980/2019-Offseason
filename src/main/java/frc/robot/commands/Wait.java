@@ -5,38 +5,36 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.lift;
+package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-import frc.robot.subsystems.Lift;
 
-public class SetLiftPosition extends Command {
+public class Wait extends Command {
 
-	Lift lift;
+    private Timer timer;
+    private double delay;
 
-	int targetPosition;
+	public Wait(double delay) {
+        timer = new Timer();
+        timer.start();
 
-	public SetLiftPosition(int targetPosition) {
-		this.targetPosition = targetPosition;
-
-		lift = Robot.lift;
-
-		requires(lift);
+        this.delay = delay;
 	}
 
+	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		lift.moveTowards(targetPosition);
 	}
 
+	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return lift.isAtTargetPosition(targetPosition);
+        return timer.get() > delay;
 	}
 
+	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		lift.stopMotors();
 	}
 }

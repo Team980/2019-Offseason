@@ -7,34 +7,34 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.sensors.PigeonIMU;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.DriveSystem;
+import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.Wrist;
 
 public class Robot extends TimedRobot {
 
 	public static RobotMap robotMap;
-	
-	public static DriveSystem driveSystem;
-	public static Lift liftSystem;
-	
-	public static OI oi;
 
-	public static PigeonIMU pigeonIMU;
+	public static DriveSystem driveSystem;
+	public static EndEffector endEffector;
+	public static Lift lift;
+	public static Wrist wrist;
+
+	public static OI oi;
 
   	@Override
   	public void robotInit() {
 		robotMap = new RobotMap();
-		
+
 		driveSystem = new DriveSystem();
-		liftSystem = new Lift();
+		endEffector = new EndEffector();
+		lift = new Lift();
+		wrist = new Wrist();
 
 		oi = new OI();
-
-		pigeonIMU = new PigeonIMU(1);
   	}
 
   	@Override
@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
   	public void teleopInit() {
 
 	}
-	  
+
 	@Override
   	public void teleopPeriodic() {
 
@@ -65,7 +65,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 		driveSystem.stopMotors();
-		liftSystem.stopMotors();
+		endEffector.stopMotors();
+		lift.stopMotors();
+		wrist.stopMotors();
 	}
 
   	@Override

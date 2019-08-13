@@ -5,29 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.lift;
+package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.Wrist;
 
-public class ManualLiftControl extends Command {
+public class ManualWristControl extends Command {
 
-    private Lift lift;
+    private Wrist wrist;
     private OI oi;
 
-    public ManualLiftControl() {
-        lift = Robot.lift;
+    public ManualWristControl() {
+        wrist = Robot.wrist;
         oi = Robot.oi;
 
-        requires(lift);
+        requires(wrist);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        lift.set(oi.getLiftJoystickValue());
+        wrist.set(oi.getWristJoystickValue());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -39,6 +39,6 @@ public class ManualLiftControl extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        lift.stopMotors();
+        wrist.stopMotors();
     }
 }

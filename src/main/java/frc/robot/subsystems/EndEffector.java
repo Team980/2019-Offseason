@@ -7,11 +7,24 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 
 public class EndEffector extends Subsystem {
 
-	public EndEffector()  { 
+    SpeedController intakeMotor;
+
+	public EndEffector()  {
+        intakeMotor = Robot.robotMap.endEffectorIntakeMotor;
+    }
+
+    public void set(double input) {
+        intakeMotor.set(input);
+    }
+
+    public void stopMotors() {
+        intakeMotor.stopMotor();
     }
 
     @Override

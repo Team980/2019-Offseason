@@ -7,57 +7,81 @@
 
 package frc.robot;
 
+import java.util.Arrays;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import frc.robot.sensors.BetterIMU;
+import frc.robot.sensors.Potentiometer;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class RobotMap {
 
-	private WPI_VictorSPX leftFront;
-	private WPI_VictorSPX leftBack;
-	private WPI_VictorSPX leftTop;
-	private WPI_VictorSPX rightFront;
-	private WPI_VictorSPX rightBack;
-	private WPI_VictorSPX rightTop; 
-	
-	public WPI_VictorSPX liftMotor;
-	
-	public Encoder liftEncoder;
-
+	// drive stuff
 	public Encoder leftDriveEncoder;
 	public Encoder rightDriveEncoder;
 
 	public SpeedControllerGroup leftDrive;
 	public SpeedControllerGroup rightDrive;
-	
+
 	public Solenoid shifter;
 
+	// end effector
+	public WPI_TalonSRX endEffectorIntakeMotor;
+
+	// lift
+	public WPI_VictorSPX liftMotor;
+	public Encoder liftEncoder;
+
+	// wrist
+	public Potentiometer wristPotentiometer;
+	public WPI_TalonSRX wristMotor;
+
+	// sensors
+	public BetterIMU imu;
+
 	public RobotMap() {
-		leftFront = new WPI_VictorSPX(1);
-  		leftBack = new WPI_VictorSPX(2);
-  		rightFront = new WPI_VictorSPX(3);
-  		rightBack = new WPI_VictorSPX(4);
-		leftTop = new WPI_VictorSPX(5);
-		rightTop = new WPI_VictorSPX(6);
+		// drive stuff
+		var leftFront = new WPI_VictorSPX(1);
+		var leftBack = new WPI_VictorSPX(2);
+		var leftTop = new WPI_VictorSPX(5);
+		leftTop.setInverted(true);
 
-		liftMotor = new WPI_VictorSPX(11);
-		
-		liftEncoder = new Encoder(10, 12, false, CounterBase.EncodingType.k4X);
+  		var rightFront = new WPI_VictorSPX(3);
+		var rightBack = new WPI_VictorSPX(4);
+		var rightTop = new WPI_VictorSPX(6);
+		rightTop.setInverted(true);
 
-		leftDriveEncoder = new Encoder(7, 8, false, CounterBase.EncodingType.k4X); 
-  		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
-  
-  		rightDriveEncoder = new Encoder(4, 5, true, CounterBase.EncodingType.k4X); 
+		leftDrive = new SpeedControllerGroup(leftFront, leftBack, leftTop);
+		rightDrive = new SpeedControllerGroup(rightFront, rightBack, rightTop);
+
+		leftDriveEncoder = new Encoder(7, 8, false, CounterBase.EncodingType.k4X);
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
-		  
-		leftDriveEncoder.setDistancePerPulse((2.0 * (Math.PI) * (2.0 / 12)) / 2048.0); 
-		rightDriveEncoder.setDistancePerPulse((2.0 * (Math.PI) * (2.0 / 12)) / 2048.0);
+		leftDriveEncoder.setDistancePerPulse(Util.TAU * (2.0 / 12) / 2048.0);
 
-		leftDrive = new SpeedControllerGroup(leftFront , leftBack, leftTop); 
-		rightDrive = new SpeedControllerGroup(rightFront , rightBack, rightTop); 
+		rightDriveEncoder = new Encoder(4, 5, true, CounterBase.EncodingType.k4X);
+		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
+		rightDriveEncoder.setDistancePerPulse(Util.TAU * (2.0 / 12) / 2048.0);
 
 		shifter = new Solenoid(0xdeadbeef);
+
+		// end effector
+		endEffectorIntakeMotor = new WPI_TalonSRX(0x0ddba11);
+
+		// lift
+		liftMotor = new WPI_VictorSPX(11);
+		liftEncoder = new Encoder(10, 12, false, CounterBase.EncodingType.k4X);
+
+		// wrist
+		int[] array = {12, 23};
+
+		wristPotentiometer = new Potentiometer(Arrays.toString(array).hashCode());
+		wristMotor = new WPI_TalonSRX(0xc0de);
+
+		// sensors
+		imu = new BetterIMU(0xfacade);
 	}
 }

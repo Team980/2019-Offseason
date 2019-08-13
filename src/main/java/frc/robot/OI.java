@@ -17,15 +17,16 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 public class OI {
 
 	public Joystick throttle;
-	public Joystick wheel; 
+	public Joystick wheel;
 	public XboxController xBox;
 
 	private static final double LIFT_DEADBAND = 0.1;
+	private static final double WRIST_DEADBAND = 0.1;
 
-	public OI () { 
-		throttle = new Joystick(0); 
+	public OI () {
+		throttle = new Joystick(0);
 		wheel = new Joystick(1);
-		xBox = new XboxController(2); 
+		xBox = new XboxController(2);
 	}
 
 	public double getMove() {
@@ -38,6 +39,11 @@ public class OI {
 
 	public double getLiftJoystickValue() {
 		double value = -xBox.getY(Hand.kLeft);
-		return (Math.abs(value) < LIFT_DEADBAND)? 0 : value; 
+		return (Math.abs(value) < LIFT_DEADBAND)? 0 : value;
+	}
+
+	public double getWristJoystickValue() {
+		double value = -xBox.getY(Hand.kRight);
+		return (Math.abs(value) < WRIST_DEADBAND)? 0 : value;
 	}
 }

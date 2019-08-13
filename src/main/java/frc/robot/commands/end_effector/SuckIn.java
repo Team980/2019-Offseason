@@ -5,38 +5,35 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.lift;
+package frc.robot.commands.end_effector;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.EndEffector;
 
-public class SetLiftPosition extends Command {
+public class SuckIn extends Command {
 
-	Lift lift;
+    private EndEffector endEffector;
 
-	int targetPosition;
+    public SuckIn() {
+        endEffector = Robot.endEffector;
+    }
 
-	public SetLiftPosition(int targetPosition) {
-		this.targetPosition = targetPosition;
-
-		lift = Robot.lift;
-
-		requires(lift);
-	}
-
+    // Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		lift.moveTowards(targetPosition);
+        endEffector.set(0.75);
 	}
 
+	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return lift.isAtTargetPosition(targetPosition);
+		return false;
 	}
 
+	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		lift.stopMotors();
+        endEffector.stopMotors();
 	}
 }

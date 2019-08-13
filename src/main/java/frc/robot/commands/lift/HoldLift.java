@@ -12,13 +12,13 @@ import frc.robot.Robot;
 import frc.robot.subsystems.Lift;
 
 public class HoldLift extends Command {
-	
-	private int targetPosition;
 
 	private Lift lift;
 
+	private int targetPosition;
+
 	public HoldLift() {
-		lift = Robot.liftSystem;
+		lift = Robot.lift;
 		requires(lift);
 	}
 

@@ -5,38 +5,43 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.lift;
+package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.Wrist;
 
-public class SetLiftPosition extends Command {
+public class HoldWrist extends Command {
 
-	Lift lift;
+    private Wrist wrist;
 
-	int targetPosition;
+    private double targetPosition;
 
-	public SetLiftPosition(int targetPosition) {
-		this.targetPosition = targetPosition;
+	public HoldWrist() {
+        wrist = Robot.wrist;
 
-		lift = Robot.lift;
+		requires(wrist);
+	}
 
-		requires(lift);
+	@Override
+	protected void initialize() {
+		targetPosition = wrist.currentAngle();
 	}
 
 	@Override
 	protected void execute() {
-		lift.moveTowards(targetPosition);
+		wrist.moveTowards(targetPosition);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return lift.isAtTargetPosition(targetPosition);
+		return false;
 	}
 
 	@Override
 	protected void end() {
-		lift.stopMotors();
+		wrist.stopMotors();
 	}
 }
+
+
