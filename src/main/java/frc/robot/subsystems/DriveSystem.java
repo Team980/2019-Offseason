@@ -32,9 +32,7 @@ public class DriveSystem extends Subsystem {
 	}
 
 	@Override
-	public void initDefaultCommand() {
-		//setDefaultCommand(new DriveCommand()); //Better to do this in Robot.java's teleopInit, otherwise it interferes with autonomous
-	}
+	public void initDefaultCommand() {}
 
 	public void driveRobot(double move, double turn) {
 		differentialDrive.arcadeDrive(move, turn);

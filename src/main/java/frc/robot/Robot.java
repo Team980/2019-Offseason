@@ -9,6 +9,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.commands.drive.TelopDrive;
+import frc.robot.commands.lift.HoldLift;
+import frc.robot.commands.wrist.HoldWrist;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.EndEffector;
 import frc.robot.subsystems.Lift;
@@ -35,6 +38,11 @@ public class Robot extends TimedRobot {
 		wrist = new Wrist();
 
 		oi = new OI();
+
+		// default commands()
+		
+		lift.setDefaultCommand(new HoldLift());
+		wrist.setDefaultCommand(new HoldWrist());
   	}
 
   	@Override
@@ -44,7 +52,7 @@ public class Robot extends TimedRobot {
 
   	@Override
   	public void autonomousInit() {
-
+		  
   	}
 
   	@Override
@@ -54,7 +62,7 @@ public class Robot extends TimedRobot {
 
   	@Override
   	public void teleopInit() {
-
+		driveSystem.setDefaultCommand(new TelopDrive());
 	}
 
 	@Override
@@ -64,6 +72,13 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
+		// clear default commands
+		var defaultCommand = driveSystem.getDefaultCommand();
+		if (defaultCommand != null) {
+			defaultCommand.cancel();
+			defaultCommand = null;	
+		}
+
 		driveSystem.stopMotors();
 		endEffector.stopMotors();
 		lift.stopMotors();

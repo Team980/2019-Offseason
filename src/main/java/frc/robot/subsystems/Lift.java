@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import frc.robot.Robot;
-import frc.robot.commands.lift.HoldLift;
 
 public class Lift extends Subsystem {
 
@@ -63,7 +62,5 @@ public class Lift extends Subsystem {
 	}
 
     @Override
-    public void initDefaultCommand() {
-        setDefaultCommand(new HoldLift());
-    }
+    public void initDefaultCommand() {}
 }

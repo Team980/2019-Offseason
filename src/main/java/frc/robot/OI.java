@@ -20,6 +20,8 @@ public class OI {
 	public Joystick wheel;
 	public XboxController xBox;
 
+	private static final double MOVE_DEADBAND = 0.1;
+	private static final double TURN_DEADBAND = 0.1;
 	private static final double LIFT_DEADBAND = 0.1;
 	private static final double WRIST_DEADBAND = 0.1;
 
@@ -30,20 +32,40 @@ public class OI {
 	}
 
 	public double getMove() {
-		return -throttle.getY();
+		return applyDeadband(-throttle.getY(), MOVE_DEADBAND);
 	}
 
 	public double getTurn() {
-		return wheel.getX();
+		return applyDeadband(wheel.getX(), TURN_DEADBAND);
 	}
 
 	public double getLiftJoystickValue() {
 		double value = -xBox.getY(Hand.kLeft);
-		return (Math.abs(value) < LIFT_DEADBAND)? 0 : value;
+		return applyDeadband(value, LIFT_DEADBAND);
 	}
 
 	public double getWristJoystickValue() {
 		double value = -xBox.getY(Hand.kRight);
-		return (Math.abs(value) < WRIST_DEADBAND)? 0 : value;
+		return applyDeadband(value, WRIST_DEADBAND);
 	}
+
+	/**
+     * Returns 0.0 if the given value is within the specified range around zero. The remaining range
+     * between the deadband and 1.0 is scaled from 0.0 to 1.0.
+     *
+     * @param value    value to clip
+     * @param deadband range around zero
+     * @see DifferentialDrive#applyDeadband(double, double)
+     */
+    private static double applyDeadband(double value, double deadband) {
+        if (Math.abs(value) > deadband) {
+            if (value > 0.0) {
+                return (value - deadband) / (1.0 - deadband);
+            } else {
+                return (value + deadband) / (1.0 - deadband);
+            }
+        } else {
+            return 0.0;
+        }
+    } 
 }

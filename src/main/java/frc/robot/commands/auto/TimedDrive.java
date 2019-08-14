@@ -5,36 +5,37 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.auto;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
+import frc.robot.Robot;
+import frc.robot.subsystems.DriveSystem;
 
-public class Wait extends Command {
+public class TimedDrive extends TimedCommand {
+  
+  private DriveSystem driveSystem;
 
-    private Timer timer;
-    private double delay;
+  private double speed;
+	
+	public TimedDrive(double timeout, double turnSpeed) {
+    	super(timeout);
+    
+    	speed = turnSpeed;
 
-	public Wait(double delay) {
-        timer = new Timer();
-        timer.start();
+		driveSystem = Robot.driveSystem;
 
-        this.delay = delay;
+		requires(driveSystem);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+    	driveSystem.driveRobot(speed, 0);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
-	@Override
-	protected boolean isFinished() {
-        return timer.get() > delay;
-	}
-
-	// Called once after isFinished returns true
+	// Called once after timeout
 	@Override
 	protected void end() {
+    	driveSystem.stopMotors();
 	}
 }
