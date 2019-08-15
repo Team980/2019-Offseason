@@ -43,7 +43,7 @@ public class RobotMap {
 	// sensors
 	public BetterIMU imu;
 
-	public RobotMap() {
+	RobotMap() {
 		// drive stuff
 		var leftFront = new WPI_VictorSPX(1);
 		var leftBack = new WPI_VictorSPX(2);
@@ -76,9 +76,8 @@ public class RobotMap {
 		liftEncoder = new Encoder(10, 12, false, CounterBase.EncodingType.k4X);
 
 		// wrist
-		int[] array = {12, 23};
 
-		wristPotentiometer = new Potentiometer(Arrays.toString(array).hashCode());
+		wristPotentiometer = new Potentiometer(0xfa1_0af);
 		wristMotor = new WPI_TalonSRX(0xc0de);
 
 		// sensors

@@ -67,9 +67,10 @@ public class IMUTurn extends Command {
     }
 
     private double currentAngleNormalized() {
-	    return normalize(imu.getAngle());
+	    return normalize(imu.getYaw());
     }
 
+    // TODO: check this logic
 	private static double normalize(double a) {
 	    a %= 360;
 	    return a < 0? a+360 : a;
@@ -79,8 +80,6 @@ public class IMUTurn extends Command {
 	    double out = a>b? a-b : a+360 - b;
 	    return normalize(out);
     }
-
-
 }
 //
 //public class IMUTurn extends Command {

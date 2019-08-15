@@ -17,7 +17,9 @@ public class SpitOut extends Command {
 
     public SpitOut() {
         endEffector = Robot.endEffector;
-    }
+
+		requires(endEffector);
+	}
 
     // Called repeatedly when this Command is scheduled to run
 	@Override

@@ -45,6 +45,7 @@ public class Wrist extends Subsystem {
         double difference = targetAngle - currentAngle();
 
         double input; // figure out which velocity we want to be
+
 		if (isAtTargetAngle(targetAngle) || isInExclusionZone()) {
 			input = 0;
 		} else {

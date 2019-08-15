@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.GyroBase;
  */
 public class BetterIMU extends GyroBase {
 
-    PigeonIMU inner;
+    private PigeonIMU inner;
 
     public BetterIMU(int channel) {
         inner = new PigeonIMU(channel);

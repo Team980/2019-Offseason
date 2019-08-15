@@ -8,15 +8,19 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.auto.CargoShipAuto;
 import frc.robot.auto.CrossHabAuto;
+import frc.robot.commands.drive.AutoShift;
 import frc.robot.commands.drive.TelopDrive;
 import frc.robot.commands.lift.HoldLift;
+import frc.robot.commands.lift.ManualLiftControl;
 import frc.robot.commands.wrist.HoldWrist;
+import frc.robot.commands.wrist.ManualWristControl;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
@@ -33,6 +37,8 @@ public class Robot extends TimedRobot {
 
 	private SendableChooser<AutoChoice> autoChooser;
 
+	private AutoShift autoShiftCommand;
+
 	@Override
   	public void robotInit() {
 		robotMap = new RobotMap();
@@ -45,12 +51,25 @@ public class Robot extends TimedRobot {
 
 		oi = new OI();
 
-		// default commands()
-		
+		// default commands
 		lift.setDefaultCommand(new HoldLift());
 		wrist.setDefaultCommand(new HoldWrist());
 
 
+		// auto shifting
+		autoShiftCommand = new AutoShift(); // TODO: check if there is a better way to start & cancel this command
+		autoShiftCommand.start();
+
+
+		ManualLiftControl liftControlCommand = new ManualLiftControl();
+		ManualWristControl wristControlCommand = new ManualWristControl();
+		JoystickButton startLiftAndWristManualControl = new JoystickButton(oi.xBox, 8); // start button
+		startLiftAndWristManualControl.whenPressed(liftControlCommand);
+		startLiftAndWristManualControl.whenPressed(wristControlCommand);
+
+		JoystickButton stopLiftAndWristManualControl = new JoystickButton(oi.xBox, 7); // back button
+		stopLiftAndWristManualControl.cancelWhenPressed(liftControlCommand);
+		stopLiftAndWristManualControl.cancelWhenPressed(wristControlCommand);
 
 		// shuffleboard
 		autoChooser = new SendableChooser<>();
@@ -71,6 +90,10 @@ public class Robot extends TimedRobot {
   	public void autonomousInit() {
   		AutoChoice autoChoice = autoChooser.getSelected();
 
+  		if (autoChoice == null) {
+  			autoChoice = AutoChoice.CARGO_SHIP_AUTO; // default value
+		}
+
 		// FIXME: what do we do if autoChoice == null ?
 		Command autoCommand = autoChoice.command;
   		autoCommand.start();
@@ -83,7 +106,6 @@ public class Robot extends TimedRobot {
   	@Override
   	public void teleopInit() {
 		driveSystem.setDefaultCommand(new TelopDrive());
-		// TODO: put in buttons
 	}
 
 	@Override
@@ -96,7 +118,11 @@ public class Robot extends TimedRobot {
 		var defaultCommand = driveSystem.getDefaultCommand();
 		if (defaultCommand != null) {
 			defaultCommand.cancel();
-			defaultCommand = null;	
+			defaultCommand = null;
+		}
+
+		if (autoShiftCommand != null) { // TODO: can we stop this command in disabled? disabled gets run in the transition between auto and teleop
+			autoShiftCommand.cancel();
 		}
 
 		driveSystem.stopMotors();

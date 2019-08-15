@@ -17,6 +17,7 @@ public class StopEndEffector extends Command {
 
     public StopEndEffector() {
         endEffector = Robot.endEffector;
+        requires(endEffector);
     }
 
     // Called repeatedly when this Command is scheduled to run

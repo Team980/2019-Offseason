@@ -9,6 +9,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.configuration.BallFloorPickupConfiguration;
+import frc.robot.commands.configuration.BattleConfiguration;
+import frc.robot.commands.configuration.CargoScoreConfiguration;
+import frc.robot.commands.end_effector.SpitOut;
+import frc.robot.commands.end_effector.SuckIn;
+import frc.robot.commands.lift.SetLiftPosition;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -16,19 +23,33 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
  */
 public class OI {
 
-	public Joystick throttle;
-	public Joystick wheel;
-	public XboxController xBox;
+	private Joystick throttle;
+	private Joystick wheel;
+	XboxController xBox;
 
 	private static final double MOVE_DEADBAND = 0.1;
 	private static final double TURN_DEADBAND = 0.1;
 	private static final double LIFT_DEADBAND = 0.1;
 	private static final double WRIST_DEADBAND = 0.1;
 
-	public OI () {
+	OI () {
 		throttle = new Joystick(0);
 		wheel = new Joystick(1);
 		xBox = new XboxController(2);
+
+		// configurations
+		JoystickButton aButton = new JoystickButton(xBox, 1);
+		aButton.whenPressed(new CargoScoreConfiguration());
+
+		JoystickButton bButton = new JoystickButton(xBox, 2);
+		bButton.whenPressed(new BattleConfiguration());
+
+		// end effector controls
+		JoystickButton leftBumper = new JoystickButton(xBox, 5);
+		leftBumper.whileHeld(new SuckIn()); // note: while pressed
+
+		JoystickButton rightBumper = new JoystickButton(xBox, 6);
+		rightBumper.whileHeld(new SpitOut()); // note: while pressed
 	}
 
 	public double getMove() {
@@ -55,7 +76,6 @@ public class OI {
      *
      * @param value    value to clip
      * @param deadband range around zero
-     * @see DifferentialDrive#applyDeadband(double, double)
      */
     private static double applyDeadband(double value, double deadband) {
         if (Math.abs(value) > deadband) {

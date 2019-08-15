@@ -17,6 +17,8 @@ public class SuckIn extends Command {
 
     public SuckIn() {
         endEffector = Robot.endEffector;
+
+        requires(endEffector);
     }
 
     // Called repeatedly when this Command is scheduled to run

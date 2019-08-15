@@ -12,11 +12,12 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import frc.robot.Robot;
+import frc.robot.Util;
 
 public class Lift extends Subsystem {
 
     private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: change this value later to trashpanda's map
-    private static final double DEADBAND = 2_000;
+    private static final double DEADBAND = 0.05;
 	
     private Encoder liftEncoder; 
     private SpeedController liftMotor; 
@@ -30,31 +31,21 @@ public class Lift extends Subsystem {
 		liftMotor.set(input);
 	}
 
-	public boolean isAtTargetPosition(int targetPosition) {
+	public boolean isAtTargetPosition(double targetPosition) {
 		double distance = Math.abs(targetPosition - currentPosition());
 		return distance < DEADBAND;
 	}
 
-
-	public void moveTowards(int targetPosition) {
+	public void moveTowards(double targetPosition) {
 		double distance = targetPosition - currentPosition();
-		double input; // figure out which velocity we want to be
 
-		if (isAtTargetPosition(targetPosition)) {
-			input = 0;
-
-		} else if (distance > 0) { // FIXME: proportional control with map
-			input = 0.5;
-
-		} else { // distance is less than 0
-			input = -0.5;
-		}
+		double input = isAtTargetPosition(targetPosition)? 0 : distance; // proportional control for free
 
 		set(input);
 	}
 
-	public int currentPosition() {
-		return liftEncoder.getRaw();
+	public double currentPosition() {
+		return Util.map(liftEncoder.getRaw(), 0, ENCODER_MAX_TICK_COUNT, 0, 1);
 	} 
 
 	public void stopMotors() {

@@ -13,11 +13,11 @@ import frc.robot.subsystems.Lift;
 
 public class SetLiftPosition extends Command {
 
-	Lift lift;
+	private Lift lift;
 
-	int targetPosition;
+	private double targetPosition;
 
-	public SetLiftPosition(int targetPosition) {
+	public SetLiftPosition(double targetPosition) {
 		this.targetPosition = targetPosition;
 
 		lift = Robot.lift;

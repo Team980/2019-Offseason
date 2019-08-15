@@ -15,7 +15,7 @@ public class HoldLift extends Command {
 
 	private Lift lift;
 
-	private int targetPosition;
+	private double targetPosition;
 
 	public HoldLift() {
 		lift = Robot.lift;
