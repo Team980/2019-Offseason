@@ -13,7 +13,7 @@ import frc.robot.Robot;
 
 public class EndEffector extends Subsystem {
 
-    SpeedController intakeMotor;
+    private SpeedController intakeMotor;
 
 	public EndEffector()  {
         intakeMotor = Robot.robotMap.endEffectorIntakeMotor;

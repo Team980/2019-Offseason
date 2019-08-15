@@ -17,10 +17,10 @@ public class TimedDrive extends TimedCommand {
 
   private double speed;
 	
-	public TimedDrive(double timeout, double turnSpeed) {
+	public TimedDrive(double timeout, double forwardSpeed) {
     	super(timeout);
     
-    	speed = turnSpeed;
+    	speed = forwardSpeed;
 
 		driveSystem = Robot.driveSystem;
 

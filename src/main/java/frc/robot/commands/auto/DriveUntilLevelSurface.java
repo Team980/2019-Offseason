@@ -8,37 +8,42 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.Util;
+import frc.robot.sensors.BetterIMU;
+import frc.robot.subsystems.DriveSystem;
 
 public class DriveUntilLevelSurface extends Command {
-  public DriveUntilLevelSurface() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-  }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-  }
+    private static final double PITCH_DEADBAND = 2.0; // degrees
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-  }
+    private DriveSystem driveSystem;
+    private BetterIMU imu;
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+    private double move;
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
+    public DriveUntilLevelSurface(double move) {
+        driveSystem = Robot.driveSystem;
+        imu = Robot.robotMap.imu;
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
+        this.move = move;
+
+        requires(driveSystem);
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    @Override
+    protected void execute() {
+        driveSystem.driveRobot(move, 0);
+    }
+
+    @Override
+    protected boolean isFinished() {
+        return Math.abs(imu.getPitch()) < PITCH_DEADBAND; // pitch returned by imu is 0 when upright
+    }
+
+    @Override
+    protected void end() {
+        driveSystem.stopMotors();
+    }
 }

@@ -11,13 +11,14 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import frc.robot.Robot;
+import frc.robot.Util;
 import frc.robot.commands.wrist.HoldWrist;
 import frc.robot.sensors.Potentiometer;
 
 public class Wrist extends Subsystem {
 
-    private static final double SPEED = 0.5;
-    private static final double DEADBAND = 36;
+    private static final double MAX_SPEED = 0.5;
+    private static final double DEADBAND = 3;
 
     // the minimum angles so we don't crash into ourselves
     private static final double EXCLUSION_MIN = 0;
@@ -36,7 +37,7 @@ public class Wrist extends Subsystem {
 	}
 
 	public boolean isAtTargetAngle(double targetAngle) {
-		double distance = targetAngle - currentAngle();
+		double distance = Math.abs(targetAngle - currentAngle());
 		return distance < DEADBAND;
 	}
 
@@ -46,12 +47,8 @@ public class Wrist extends Subsystem {
         double input; // figure out which velocity we want to be
 		if (isAtTargetAngle(targetAngle) || isInExclusionZone()) {
 			input = 0;
-
-		} else if (difference > 0) {
-			input = SPEED;
-
-		} else { // distance is less than 0
-			input = -SPEED;
+		} else {
+			input = Util.map(difference, 30, 210, -MAX_SPEED, MAX_SPEED); // FIXME: we don't actually know what the values from the pot will be
 		}
 
 		set(input);
@@ -63,7 +60,7 @@ public class Wrist extends Subsystem {
     }
 
 	public double currentAngle() {
-		return wristPotentiometer.getAngle();
+		return wristPotentiometer.getAngle(); // NB: can add an offset here if values returned by potentiometer are not helpful
 	}
 
 	public void stopMotors() {

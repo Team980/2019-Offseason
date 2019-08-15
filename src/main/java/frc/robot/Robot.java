@@ -8,14 +8,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.auto.CargoShipAuto;
+import frc.robot.auto.CrossHabAuto;
 import frc.robot.commands.drive.TelopDrive;
 import frc.robot.commands.lift.HoldLift;
 import frc.robot.commands.wrist.HoldWrist;
-import frc.robot.subsystems.DriveSystem;
-import frc.robot.subsystems.EndEffector;
-import frc.robot.subsystems.Lift;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
 
@@ -24,17 +26,21 @@ public class Robot extends TimedRobot {
 	public static DriveSystem driveSystem;
 	public static EndEffector endEffector;
 	public static Lift lift;
+	public static Limelight limelight;
 	public static Wrist wrist;
 
 	public static OI oi;
 
-  	@Override
+	private SendableChooser<AutoChoice> autoChooser;
+
+	@Override
   	public void robotInit() {
 		robotMap = new RobotMap();
 
 		driveSystem = new DriveSystem();
 		endEffector = new EndEffector();
 		lift = new Lift();
+		limelight = new Limelight();
 		wrist = new Wrist();
 
 		oi = new OI();
@@ -43,7 +49,18 @@ public class Robot extends TimedRobot {
 		
 		lift.setDefaultCommand(new HoldLift());
 		wrist.setDefaultCommand(new HoldWrist());
-  	}
+
+
+
+		// shuffleboard
+		autoChooser = new SendableChooser<>();
+		autoChooser.setName("Choose Autonomous");
+
+		autoChooser.setDefaultOption(AutoChoice.CARGO_SHIP_AUTO.descriptor, AutoChoice.CARGO_SHIP_AUTO);
+		autoChooser.addOption(AutoChoice.CROSS_HAB_AUTO.descriptor, AutoChoice.CROSS_HAB_AUTO);
+
+		SmartDashboard.putData(autoChooser);
+	}
 
   	@Override
   	public void robotPeriodic() {
@@ -52,22 +69,25 @@ public class Robot extends TimedRobot {
 
   	@Override
   	public void autonomousInit() {
-		  
+  		AutoChoice autoChoice = autoChooser.getSelected();
+
+		// FIXME: what do we do if autoChoice == null ?
+		Command autoCommand = autoChoice.command;
+  		autoCommand.start();
   	}
 
   	@Override
   	public void autonomousPeriodic() {
-
   	}
 
   	@Override
   	public void teleopInit() {
 		driveSystem.setDefaultCommand(new TelopDrive());
+		// TODO: put in buttons
 	}
 
 	@Override
   	public void teleopPeriodic() {
-
   	}
 
 	@Override
@@ -87,7 +107,18 @@ public class Robot extends TimedRobot {
 
   	@Override
   	public void testPeriodic() {
-
 	}
 
+	enum AutoChoice {
+		CARGO_SHIP_AUTO(new CargoShipAuto(), "cargo ship auto"),
+		CROSS_HAB_AUTO(new CrossHabAuto(), "just cross hab line");
+
+  		Command command;
+  		String descriptor;
+
+  		AutoChoice(Command command, String descriptor) {
+  			this.command = command;
+  			this.descriptor = descriptor;
+		}
+	}
 }

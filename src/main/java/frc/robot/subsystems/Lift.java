@@ -31,7 +31,7 @@ public class Lift extends Subsystem {
 	}
 
 	public boolean isAtTargetPosition(int targetPosition) {
-		double distance = targetPosition - currentPosition();
+		double distance = Math.abs(targetPosition - currentPosition());
 		return distance < DEADBAND;
 	}
 
@@ -43,7 +43,7 @@ public class Lift extends Subsystem {
 		if (isAtTargetPosition(targetPosition)) {
 			input = 0;
 
-		} else if (distance > 0) {
+		} else if (distance > 0) { // FIXME: proportional control with map
 			input = 0.5;
 
 		} else { // distance is less than 0
