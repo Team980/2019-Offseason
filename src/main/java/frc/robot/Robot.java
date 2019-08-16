@@ -21,6 +21,7 @@ import frc.robot.commands.lift.HoldLift;
 import frc.robot.commands.lift.ManualLiftControl;
 import frc.robot.commands.wrist.HoldWrist;
 import frc.robot.commands.wrist.ManualWristControl;
+import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
@@ -30,14 +31,15 @@ public class Robot extends TimedRobot {
 	public static DriveSystem driveSystem;
 	public static EndEffector endEffector;
 	public static Lift lift;
-	public static Limelight limelight;
 	public static Wrist wrist;
+	public static double[] ypr = new double[3];
 
 	public static OI oi;
 
 	private SendableChooser<AutoChoice> autoChooser;
 
 	private AutoShift autoShiftCommand;
+
 
 	@Override
   	public void robotInit() {
@@ -46,7 +48,6 @@ public class Robot extends TimedRobot {
 		driveSystem = new DriveSystem();
 		endEffector = new EndEffector();
 		lift = new Lift();
-		limelight = new Limelight();
 		wrist = new Wrist();
 
 		oi = new OI();
@@ -54,12 +55,6 @@ public class Robot extends TimedRobot {
 		// default commands
 		lift.setDefaultCommand(new HoldLift());
 		wrist.setDefaultCommand(new HoldWrist());
-
-
-		// auto shifting
-		autoShiftCommand = new AutoShift(); // TODO: check if there is a better way to start & cancel this command
-		autoShiftCommand.start();
-
 
 		ManualLiftControl liftControlCommand = new ManualLiftControl();
 		ManualWristControl wristControlCommand = new ManualWristControl();
@@ -83,6 +78,8 @@ public class Robot extends TimedRobot {
 
   	@Override
   	public void robotPeriodic() {
+		Robot.robotMap.imu.getYawPitchRoll(ypr);		
+
 		Scheduler.getInstance().run();
   	}
 
@@ -93,8 +90,7 @@ public class Robot extends TimedRobot {
   		if (autoChoice == null) {
   			autoChoice = AutoChoice.CARGO_SHIP_AUTO; // default value
 		}
-
-		// FIXME: what do we do if autoChoice == null ?
+		
 		Command autoCommand = autoChoice.command;
   		autoCommand.start();
   	}
@@ -105,6 +101,10 @@ public class Robot extends TimedRobot {
 
   	@Override
   	public void teleopInit() {
+		// auto shifting
+		autoShiftCommand = new AutoShift(); // TODO: check if there is a better way to start & cancel this command
+		autoShiftCommand.start();
+
 		driveSystem.setDefaultCommand(new TelopDrive());
 	}
 
@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
 			defaultCommand = null;
 		}
 
-		if (autoShiftCommand != null) { // TODO: can we stop this command in disabled? disabled gets run in the transition between auto and teleop
+		if (autoShiftCommand != null) {
 			autoShiftCommand.cancel();
 		}
 

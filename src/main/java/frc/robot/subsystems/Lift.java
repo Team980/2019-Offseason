@@ -39,7 +39,12 @@ public class Lift extends Subsystem {
 	public void moveTowards(double targetPosition) {
 		double distance = targetPosition - currentPosition();
 
-		double input = isAtTargetPosition(targetPosition)? 0 : distance; // proportional control for free
+		double input;
+		if (isAtTargetPosition(targetPosition)) {
+			input = 0;
+		} else {
+			input = distance;
+		}
 
 		set(input);
 	}

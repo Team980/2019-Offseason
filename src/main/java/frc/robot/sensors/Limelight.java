@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.subsystems;
+package frc.robot.sensors;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * The limelight camera. This extends subsystem because there is only one limelight on the robot and it keeps state; ie, one
  * pipeline can be active at once.
  */
-public class Limelight extends Subsystem {
+public class Limelight {
     public static final double BALL_TARGET_PIPELINE_INDEX = 0;
     public static final double VISION_TARGET_PIPELINE_INDEX = 1;
 
@@ -54,7 +54,4 @@ public class Limelight extends Subsystem {
     public double getTargetArea(){
         return ta.getDouble(0.0);
     }
-
-    @Override
-    public void initDefaultCommand() {}
 }

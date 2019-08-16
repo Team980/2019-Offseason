@@ -10,7 +10,6 @@ package frc.robot.commands.auto;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.Util;
-import frc.robot.sensors.BetterIMU;
 import frc.robot.subsystems.DriveSystem;
 
 public class DriveUntilLevelSurface extends Command {
@@ -18,13 +17,11 @@ public class DriveUntilLevelSurface extends Command {
     private static final double PITCH_DEADBAND = 2.0; // degrees
 
     private DriveSystem driveSystem;
-    private BetterIMU imu;
 
     private double move;
 
     public DriveUntilLevelSurface(double move) {
         driveSystem = Robot.driveSystem;
-        imu = Robot.robotMap.imu;
 
         this.move = move;
 
@@ -39,7 +36,8 @@ public class DriveUntilLevelSurface extends Command {
 
     @Override
     protected boolean isFinished() {
-        return Math.abs(imu.getPitch()) < PITCH_DEADBAND; // pitch returned by imu is 0 when upright
+        double pitch = Robot.ypr[1];
+        return Math.abs(pitch) < PITCH_DEADBAND; // pitch returned by imu is 0 when upright
     }
 
     @Override

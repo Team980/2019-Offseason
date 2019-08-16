@@ -10,8 +10,8 @@ package frc.robot.commands.limelight;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.Util;
+import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.DriveSystem;
-import frc.robot.subsystems.Limelight;
 
 public class DriveTowardsBallUntilBallOutOfView extends Command {
     private static final double FORWARD_SPEED = 0.5;
@@ -21,10 +21,9 @@ public class DriveTowardsBallUntilBallOutOfView extends Command {
 
     DriveTowardsBallUntilBallOutOfView() {
         driveSystem = Robot.driveSystem;
-        limelight = Robot.limelight;
+        limelight = Robot.robotMap.limelight;
 
         requires(driveSystem);
-        requires(limelight);
     }
 
     @Override
