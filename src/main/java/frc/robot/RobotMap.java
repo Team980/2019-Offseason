@@ -9,9 +9,7 @@ package frc.robot;
 
 import java.util.Arrays;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -44,19 +42,19 @@ public class RobotMap {
 	public WPI_TalonSRX wristMotor;
 
 	// sensors
-	public PigeonIMU imu;
+	PigeonIMU imu;
 	public Limelight limelight;
 
 	RobotMap() {
 		// drive stuff
-		var leftFront = new WPI_VictorSPX(1);
-		var leftBack = new WPI_VictorSPX(2);
-		var leftTop = new WPI_VictorSPX(0);
+		var leftFront = new WPI_TalonSRX(1);
+		var leftBack = new WPI_TalonSRX(2);
+		var leftTop = new WPI_TalonSRX(0);
 		leftTop.setInverted(true);
 
-  		var rightFront = new WPI_VictorSPX(4);
-		var rightBack = new WPI_VictorSPX(5);
-		var rightTop = new WPI_VictorSPX(3);
+  		var rightFront = new WPI_TalonSRX(4);
+		var rightBack = new WPI_TalonSRX(5);
+		var rightTop = new WPI_TalonSRX(3);
 		rightTop.setInverted(true);
 
 		leftDrive = new SpeedControllerGroup(leftFront, leftBack, leftTop);
@@ -73,7 +71,7 @@ public class RobotMap {
 		shifter = new Solenoid(0); // FIXME: might be wrong
 
 		// end effector
-		endEffectorIntakeMotor = new WPI_TalonSRX(13); // FIME: probably
+		endEffectorIntakeMotor = new WPI_TalonSRX(13); // FIXME: probably
 
 		// lift
 		liftMotor = new WPI_TalonSRX(15);

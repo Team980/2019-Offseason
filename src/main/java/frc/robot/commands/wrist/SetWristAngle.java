@@ -13,9 +13,9 @@ import frc.robot.subsystems.Wrist;
 
 public class SetWristAngle extends Command {
 
-	Wrist wrist;
+	private Wrist wrist;
 
-	int targetAngle;
+	private int targetAngle;
 
 	public SetWristAngle(int targetAngle) {
 		this.targetAngle = targetAngle;

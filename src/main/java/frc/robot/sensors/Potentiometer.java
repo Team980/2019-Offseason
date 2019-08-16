@@ -8,7 +8,7 @@ public class Potentiometer {
     private AnalogInput analogInput;
 
     private static final double MIN_VOLTAGE = 0;
-    private static final double MAX_VOLTAGE = 12;
+    private static final double MAX_VOLTAGE = 5;
 
     public Potentiometer(int channel) {
         analogInput = new AnalogInput(channel);

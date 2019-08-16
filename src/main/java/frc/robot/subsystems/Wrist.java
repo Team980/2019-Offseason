@@ -21,8 +21,8 @@ public class Wrist extends Subsystem {
     private static final double DEADBAND = 3;
 
     // the minimum angles so we don't crash into ourselves
-    private static final double EXCLUSION_MIN = 0;
-    private static final double EXCLUSION_MAX = 360;
+    private static final double MINIMUM_ANGLE = 20; // TODO: determine experimentally
+    private static final double MAXIMUM_ANGLE = 300;
 
     private SpeedController wristMotor;
     private Potentiometer wristPotentiometer;
@@ -49,7 +49,7 @@ public class Wrist extends Subsystem {
 		if (isAtTargetAngle(targetAngle) || isInExclusionZone()) {
 			input = 0;
 		} else {
-			input = Util.map(difference, 30, 210, -MAX_SPEED, MAX_SPEED); // FIXME: we don't actually know what the values from the pot will be
+			input = Util.map(difference, MINIMUM_ANGLE, MAXIMUM_ANGLE, -MAX_SPEED, MAX_SPEED); // FIXME: we don't actually know what the values from the pot will be
 		}
 
 		set(input);
@@ -57,7 +57,7 @@ public class Wrist extends Subsystem {
 
     private boolean isInExclusionZone() {
         double currentAngle = currentAngle();
-        return currentAngle < EXCLUSION_MIN || currentAngle > EXCLUSION_MAX;
+        return currentAngle < MINIMUM_ANGLE || currentAngle > MAXIMUM_ANGLE;
     }
 
 	public double currentAngle() {

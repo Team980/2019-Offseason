@@ -16,7 +16,7 @@ import frc.robot.Util;
 
 public class Lift extends Subsystem {
 
-    private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: change this value later to trashpanda's map
+    private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: determine experimentally
     private static final double DEADBAND = 0.05;
 	
     private Encoder liftEncoder; 

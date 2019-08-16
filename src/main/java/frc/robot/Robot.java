@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
@@ -24,6 +26,8 @@ import frc.robot.commands.wrist.ManualWristControl;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.*;
 
+import java.util.Arrays;
+
 public class Robot extends TimedRobot {
 
 	public static RobotMap robotMap;
@@ -40,6 +44,7 @@ public class Robot extends TimedRobot {
 
 	private AutoShift autoShiftCommand;
 
+	private NetworkTable debugTable;
 
 	@Override
   	public void robotInit() {
@@ -74,23 +79,33 @@ public class Robot extends TimedRobot {
 		autoChooser.addOption(AutoChoice.CROSS_HAB_AUTO.descriptor, AutoChoice.CROSS_HAB_AUTO);
 
 		SmartDashboard.putData(autoChooser);
+
+
+		debugTable = NetworkTableInstance.getDefault().getTable("debug");
 	}
 
   	@Override
   	public void robotPeriodic() {
-		Robot.robotMap.imu.getYawPitchRoll(ypr);		
+		robotMap.imu.getYawPitchRoll(ypr);
+		
+		debugTable.getEntry("wrist angle").setNumber(wrist.currentAngle());
+		debugTable.getEntry("wrist height").setNumber(lift.currentPosition());
+		debugTable.getEntry("yaw").setNumber(ypr[0]);
+		debugTable.getEntry("pitch").setNumber(ypr[1]);
 
 		Scheduler.getInstance().run();
   	}
 
   	@Override
   	public void autonomousInit() {
-  		AutoChoice autoChoice = autoChooser.getSelected();
+		// reset imu
+		robotMap.imu.setYaw(0);
 
+		// start up auto command
+  		AutoChoice autoChoice = autoChooser.getSelected();
   		if (autoChoice == null) {
   			autoChoice = AutoChoice.CARGO_SHIP_AUTO; // default value
 		}
-		
 		Command autoCommand = autoChoice.command;
   		autoCommand.start();
   	}
