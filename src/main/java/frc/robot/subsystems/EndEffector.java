@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
+import frc.robot.commands.end_effector.RunIntake;
 
 public class EndEffector extends Subsystem {
 
@@ -28,5 +29,7 @@ public class EndEffector extends Subsystem {
     }
 
     @Override
-    public void initDefaultCommand() {}
+    public void initDefaultCommand() {
+        setDefaultCommand(new RunIntake());
+    }
 }

@@ -21,8 +21,8 @@ public class Wrist extends Subsystem {
     private static final double DEADBAND = 3;
 
     // the minimum angles so we don't crash into ourselves
-    private static final double MINIMUM_ANGLE = 20; // TODO: determine experimentally
-    private static final double MAXIMUM_ANGLE = 300;
+    private static final double MINIMUM_ANGLE = 25; // experimental numbers found
+    private static final double MAXIMUM_ANGLE = 288;
 
     private SpeedController wristMotor;
     private Potentiometer wristPotentiometer;
@@ -33,7 +33,13 @@ public class Wrist extends Subsystem {
 	}
 
 	public void set(double input) {
-		wristMotor.set(input);
+		if ((input < 0 && currentAngle() > MINIMUM_ANGLE) || (input > 0 && currentAngle() < MAXIMUM_ANGLE)){
+			wristMotor.set(input);
+		}//the softstop check needs to be here where the motor is running, this way both manual and automation use the soft stop protection
+		else{
+			wristMotor.stopMotor();
+		}
+		
 	}
 
 	public boolean isAtTargetAngle(double targetAngle) {
@@ -46,7 +52,7 @@ public class Wrist extends Subsystem {
 
         double input; // figure out which velocity we want to be
 
-		if (isAtTargetAngle(targetAngle) || isInExclusionZone()) {
+		if (isAtTargetAngle(targetAngle) /*|| isInExclusionZone()*/) {
 			input = 0;
 		} else {
 			input = Util.map(difference, MINIMUM_ANGLE, MAXIMUM_ANGLE, -MAX_SPEED, MAX_SPEED); // FIXME: we don't actually know what the values from the pot will be
@@ -55,10 +61,10 @@ public class Wrist extends Subsystem {
 		set(input);
     }
 
-    private boolean isInExclusionZone() {
+    /*private boolean isInExclusionZone() {
         double currentAngle = currentAngle();
         return currentAngle < MINIMUM_ANGLE || currentAngle > MAXIMUM_ANGLE;
-    }
+    }*/
 
 	public double currentAngle() {
 		return wristPotentiometer.getAngle(); // NB: can add an offset here if values returned by potentiometer are not helpful

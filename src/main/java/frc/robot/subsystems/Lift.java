@@ -16,7 +16,15 @@ import frc.robot.Util;
 
 public class Lift extends Subsystem {
 
-    private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: determine experimentally
+	private static final double EXCLUSION_MIN = 0.04;
+	private static final double EXCLUSION_MAX = 0.96;
+
+	// private static final double EXCLUSION_MIN = 0.2;
+	// private static final double EXCLUSION_MAX = 1.1;
+
+	// private static final double ENCODER_MIN_TICK_COUNT = -20_000;
+
+    // private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: determine experimentally
     private static final double DEADBAND = 0.05;
 	
     private Encoder liftEncoder; 
@@ -28,7 +36,13 @@ public class Lift extends Subsystem {
 	}
 
 	public void set(double input) { 
-		liftMotor.set(input);
+	
+		System.out.println(input);
+		if ((input < 0 && currentPosition() > EXCLUSION_MIN) || (input > 0 && currentPosition() < EXCLUSION_MAX)) {
+			liftMotor.set(input);
+		} else {
+			liftMotor.stopMotor();
+		}
 	}
 
 	public boolean isAtTargetPosition(double targetPosition) {
@@ -49,8 +63,9 @@ public class Lift extends Subsystem {
 		set(input);
 	}
 
+
 	public double currentPosition() {
-		return Util.map(liftEncoder.getRaw(), 0, ENCODER_MAX_TICK_COUNT, 0, 1);
+		return Util.map(liftEncoder.getRaw(), -20_000, 0, 0, 1);
 	} 
 
 	public void stopMotors() {

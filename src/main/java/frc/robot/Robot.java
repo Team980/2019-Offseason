@@ -82,6 +82,7 @@ public class Robot extends TimedRobot {
 
 
 		debugTable = NetworkTableInstance.getDefault().getTable("debug");
+
 	}
 
   	@Override
@@ -89,7 +90,9 @@ public class Robot extends TimedRobot {
 		robotMap.imu.getYawPitchRoll(ypr);
 		
 		debugTable.getEntry("wrist angle").setNumber(wrist.currentAngle());
-		debugTable.getEntry("wrist height").setNumber(lift.currentPosition());
+		debugTable.getEntry("lift relative height").setNumber(lift.currentPosition());
+		debugTable.getEntry("lift ticks").setNumber(robotMap.liftEncoder.getRaw());
+
 		debugTable.getEntry("yaw").setNumber(ypr[0]);
 		debugTable.getEntry("pitch").setNumber(ypr[1]);
 

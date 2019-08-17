@@ -75,7 +75,7 @@ public class RobotMap {
 
 		// lift
 		liftMotor = new WPI_TalonSRX(15);
-		liftEncoder = new Encoder(6, 7, false, CounterBase.EncodingType.k4X);
+		liftEncoder = new Encoder(0, 1, false, CounterBase.EncodingType.k4X);
 
 		// wrist
 		wristPotentiometer = new Potentiometer(0);

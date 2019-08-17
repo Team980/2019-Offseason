@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.configuration.BallFloorPickupConfiguration;
+import edu.wpi.first.wpilibj.buttons.Trigger;
 import frc.robot.commands.configuration.BattleConfiguration;
 import frc.robot.commands.configuration.CargoScoreConfiguration;
-import frc.robot.commands.end_effector.SpitOut;
-import frc.robot.commands.end_effector.SuckIn;
+import frc.robot.commands.lift.IncrementLiftPosition;
 import frc.robot.commands.lift.SetLiftPosition;
+import frc.robot.commands.wrist.SetWristAngle;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -32,24 +32,73 @@ public class OI {
 	private static final double LIFT_DEADBAND = 0.1;
 	private static final double WRIST_DEADBAND = 0.1;
 
+
 	OI () {
 		throttle = new Joystick(0);
 		wheel = new Joystick(1);
 		xBox = new XboxController(2);
 
 		// configurations
-		JoystickButton aButton = new JoystickButton(xBox, 1);
-		aButton.whenPressed(new CargoScoreConfiguration());
+		
+		JoystickButton aButton = new JoystickButton(xBox, 1); // ball floor pickup
+		aButton.whenPressed(new SetWristAngle(120));
+		aButton.whenPressed(new SetLiftPosition(0.12));
 
-		JoystickButton bButton = new JoystickButton(xBox, 2);
-		bButton.whenPressed(new BattleConfiguration());
+		JoystickButton bButton = new JoystickButton(xBox, 2); // low ball score
+		bButton.whenPressed(new SetWristAngle(120));
+		bButton.whenPressed(new SetLiftPosition(0.12));
+
+
+		JoystickButton xButton = new JoystickButton(xBox, 3); // cargo ship dump
+		xButton.whenPressed(new SetWristAngle(120));
+		xButton.whenPressed(new SetLiftPosition(0.12));
+
+
+		JoystickButton yButton = new JoystickButton(xBox, 4); // mid ball score 
+		yButton.whenPressed(new SetWristAngle(120));
+		yButton.whenPressed(new SetLiftPosition(0.12));
+
+
+		Trigger povRight = new Trigger() { // low hatch 
+			@Override
+			public boolean get() {
+				return xBox.getPOV() == 0;
+			}
+		};
+		povRight.whenActive(new SetWristAngle(23));
+		povRight.whenActive(new SetLiftPosition(0.35));
+
+
+		Trigger povUp = new Trigger() { // rocket mid hatch
+			@Override
+			public boolean get() {
+				return xBox.getPOV() == 90;
+			}
+		};
+		povUp.whenActive(new SetWristAngle(23));
+		povUp.whenActive(new SetLiftPosition(0.35));
+
+
+		JoystickButton leftThumb = new JoystickButton(xBox, 9); // battle configuration
+		leftThumb.whenPressed(new SetWristAngle(60));
+		leftThumb.whenPressed(new SetLiftPosition(0.35));
 
 		// end effector controls
-		JoystickButton leftBumper = new JoystickButton(xBox, 5);
-		leftBumper.whileHeld(new SuckIn()); // note: while pressed
+		JoystickButton leftBumper = new JoystickButton(xBox, 5); // snag hatch
+		leftBumper.whenPressed(new IncrementLiftPosition(0.05));
 
-		JoystickButton rightBumper = new JoystickButton(xBox, 6);
-		rightBumper.whileHeld(new SpitOut()); // note: while pressed
+		JoystickButton rightBumper = new JoystickButton(xBox, 6); // spit out hatch
+		leftBumper.whenPressed(new IncrementLiftPosition(-0.05));
+
+		
+	}
+
+	public double getSuckInSpeed() {
+		return xBox.getTriggerAxis(Hand.kLeft);
+	}
+
+	public double getSpitOutSpeed() {
+		return xBox.getTriggerAxis(Hand.kRight);
 	}
 
 	public double getMove() {
@@ -61,12 +110,12 @@ public class OI {
 	}
 
 	public double getLiftJoystickValue() {
-		double value = -xBox.getY(Hand.kLeft);
+		double value = -xBox.getY(Hand.kRight);
 		return applyDeadband(value, LIFT_DEADBAND);
 	}
 
 	public double getWristJoystickValue() {
-		double value = -xBox.getY(Hand.kRight);
+		double value = xBox.getY(Hand.kLeft);
 		return applyDeadband(value, WRIST_DEADBAND);
 	}
 
