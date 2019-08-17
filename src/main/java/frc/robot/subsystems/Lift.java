@@ -16,8 +16,8 @@ import frc.robot.Util;
 
 public class Lift extends Subsystem {
 
-	private static final double EXCLUSION_MIN = 0.04;
-	private static final double EXCLUSION_MAX = 0.96;
+	private static final double EXCLUSION_MIN = 0.03;
+	private static final double EXCLUSION_MAX = 0.97;
 
 	// private static final double EXCLUSION_MIN = 0.2;
 	// private static final double EXCLUSION_MAX = 1.1;
@@ -25,7 +25,7 @@ public class Lift extends Subsystem {
 	// private static final double ENCODER_MIN_TICK_COUNT = -20_000;
 
     // private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: determine experimentally
-    private static final double DEADBAND = 0.05;
+    private static final double DEADBAND = 0.04;
 	
     private Encoder liftEncoder; 
     private SpeedController liftMotor; 
@@ -41,7 +41,7 @@ public class Lift extends Subsystem {
 		if ((input < 0 && currentPosition() > EXCLUSION_MIN) || (input > 0 && currentPosition() < EXCLUSION_MAX)) {
 			liftMotor.set(input);
 		} else {
-			liftMotor.stopMotor();
+			liftMotor.set(0);
 		}
 	}
 

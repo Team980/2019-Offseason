@@ -17,13 +17,11 @@ public class IncrementLiftPosition extends Command {
 	private Lift lift;
   private double targetPosition;
   private double increment;
-  private OI oi;
 
   public IncrementLiftPosition(double increment) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     lift = Robot.lift;
-    oi = Robot.oi;
 
     this.increment = increment;
 

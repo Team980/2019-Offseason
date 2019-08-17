@@ -42,53 +42,54 @@ public class OI {
 		
 		JoystickButton aButton = new JoystickButton(xBox, 1); // ball floor pickup
 		aButton.whenPressed(new SetWristAngle(120));
-		aButton.whenPressed(new SetLiftPosition(0.12));
+		aButton.whenPressed(new SetLiftPosition(0.12)); // TODO: figure out in the pits
 
 		JoystickButton bButton = new JoystickButton(xBox, 2); // low ball score
-		bButton.whenPressed(new SetWristAngle(120));
-		bButton.whenPressed(new SetLiftPosition(0.12));
+		bButton.whenPressed(new SetWristAngle(124.5));
+		bButton.whenPressed(new SetLiftPosition(0.03));
 
 
 		JoystickButton xButton = new JoystickButton(xBox, 3); // cargo ship dump
-		xButton.whenPressed(new SetWristAngle(120));
-		xButton.whenPressed(new SetLiftPosition(0.12));
+		xButton.whenPressed(new SetWristAngle(144.2));
+		xButton.whenPressed(new SetLiftPosition(0.96));
 
 
 		JoystickButton yButton = new JoystickButton(xBox, 4); // mid ball score 
-		yButton.whenPressed(new SetWristAngle(120));
-		yButton.whenPressed(new SetLiftPosition(0.12));
+		yButton.whenPressed(new SetWristAngle(61.8)); // TODO: this one was probably entered wrong
+ 		yButton.whenPressed(new SetLiftPosition(0.285));
 
 
 		Trigger povRight = new Trigger() { // low hatch 
 			@Override
 			public boolean get() {
-				return xBox.getPOV() == 0;
-			}
-		};
-		povRight.whenActive(new SetWristAngle(23));
-		povRight.whenActive(new SetLiftPosition(0.35));
-
-
-		Trigger povUp = new Trigger() { // rocket mid hatch
-			@Override
-			public boolean get() {
 				return xBox.getPOV() == 90;
 			}
 		};
-		povUp.whenActive(new SetWristAngle(23));
-		povUp.whenActive(new SetLiftPosition(0.35));
+		povRight.whenActive(new SetWristAngle(62));
+		povRight.whenActive(new SetLiftPosition(0.285));
+//
+//
+//		Trigger povUp = new Trigger() { // rocket mid hatch
+//			@Override
+//			public boolean get() {
+//				return xBox.getPOV() == 0;
+//			}
+//		};
+//		povUp.whenActive(new SetWristAngle(23));
+//		povUp.whenActive(new SetLiftPosition(0.35));
 
 
 		JoystickButton leftThumb = new JoystickButton(xBox, 9); // battle configuration
 		leftThumb.whenPressed(new SetWristAngle(60));
 		leftThumb.whenPressed(new SetLiftPosition(0.35));
 
-		// end effector controls
+
+		// snag & release hatch
 		JoystickButton leftBumper = new JoystickButton(xBox, 5); // snag hatch
-		leftBumper.whenPressed(new IncrementLiftPosition(0.05));
+		leftBumper.whenPressed(new IncrementLiftPosition(0.285));
 
 		JoystickButton rightBumper = new JoystickButton(xBox, 6); // spit out hatch
-		leftBumper.whenPressed(new IncrementLiftPosition(-0.05));
+		leftBumper.whenPressed(new IncrementLiftPosition(-0.285));
 
 		
 	}

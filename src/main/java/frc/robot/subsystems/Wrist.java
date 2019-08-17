@@ -33,9 +33,9 @@ public class Wrist extends Subsystem {
 	}
 
 	public void set(double input) {
-		if ((input < 0 && currentAngle() > MINIMUM_ANGLE) || (input > 0 && currentAngle() < MAXIMUM_ANGLE)){
+		if ((input < 0 && currentAngle() > MINIMUM_ANGLE) || (input > 0 && currentAngle() < MAXIMUM_ANGLE)) {
 			wristMotor.set(input);
-		}//the softstop check needs to be here where the motor is running, this way both manual and automation use the soft stop protection
+		} // the softstop check needs to be here where the motor is running, this way both manual and automation use the soft stop protection
 		else{
 			wristMotor.stopMotor();
 		}
@@ -55,7 +55,7 @@ public class Wrist extends Subsystem {
 		if (isAtTargetAngle(targetAngle) /*|| isInExclusionZone()*/) {
 			input = 0;
 		} else {
-			input = Util.map(difference, MINIMUM_ANGLE, MAXIMUM_ANGLE, -MAX_SPEED, MAX_SPEED); // FIXME: we don't actually know what the values from the pot will be
+			input = Util.map(difference, MINIMUM_ANGLE, MAXIMUM_ANGLE, -MAX_SPEED, MAX_SPEED);
 		}
 
 		set(input);
@@ -67,7 +67,7 @@ public class Wrist extends Subsystem {
     }*/
 
 	public double currentAngle() {
-		return wristPotentiometer.getAngle(); // NB: can add an offset here if values returned by potentiometer are not helpful
+		return wristPotentiometer.getAngle();
 	}
 
 	public void stopMotors() {

@@ -15,9 +15,9 @@ public class SetWristAngle extends Command {
 
 	private Wrist wrist;
 
-	private int targetAngle;
+	private double targetAngle;
 
-	public SetWristAngle(int targetAngle) {
+	public SetWristAngle(double targetAngle) {
 		this.targetAngle = targetAngle;
 
 		wrist = Robot.wrist;

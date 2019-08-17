@@ -80,9 +80,7 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putData(autoChooser);
 
-
 		debugTable = NetworkTableInstance.getDefault().getTable("debug");
-
 	}
 
   	@Override
@@ -90,9 +88,8 @@ public class Robot extends TimedRobot {
 		robotMap.imu.getYawPitchRoll(ypr);
 		
 		debugTable.getEntry("wrist angle").setNumber(wrist.currentAngle());
-		debugTable.getEntry("lift relative height").setNumber(lift.currentPosition());
-		debugTable.getEntry("lift ticks").setNumber(robotMap.liftEncoder.getRaw());
-
+		debugTable.getEntry("lift scaled height").setNumber(lift.currentPosition());
+		debugTable.getEntry("lift encoder ticks").setNumber(robotMap.liftEncoder.getRaw());
 		debugTable.getEntry("yaw").setNumber(ypr[0]);
 		debugTable.getEntry("pitch").setNumber(ypr[1]);
 
@@ -136,7 +133,7 @@ public class Robot extends TimedRobot {
 		var defaultCommand = driveSystem.getDefaultCommand();
 		if (defaultCommand != null) {
 			defaultCommand.cancel();
-			defaultCommand = null;
+			driveSystem.setDefaultCommand(null);
 		}
 
 		if (autoShiftCommand != null) {

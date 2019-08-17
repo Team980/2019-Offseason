@@ -14,7 +14,7 @@ import frc.robot.subsystems.DriveSystem;
 
 public class DriveUntilLevelSurface extends Command {
 
-    private static final double PITCH_DEADBAND = 2.0; // degrees
+    private static final double PITCH_DEADBAND = 5.0; // degrees
 
     private DriveSystem driveSystem;
 
@@ -37,7 +37,7 @@ public class DriveUntilLevelSurface extends Command {
     @Override
     protected boolean isFinished() {
         double pitch = Robot.ypr[1];
-        return Math.abs(pitch) < PITCH_DEADBAND; // pitch returned by imu is 0 when upright
+        return Math.abs(pitch) < PITCH_DEADBAND; // pitch returned by imu is about 0 when upright
     }
 
     @Override
