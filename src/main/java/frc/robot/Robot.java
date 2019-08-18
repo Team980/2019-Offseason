@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
 
 	private AutoShift autoShiftCommand;
 
-	private NetworkTable debugTable;
+	public static NetworkTable debugTable;
 
 	@Override
   	public void robotInit() {
