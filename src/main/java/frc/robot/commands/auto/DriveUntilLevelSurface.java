@@ -36,7 +36,7 @@ public class DriveUntilLevelSurface extends Command {
 
     @Override
     protected boolean isFinished() {
-        double pitch = Robot.ypr[1];
+        double pitch = Robot.ypr[2];
         return Math.abs(pitch) < PITCH_DEADBAND; // pitch returned by imu is about 0 when upright
     }
 

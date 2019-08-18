@@ -36,6 +36,7 @@ public class TimedDrive extends TimedCommand {
 	// Called once after timeout
 	@Override
 	protected void end() {
-    	driveSystem.stopMotors();
+		driveSystem.driveRobot(0, 0);
+    	//driveSystem.stopMotors();
 	}
 }

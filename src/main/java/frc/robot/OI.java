@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 import frc.robot.commands.configuration.BattleConfiguration;
 import frc.robot.commands.configuration.CargoScoreConfiguration;
+import frc.robot.commands.drive.StopDriveTrain;
 import frc.robot.commands.lift.IncrementLiftPosition;
 import frc.robot.commands.lift.SetLiftPosition;
 import frc.robot.commands.wrist.SetWristAngle;
@@ -39,10 +40,13 @@ public class OI {
 		xBox = new XboxController(2);
 
 		// configurations
+
+		JoystickButton stopAuto = new JoystickButton(throttle, 7);
+		stopAuto.whenPressed(new StopDriveTrain());
 		
 		JoystickButton aButton = new JoystickButton(xBox, 1); // ball floor pickup
-		aButton.whenPressed(new SetWristAngle(120));
-		aButton.whenPressed(new SetLiftPosition(0.12)); // TODO: figure out in the pits
+		aButton.whenPressed(new SetWristAngle(200));
+		aButton.whenPressed(new SetLiftPosition(0)); 
 
 		JoystickButton bButton = new JoystickButton(xBox, 2); // low ball score
 		bButton.whenPressed(new SetWristAngle(124.5));
@@ -50,13 +54,13 @@ public class OI {
 
 
 		JoystickButton xButton = new JoystickButton(xBox, 3); // cargo ship dump
-		xButton.whenPressed(new SetWristAngle(144.2));
+		xButton.whenPressed(new SetWristAngle(120.2)); // used to be 140.2
 		xButton.whenPressed(new SetLiftPosition(0.96));
 
 
 		JoystickButton yButton = new JoystickButton(xBox, 4); // mid ball score 
-		yButton.whenPressed(new SetWristAngle(61.8)); // TODO: this one was probably entered wrong
- 		yButton.whenPressed(new SetLiftPosition(0.285));
+		yButton.whenPressed(new SetWristAngle(101.337)); 
+ 		yButton.whenPressed(new SetLiftPosition(0.9731));
 
 
 		Trigger povRight = new Trigger() { // low hatch 
@@ -66,7 +70,7 @@ public class OI {
 			}
 		};
 		povRight.whenActive(new SetWristAngle(62));
-		povRight.whenActive(new SetLiftPosition(0.285));
+		povRight.whenActive(new SetLiftPosition(0));
 //
 //
 //		Trigger povUp = new Trigger() { // rocket mid hatch
@@ -80,8 +84,8 @@ public class OI {
 
 
 		JoystickButton leftThumb = new JoystickButton(xBox, 9); // battle configuration
-		leftThumb.whenPressed(new SetWristAngle(60));
-		leftThumb.whenPressed(new SetLiftPosition(0.35));
+		leftThumb.whenPressed(new SetWristAngle(287));
+		leftThumb.whenPressed(new SetLiftPosition(0.97));
 
 
 		// snag & release hatch
@@ -89,17 +93,17 @@ public class OI {
 		leftBumper.whenPressed(new IncrementLiftPosition(0.285));
 
 		JoystickButton rightBumper = new JoystickButton(xBox, 6); // spit out hatch
-		leftBumper.whenPressed(new IncrementLiftPosition(-0.285));
+		rightBumper.whenPressed(new IncrementLiftPosition(-0.285));
 
 		
 	}
 
 	public double getSuckInSpeed() {
-		return xBox.getTriggerAxis(Hand.kLeft);
+		return xBox.getTriggerAxis(Hand.kRight);
 	}
 
 	public double getSpitOutSpeed() {
-		return xBox.getTriggerAxis(Hand.kRight);
+		return xBox.getTriggerAxis(Hand.kLeft);
 	}
 
 	public double getMove() {

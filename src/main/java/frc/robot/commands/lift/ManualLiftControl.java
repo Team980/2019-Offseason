@@ -27,7 +27,8 @@ public class ManualLiftControl extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        lift.set(oi.getLiftJoystickValue());
+        lift.rawSet(oi.getLiftJoystickValue());
+        //lift.set(oi.getLiftJoystickValue()); TODO: add back in soft stops
     }
 
     // Make this return true when this Command no longer needs to run execute()

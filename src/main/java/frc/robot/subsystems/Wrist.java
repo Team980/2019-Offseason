@@ -18,11 +18,13 @@ import frc.robot.sensors.Potentiometer;
 public class Wrist extends Subsystem {
 
     private static final double MAX_SPEED = 0.5;
-    private static final double DEADBAND = 3;
+    private static final double DEADBAND = 10;
 
     // the minimum angles so we don't crash into ourselves
-    private static final double MINIMUM_ANGLE = 25; // experimental numbers found
+    private static final double MINIMUM_ANGLE = 30; // experimental numbers found
     private static final double MAXIMUM_ANGLE = 288;
+
+	private static final double MIN_SPEED = 0.5;
 
     private SpeedController wristMotor;
     private Potentiometer wristPotentiometer;
@@ -32,12 +34,16 @@ public class Wrist extends Subsystem {
         wristMotor = Robot.robotMap.wristMotor;
 	}
 
+	public void rawSet(double input) {
+		wristMotor.set(input);
+	}
+
 	public void set(double input) {
 		if ((input < 0 && currentAngle() > MINIMUM_ANGLE) || (input > 0 && currentAngle() < MAXIMUM_ANGLE)) {
 			wristMotor.set(input);
 		} // the softstop check needs to be here where the motor is running, this way both manual and automation use the soft stop protection
 		else{
-			wristMotor.stopMotor();
+			wristMotor.set(0);
 		}
 		
 	}
@@ -50,13 +56,30 @@ public class Wrist extends Subsystem {
 	public void moveTowards(double targetAngle) {
         double difference = targetAngle - currentAngle();
 
-        double input; // figure out which velocity we want to be
+        double input = 1.5 * difference / 260 ; // figure out which velocity we want to be
 
 		if (isAtTargetAngle(targetAngle) /*|| isInExclusionZone()*/) {
+			System.out.println("should be stopped");
 			input = 0;
-		} else {
-			input = Util.map(difference, MINIMUM_ANGLE, MAXIMUM_ANGLE, -MAX_SPEED, MAX_SPEED);
+		} else if (targetAngle > 270 && Math.abs(difference) < 30) { // TODO: hack until pid
+			input = 0.6;
+		
 		}
+
+
+/*		else if (difference > 0){
+			input = .3;
+			//input = Util.map(difference, MINIMUM_ANGLE, MAXIMUM_ANGLE, -MAX_SPEED, MAX_SPEED);
+
+		}
+		else if (difference < 0){
+			input = -.3;
+		}
+		else{
+			System.out.println("failsafe");
+
+			input = 0;
+		}*/
 
 		set(input);
     }

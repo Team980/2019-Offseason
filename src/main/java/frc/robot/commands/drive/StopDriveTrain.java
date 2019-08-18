@@ -5,24 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.end_effector;
+package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.EndEffector;
+import frc.robot.subsystems.DriveSystem;
 
-public class RunIntake extends Command {
-  private EndEffector endEffector;
-  private OI oi;
-
-  public RunIntake() {
-    endEffector = Robot.endEffector;
-    oi = Robot.oi;
-
-    requires(endEffector);
+public class StopDriveTrain extends Command {
+  DriveSystem driveSystem;
+  public StopDriveTrain() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    driveSystem = Robot.driveSystem;
+    requires(driveSystem);
   }
 
   // Called just before this Command runs the first time
@@ -33,29 +28,18 @@ public class RunIntake extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double inSpeed = oi.getSuckInSpeed();
-    double outSpeed = oi.getSpitOutSpeed();
-
-    if (inSpeed > 0) {
-      endEffector.set(inSpeed);
-    } 
-    else if (outSpeed > 0) {
-      endEffector.set(-outSpeed);
-    } 
-    else {
-      endEffector.set(0);
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    driveSystem.stopMotors();
   }
 
   // Called when another command which requires one or more of the same

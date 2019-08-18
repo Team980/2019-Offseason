@@ -27,7 +27,8 @@ public class ManualWristControl extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        wrist.set(oi.getWristJoystickValue());
+        wrist.rawSet(-oi.getWristJoystickValue());
+        //wrist.set(-oi.getWristJoystickValue()); TODO: add back soft stops
     }
 
     // Make this return true when this Command no longer needs to run execute()

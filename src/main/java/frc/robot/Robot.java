@@ -56,11 +56,11 @@ public class Robot extends TimedRobot {
 		wrist = new Wrist();
 
 		oi = new OI();
+		robotMap.liftEncoder.reset();
 
 		// default commands
-		lift.setDefaultCommand(new HoldLift());
-		wrist.setDefaultCommand(new HoldWrist());
-
+		
+		
 		ManualLiftControl liftControlCommand = new ManualLiftControl();
 		ManualWristControl wristControlCommand = new ManualWristControl();
 		JoystickButton startLiftAndWristManualControl = new JoystickButton(oi.xBox, 8); // start button
@@ -92,6 +92,8 @@ public class Robot extends TimedRobot {
 		debugTable.getEntry("lift encoder ticks").setNumber(robotMap.liftEncoder.getRaw());
 		debugTable.getEntry("yaw").setNumber(ypr[0]);
 		debugTable.getEntry("pitch").setNumber(ypr[1]);
+		debugTable.getEntry("roll").setNumber(ypr[2]);
+
 
 		Scheduler.getInstance().run();
   	}
@@ -101,11 +103,13 @@ public class Robot extends TimedRobot {
 		// reset imu
 		robotMap.imu.setYaw(0);
 
-		// start up auto command
-  		AutoChoice autoChoice = autoChooser.getSelected();
-  		if (autoChoice == null) {
-  			autoChoice = AutoChoice.CARGO_SHIP_AUTO; // default value
-		}
+		// // start up auto command
+  		// AutoChoice autoChoice = autoChooser.getSelected();
+  		// if (autoChoice == null) {
+		// 	autoChoice = AutoChoice.CARGO_SHIP_AUTO; // default value
+		// }
+		AutoChoice autoChoice = AutoChoice.CROSS_HAB_AUTO; // default value
+
 		Command autoCommand = autoChoice.command;
   		autoCommand.start();
   	}

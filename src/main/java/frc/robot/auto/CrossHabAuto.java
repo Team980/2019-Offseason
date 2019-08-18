@@ -13,7 +13,7 @@ import frc.robot.commands.auto.TimedDrive;
 
 public class CrossHabAuto extends CommandGroup {
     public CrossHabAuto() {
-        addSequential(new TimedDrive(1.0, 0.5));
-        addSequential((new DriveUntilLevelSurface(0.5)));
+        addSequential(new TimedDrive(0.5, 1));
+        //addSequential((new DriveUntilLevelSurface(0.4))); TODO: this never stopped
     }
 }

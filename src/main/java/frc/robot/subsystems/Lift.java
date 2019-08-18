@@ -13,11 +13,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 import frc.robot.Robot;
 import frc.robot.Util;
+import frc.robot.commands.lift.HoldLift;
 
 public class Lift extends Subsystem {
 
 	private static final double EXCLUSION_MIN = 0.03;
 	private static final double EXCLUSION_MAX = 0.97;
+	private double minSpeedUp = .35;
+	private double minSpeedDown = -.15;
 
 	// private static final double EXCLUSION_MIN = 0.2;
 	// private static final double EXCLUSION_MAX = 1.1;
@@ -25,7 +28,7 @@ public class Lift extends Subsystem {
 	// private static final double ENCODER_MIN_TICK_COUNT = -20_000;
 
     // private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: determine experimentally
-    private static final double DEADBAND = 0.04;
+    private static final double DEADBAND = 0.02;
 	
     private Encoder liftEncoder; 
     private SpeedController liftMotor; 
@@ -35,12 +38,16 @@ public class Lift extends Subsystem {
         liftMotor = Robot.robotMap.liftMotor;
 	}
 
+	public void rawSet(double input) {
+		liftMotor.set(input); // no holds barred
+	}
+
 	public void set(double input) { 
 	
-		System.out.println(input);
 		if ((input < 0 && currentPosition() > EXCLUSION_MIN) || (input > 0 && currentPosition() < EXCLUSION_MAX)) {
 			liftMotor.set(input);
-		} else {
+		} 
+		else {
 			liftMotor.set(0);
 		}
 	}
@@ -56,10 +63,18 @@ public class Lift extends Subsystem {
 		double input;
 		if (isAtTargetPosition(targetPosition)) {
 			input = 0;
-		} else {
+		} 
+		else if (distance <= 0 && (distance > minSpeedDown)){
+				input = minSpeedDown;
+		}
+		else if (distance > 0 && (distance < minSpeedUp)){
+				input = minSpeedUp;
+		}
+		else {
 			input = distance;
 		}
 
+		System.out.println(input);
 		set(input);
 	}
 
@@ -73,5 +88,7 @@ public class Lift extends Subsystem {
 	}
 
     @Override
-    public void initDefaultCommand() {}
+    public void initDefaultCommand() {
+		setDefaultCommand(new HoldLift());
+	}
 }
