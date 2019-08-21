@@ -69,7 +69,7 @@ public class OI {
 				return xBox.getPOV() == 90;
 			}
 		};
-		povRight.whenActive(new SetWristAngle(62));
+		povRight.whenActive(new SetWristAngle(56));
 		povRight.whenActive(new SetLiftPosition(0));
 //
 //
@@ -114,15 +114,15 @@ public class OI {
 		return applyDeadband(wheel.getX(), TURN_DEADBAND);
 	}
 
-	public double getLiftJoystickValue() {
-		double value = -xBox.getY(Hand.kRight);
-		return applyDeadband(value, LIFT_DEADBAND);
+	public double getRawLiftJoystick() {
+		return -xBox.getY(Hand.kRight);
 	}
 
 	public double getWristJoystickValue() {
 		double value = xBox.getY(Hand.kLeft);
 		return applyDeadband(value, WRIST_DEADBAND);
 	}
+
 
 	/**
      * Returns 0.0 if the given value is within the specified range around zero. The remaining range
@@ -131,7 +131,7 @@ public class OI {
      * @param value    value to clip
      * @param deadband range around zero
      */
-    private static double applyDeadband(double value, double deadband) {
+    public static double applyDeadband(double value, double deadband) {
         if (Math.abs(value) > deadband) {
             if (value > 0.0) {
                 return (value - deadband) / (1.0 - deadband);

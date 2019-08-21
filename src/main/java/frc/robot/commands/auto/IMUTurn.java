@@ -16,7 +16,7 @@ public class IMUTurn extends Command {
 
    private static final double DEADBAND = 1.0; // degrees
 
-   private static final double ABSOLUTE_TURN_SPEED = 0.35;
+   private static final double ABSOLUTE_TURN_SPEED = 0.5;
 
    private DriveSystem driveSystem;
 

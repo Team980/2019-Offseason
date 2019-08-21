@@ -7,20 +7,22 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.Util;
 import frc.robot.commands.lift.HoldLift;
 
 public class Lift extends Subsystem {
 
+	private static final double MAX_LIFT_VELOCITY = 100; // TODO: determine
+
 	private static final double EXCLUSION_MIN = 0.03;
 	private static final double EXCLUSION_MAX = 0.97;
-	private double minSpeedUp = .35;
-	private double minSpeedDown = -.15;
+
+	private static double TOLERANCE = 15; // 0 - 100
 
 	// private static final double EXCLUSION_MIN = 0.2;
 	// private static final double EXCLUSION_MAX = 1.1;
@@ -31,25 +33,32 @@ public class Lift extends Subsystem {
     private static final double DEADBAND = 0.02;
 	
     private Encoder liftEncoder; 
-    private SpeedController liftMotor; 
+    private SpeedController liftMotor;
+
+    private PIDController pidController;
 
 	public Lift()  {
         liftEncoder = Robot.robotMap.liftEncoder;
         liftMotor = Robot.robotMap.liftMotor;
+
+
+		pidController = new PIDController(1, 1, 1, liftEncoder, liftMotor); // TODO: include pid constants
+		pidController.setPercentTolerance(TOLERANCE);
+		pidController.setName("lift pid controller");
+
+		pidController.enable();
 	}
 
-	public void rawSet(double input) {
-		liftMotor.set(input); // no holds barred
-	}
-
-	public void set(double input) { 
-	
-		if ((input < 0 && currentPosition() > EXCLUSION_MIN) || (input > 0 && currentPosition() < EXCLUSION_MAX)) {
-			liftMotor.set(input);
-		} 
-		else {
-			liftMotor.set(0);
+	private void setVelocity(double velocity) {
+		double newSetPoint;
+		if ((velocity < 0 && currentPosition() > EXCLUSION_MIN) || (velocity > 0 && currentPosition() < EXCLUSION_MAX)) {
+			newSetPoint = velocity;
+		} else {
+			newSetPoint = 0;
 		}
+
+		Robot.debugTable.getEntry("lift target velocity").setNumber(newSetPoint);
+		pidController.setSetpoint(newSetPoint);
 	}
 
 	public boolean isAtTargetPosition(double targetPosition) {
@@ -60,22 +69,14 @@ public class Lift extends Subsystem {
 	public void moveTowards(double targetPosition) {
 		double distance = targetPosition - currentPosition();
 
-		double input;
-		if (isAtTargetPosition(targetPosition)) {
-			input = 0;
-		} 
-		else if (distance <= 0 && (distance > minSpeedDown)){
-				input = minSpeedDown;
-		}
-		else if (distance > 0 && (distance < minSpeedUp)){
-				input = minSpeedUp;
-		}
-		else {
-			input = distance;
-		}
+		setVelocity(distance); // TODO: translate distance to velocity
+	}
 
-		System.out.println(input);
-		set(input);
+	public void manualSet(double joystickValue) {
+		// joystick values are -1..0..1
+		double deadbinded = OI.applyDeadband(joystickValue, 0.1);
+		double velocity = Util.map(deadbinded, -1, 1, -MAX_LIFT_VELOCITY, MAX_LIFT_VELOCITY);
+		setVelocity(velocity);
 	}
 
 

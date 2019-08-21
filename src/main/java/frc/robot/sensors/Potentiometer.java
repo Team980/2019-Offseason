@@ -1,9 +1,11 @@
 package frc.robot.sensors;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import frc.robot.Util;
 
-public class Potentiometer {
+public class Potentiometer implements PIDSource {
 
     private AnalogInput analogInput;
 
@@ -14,9 +16,26 @@ public class Potentiometer {
         analogInput = new AnalogInput(channel);
     }
 
-    public double getAngle() { 
-        double rawOut = analogInput.getVoltage(); 
+    public double getAngle() {
+        return voltageToAngle(analogInput.getVoltage());
+    }
 
-        return Util.map(rawOut, MIN_VOLTAGE, MAX_VOLTAGE, 0, 360);
+    private static double voltageToAngle(double voltage) {
+        return Util.map(voltage, MIN_VOLTAGE, MAX_VOLTAGE, 0, 360);
+    }
+
+    @Override
+    public void setPIDSourceType(PIDSourceType pidType) {
+        analogInput.setPIDSourceType(pidType);
+    }
+
+    @Override
+    public PIDSourceType getPIDSourceType() {
+        return analogInput.getPIDSourceType();
+    }
+
+    @Override
+    public double pidGet() {
+        return voltageToAngle(analogInput.pidGet());
     }
 }

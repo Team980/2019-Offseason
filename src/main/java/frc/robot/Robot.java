@@ -40,11 +40,9 @@ public class Robot extends TimedRobot {
 
 	public static OI oi;
 
-	private SendableChooser<AutoChoice> autoChooser;
-
 	private AutoShift autoShiftCommand;
 
-	private NetworkTable debugTable;
+	public static NetworkTable debugTable;
 
 	@Override
   	public void robotInit() {
@@ -72,7 +70,7 @@ public class Robot extends TimedRobot {
 		stopLiftAndWristManualControl.cancelWhenPressed(wristControlCommand);
 
 		// shuffleboard
-		autoChooser = new SendableChooser<>();
+		SendableChooser<AutoChoice> autoChooser = new SendableChooser<>();
 		autoChooser.setName("Choose Autonomous");
 
 		autoChooser.setDefaultOption(AutoChoice.CARGO_SHIP_AUTO.descriptor, AutoChoice.CARGO_SHIP_AUTO);
