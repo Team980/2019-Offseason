@@ -23,10 +23,10 @@ public class AutoShift extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (driveSystem.getLeftSpeed() > 4.5 || driveSystem.getRightSpeed() > 4.5) {
+		if (Math.abs(driveSystem.getLeftSpeed()) > 4.5 || Math.abs(driveSystem.getRightSpeed()) > 4.5) {
 			driveSystem.setGear(Gear.HIGH);
 
-		} else if (driveSystem.getLeftSpeed() < 3.75 && driveSystem.getRightSpeed() < 3.75) {
+		} else if (Math.abs(driveSystem.getLeftSpeed()) < 3.75 && Math.abs(driveSystem.getRightSpeed()) < 3.75) {
 			driveSystem.setGear(Gear.LOW);
 		}
 	}

@@ -59,7 +59,6 @@ public class Wrist extends Subsystem {
         double input = 1.5 * difference / 260 ; // figure out which velocity we want to be
 
 		if (isAtTargetAngle(targetAngle) /*|| isInExclusionZone()*/) {
-			System.out.println("should be stopped");
 			input = 0;
 		} else if (targetAngle > 270 && Math.abs(difference) < 30) { // TODO: hack until pid
 			input = 0.6;

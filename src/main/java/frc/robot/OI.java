@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
 import frc.robot.commands.configuration.BattleConfiguration;
 import frc.robot.commands.configuration.CargoScoreConfiguration;
 import frc.robot.commands.drive.StopDriveTrain;
+import frc.robot.commands.drive.TrophyTruckDeploy;
+import frc.robot.commands.drive.TrophyTruckRetract;
 import frc.robot.commands.lift.IncrementLiftPosition;
 import frc.robot.commands.lift.SetLiftPosition;
 import frc.robot.commands.wrist.SetWristAngle;
@@ -69,8 +71,27 @@ public class OI {
 				return xBox.getPOV() == 90;
 			}
 		};
-		povRight.whenActive(new SetWristAngle(62));
+		povRight.whenActive(new SetWristAngle(56));
 		povRight.whenActive(new SetLiftPosition(0));
+
+
+		Trigger povUp = new Trigger() { // trophy truck retract
+			@Override
+			public boolean get() {
+				return xBox.getPOV() == 0; // top pov
+			}
+		};
+		povUp.whenActive(new TrophyTruckRetract());
+
+
+		Trigger povDown = new Trigger() { // trophy truck deploy
+			@Override
+			public boolean get() {
+				return xBox.getPOV() == 180; // bottom pov
+			}
+		};
+		povDown.whenActive(new TrophyTruckDeploy());
+		
 //
 //
 //		Trigger povUp = new Trigger() { // rocket mid hatch

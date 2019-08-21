@@ -45,6 +45,8 @@ public class RobotMap {
 	PigeonIMU imu;
 	public Limelight limelight;
 
+	public Solenoid trophyTruckSolenoid;
+
 	RobotMap() {
 		// drive stuff
 		var leftFront = new WPI_TalonSRX(1);
@@ -84,5 +86,7 @@ public class RobotMap {
 		// sensors
 		imu = new PigeonIMU(0);
 		limelight = new Limelight();
+
+		trophyTruckSolenoid = new Solenoid(2);
 	}
 }

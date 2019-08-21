@@ -79,6 +79,10 @@ public class Lift extends Subsystem {
 	}
 
 
+	public double getSpeed() {
+		return liftEncoder.getRate();
+	}
+
 	public double currentPosition() {
 		return Util.map(liftEncoder.getRaw(), -20_000, 0, 0, 1);
 	} 

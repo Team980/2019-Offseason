@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
 
 	private AutoShift autoShiftCommand;
 
-	private NetworkTable debugTable;
+	public static NetworkTable debugTable;
 
 	@Override
   	public void robotInit() {
@@ -108,8 +108,7 @@ public class Robot extends TimedRobot {
   		// if (autoChoice == null) {
 		// 	autoChoice = AutoChoice.CARGO_SHIP_AUTO; // default value
 		// }
-		AutoChoice autoChoice = AutoChoice.CROSS_HAB_AUTO; // default value
-
+		AutoChoice autoChoice = AutoChoice.CARGO_SHIP_AUTO; // default value
 		Command autoCommand = autoChoice.command;
   		autoCommand.start();
   	}

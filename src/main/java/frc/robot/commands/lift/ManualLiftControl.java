@@ -27,6 +27,7 @@ public class ManualLiftControl extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+        Robot.debugTable.getEntry("lift control speed").setNumber(lift.getSpeed());
         lift.rawSet(oi.getLiftJoystickValue());
         //lift.set(oi.getLiftJoystickValue()); TODO: add back in soft stops
     }
