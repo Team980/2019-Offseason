@@ -30,15 +30,15 @@ public class Wrist extends Subsystem {
     private Potentiometer wristPotentiometer;
 
 	public Wrist()  {
-        wristPotentiometer = Robot.robotMap.wristPotentiometer;
-        wristMotor = Robot.robotMap.wristMotor;
+//        wristPotentiometer = Robot.robotMap.wristPotentiometer; UNDO
+//        wristMotor = Robot.robotMap.wristMotor; UNDO
 	}
 
 	public void rawSet(double input) {
 		wristMotor.set(input);
 	}
 
-	public void set(double input) {
+	private void set(double input) {
 		if ((input < 0 && currentAngle() > MINIMUM_ANGLE) || (input > 0 && currentAngle() < MAXIMUM_ANGLE)) {
 			wristMotor.set(input);
 		} // the softstop check needs to be here where the motor is running, this way both manual and automation use the soft stop protection

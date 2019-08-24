@@ -41,59 +41,63 @@ public class OI {
 
 		// configurations
 
-		JoystickButton stopAuto = new JoystickButton(throttle, 7);
-		stopAuto.whenPressed(new StopDriveTrain());
+		// UNDO add all of this back
+// 		JoystickButton stopAuto = new JoystickButton(throttle, 7);
+// 		stopAuto.whenPressed(new StopDriveTrain());
 		
 		JoystickButton aButton = new JoystickButton(xBox, 1); // ball floor pickup
-		aButton.whenPressed(new SetWristAngle(200));
-		aButton.whenPressed(new SetLiftPosition(0)); 
+		//aButton.whenPressed(new SetWristAngle(200));
+		//aButton.whenPressed(new SetLiftPosition(0)); 
+		aButton.whenPressed(new SetLiftPosition(0.20)); 
+
 
 		JoystickButton bButton = new JoystickButton(xBox, 2); // low ball score
-		bButton.whenPressed(new SetWristAngle(124.5));
-		bButton.whenPressed(new SetLiftPosition(0.03));
+		//bButton.whenPressed(new SetWristAngle(124.5));
+		//bButton.whenPressed(new SetLiftPosition(0.03));
+		bButton.whenPressed(new SetLiftPosition(0.80));
 
 
-		JoystickButton xButton = new JoystickButton(xBox, 3); // cargo ship dump
-		xButton.whenPressed(new SetWristAngle(120.2)); // used to be 140.2
-		xButton.whenPressed(new SetLiftPosition(0.96));
+// 		JoystickButton xButton = new JoystickButton(xBox, 3); // cargo ship dump
+// 		xButton.whenPressed(new SetWristAngle(120.2)); // used to be 140.2
+// 		xButton.whenPressed(new SetLiftPosition(0.96));
 
 
-		JoystickButton yButton = new JoystickButton(xBox, 4); // mid ball score 
-		yButton.whenPressed(new SetWristAngle(101.337)); 
- 		yButton.whenPressed(new SetLiftPosition(0.9731));
+// 		JoystickButton yButton = new JoystickButton(xBox, 4); // mid ball score 
+// 		yButton.whenPressed(new SetWristAngle(101.337)); 
+//  		yButton.whenPressed(new SetLiftPosition(0.9731));
 
 
-		Trigger povRight = new Trigger() { // low hatch 
-			@Override
-			public boolean get() {
-				return xBox.getPOV() == 90;
-			}
-		};
-		povRight.whenActive(new SetWristAngle(56));
-		povRight.whenActive(new SetLiftPosition(0));
-//
-//
-//		Trigger povUp = new Trigger() { // rocket mid hatch
-//			@Override
-//			public boolean get() {
-//				return xBox.getPOV() == 0;
-//			}
-//		};
-//		povUp.whenActive(new SetWristAngle(23));
-//		povUp.whenActive(new SetLiftPosition(0.35));
+// 		Trigger povRight = new Trigger() { // low hatch 
+// 			@Override
+// 			public boolean get() {
+// 				return xBox.getPOV() == 90;
+// 			}
+// 		};
+// 		povRight.whenActive(new SetWristAngle(56));
+// 		povRight.whenActive(new SetLiftPosition(0));
+// //
+// //
+// //		Trigger povUp = new Trigger() { // rocket mid hatch
+// //			@Override
+// //			public boolean get() {
+// //				return xBox.getPOV() == 0;
+// //			}
+// //		};
+// //		povUp.whenActive(new SetWristAngle(23));
+// //		povUp.whenActive(new SetLiftPosition(0.35));
 
 
-		JoystickButton leftThumb = new JoystickButton(xBox, 9); // battle configuration
-		leftThumb.whenPressed(new SetWristAngle(287));
-		leftThumb.whenPressed(new SetLiftPosition(0.97));
+// 		JoystickButton leftThumb = new JoystickButton(xBox, 9); // battle configuration
+// 		leftThumb.whenPressed(new SetWristAngle(287));
+// 		leftThumb.whenPressed(new SetLiftPosition(0.97));
 
 
-		// snag & release hatch
-		JoystickButton leftBumper = new JoystickButton(xBox, 5); // snag hatch
-		leftBumper.whenPressed(new IncrementLiftPosition(0.285));
+// 		// snag & release hatch
+// 		JoystickButton leftBumper = new JoystickButton(xBox, 5); // snag hatch
+// 		leftBumper.whenPressed(new IncrementLiftPosition(0.285));
 
-		JoystickButton rightBumper = new JoystickButton(xBox, 6); // spit out hatch
-		rightBumper.whenPressed(new IncrementLiftPosition(-0.285));
+// 		JoystickButton rightBumper = new JoystickButton(xBox, 6); // spit out hatch
+// 		rightBumper.whenPressed(new IncrementLiftPosition(-0.285));
 
 		
 	}

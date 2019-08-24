@@ -49,9 +49,9 @@ public class Robot extends TimedRobot {
 		robotMap = new RobotMap();
 
 		driveSystem = new DriveSystem();
-		endEffector = new EndEffector();
+//		endEffector = new EndEffector(); UNDO
 		lift = new Lift();
-		wrist = new Wrist();
+//		wrist = new Wrist(); UNDO
 
 		oi = new OI();
 		robotMap.liftEncoder.reset();
@@ -59,15 +59,15 @@ public class Robot extends TimedRobot {
 		// default commands
 		
 		
-		ManualLiftControl liftControlCommand = new ManualLiftControl();
-		ManualWristControl wristControlCommand = new ManualWristControl();
+		ManualLiftControl liftControlCommand = new ManualLiftControl(); // UNDO uncomment
+		// ManualWristControl wristControlCommand = new ManualWristControl();
 		JoystickButton startLiftAndWristManualControl = new JoystickButton(oi.xBox, 8); // start button
 		startLiftAndWristManualControl.whenPressed(liftControlCommand);
-		startLiftAndWristManualControl.whenPressed(wristControlCommand);
+		// startLiftAndWristManualControl.whenPressed(wristControlCommand);
 
 		JoystickButton stopLiftAndWristManualControl = new JoystickButton(oi.xBox, 7); // back button
 		stopLiftAndWristManualControl.cancelWhenPressed(liftControlCommand);
-		stopLiftAndWristManualControl.cancelWhenPressed(wristControlCommand);
+		// stopLiftAndWristManualControl.cancelWhenPressed(wristControlCommand);
 
 		// shuffleboard
 		SendableChooser<AutoChoice> autoChooser = new SendableChooser<>();
@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
   	public void robotPeriodic() {
 		robotMap.imu.getYawPitchRoll(ypr);
 		
-		debugTable.getEntry("wrist angle").setNumber(wrist.currentAngle());
+		//debugTable.getEntry("wrist angle").setNumber(wrist.currentAngle()); UNDO
 		debugTable.getEntry("lift scaled height").setNumber(lift.currentPosition());
 		debugTable.getEntry("lift encoder ticks").setNumber(robotMap.liftEncoder.getRaw());
 		debugTable.getEntry("yaw").setNumber(ypr[0]);
@@ -143,9 +143,9 @@ public class Robot extends TimedRobot {
 		}
 
 		driveSystem.stopMotors();
-		endEffector.stopMotors();
+		//endEffector.stopMotors(); UNDO
 		lift.stopMotors();
-		wrist.stopMotors();
+		//wrist.stopMotors();
 	}
 
   	@Override

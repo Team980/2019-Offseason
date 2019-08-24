@@ -8,7 +8,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
@@ -17,18 +20,33 @@ public class DriveSystem extends Subsystem {
 	
 	private DifferentialDrive differentialDrive;
 
+	private SpeedController leftDrive;
+	private SpeedController rightDrive;
+
 	private Encoder leftEncoder; 
 	private Encoder rightEncoder; 
 
 	private Solenoid shifterSolenoid;
 
-	public DriveSystem() {
-		differentialDrive = new DifferentialDrive(Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
-	
-		leftEncoder = Robot.robotMap.leftDriveEncoder; 
-		rightEncoder = Robot.robotMap.rightDriveEncoder;
+	PIDController leftPidController;
+	PIDController rightPidController;
+
+	public DriveSystem() {	
+		leftDrive = Robot.robotMap.leftDrive;
+		rightDrive = Robot.robotMap.rightDrive;
+
+		differentialDrive = new DifferentialDrive(leftDrive, rightDrive);
 		
 		shifterSolenoid = Robot.robotMap.shifter;
+
+		leftEncoder = Robot.robotMap.leftDriveEncoder; 
+		rightEncoder = Robot.robotMap.rightDriveEncoder;
+
+		leftEncoder.setPIDSourceType(PIDSourceType.kRate);
+		rightEncoder.setPIDSourceType(PIDSourceType.kRate);
+
+		leftPidController = new PIDController(0.0001, 0, 0, leftEncoder, leftDrive);
+		rightPidController = new PIDController(0.0001, 0, 0, rightEncoder, rightDrive);
 	}
 
 	@Override
@@ -36,6 +54,26 @@ public class DriveSystem extends Subsystem {
 
 	public void driveRobot(double move, double turn) {
 		differentialDrive.arcadeDrive(move, turn);
+	}
+
+	public void velocityControlDriveForward(double targetDistance) {
+		double currentLeftDistance = leftEncoder.getDistance();
+		double currentRightDistance = rightEncoder.getDistance();
+	
+		//double speed = Util.map(currentLeftDistance, 0, targetDistance, 0, 1);
+
+		double speed = (targetDistance - currentLeftDistance) / targetDistance;
+
+		//double speed = currentLeftDistance / targetDistance;
+
+		// double distanceToMove = currentLeftDistance - targetDistance;
+		
+		// double speed = (distanceToMove - currentLeftDistance) / distanceToMove;
+	
+		//double alsoSpeed = Util.map(currentLeftDistance, leftDriveStartDistance, leftDriveStartDistance+distance, 0, 1);
+	
+		leftPidController.setSetpoint(speed);
+		rightPidController.setSetpoint(speed);
 	}
 
 	public double getLeftDistance() {

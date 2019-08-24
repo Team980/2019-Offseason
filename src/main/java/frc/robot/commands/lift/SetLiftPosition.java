@@ -25,6 +25,11 @@ public class SetLiftPosition extends Command {
 		requires(lift);
 	}
 
+	// @Override
+	// protected void initialize() {
+	// 	lift.setPidPosition(targetPosition);
+	// }
+
 	@Override
 	protected void execute() {
 		lift.moveTowards(targetPosition);

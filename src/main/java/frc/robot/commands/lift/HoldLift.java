@@ -15,7 +15,7 @@ public class HoldLift extends Command {
 
 	private Lift lift;
 
-	private double targetPosition;
+	//private double targetPosition;
 
 	public HoldLift() {
 		lift = Robot.lift;
@@ -24,12 +24,13 @@ public class HoldLift extends Command {
 
 	@Override
 	protected void initialize() {
-		targetPosition = lift.currentPosition();
+		//targetPosition = lift.currentPosition();
 	}
 
 	@Override
 	protected void execute() {
-		lift.moveTowards(targetPosition);
+		lift.hold();
+		//lift.moveTowards(targetPosition);
 	}
 
 	@Override

@@ -17,20 +17,20 @@ import frc.robot.commands.lift.HoldLift;
 
 public class Lift extends Subsystem {
 
-	private static final double MAX_LIFT_VELOCITY = 100; // TODO: determine
+	private static final double MAX_LIFT_VELOCITY = 14_000; // UNDO: determine experimentally
 
 	private static final double EXCLUSION_MIN = 0.03;
 	private static final double EXCLUSION_MAX = 0.97;
 
-	private static double TOLERANCE = 15; // 0 - 100
+	private static final double TOLERANCE = 10; // 0 - 100
 
 	// private static final double EXCLUSION_MIN = 0.2;
 	// private static final double EXCLUSION_MAX = 1.1;
 
-	// private static final double ENCODER_MIN_TICK_COUNT = -20_000;
+	private static final double ENCODER_MIN_TICK_COUNT = 0; // UNDO changed min and max
+	private static final double ENCODER_MAX_TICK_COUNT = 190_000; // UNDO
 
-    // private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: determine experimentally
-    private static final double DEADBAND = 0.02;
+    private static final double DEADBAND = 0.01;
 	
     private Encoder liftEncoder; 
     private SpeedController liftMotor;
@@ -42,7 +42,13 @@ public class Lift extends Subsystem {
         liftMotor = Robot.robotMap.liftMotor;
 
 
-		pidController = new PIDController(1, 1, 1, liftEncoder, liftMotor); // TODO: include pid constants
+		liftEncoder.setPIDSourceType(PIDSourceType.kRate);
+
+		// good value
+		// coast p=0.000004
+		// overly sharp p=0.0001
+		// sharp - 
+		pidController = new PIDController(0.0001, 0, 0, liftEncoder, liftMotor); 
 		pidController.setPercentTolerance(TOLERANCE);
 		pidController.setName("lift pid controller");
 
@@ -58,18 +64,51 @@ public class Lift extends Subsystem {
 		}
 
 		Robot.debugTable.getEntry("lift target velocity").setNumber(newSetPoint);
+		Robot.debugTable.getEntry("lift encoder speed").setNumber(liftEncoder.getRate());
+
+		//liftEncoder.setPIDSourceType(PIDSourceType.kRate);
 		pidController.setSetpoint(newSetPoint);
 	}
+
+	
 
 	public boolean isAtTargetPosition(double targetPosition) {
 		double distance = Math.abs(targetPosition - currentPosition());
 		return distance < DEADBAND;
 	}
 
+	public void setPosition(double scaledPosition) {
+		double encoderTicks = Util.map(scaledPosition, 0, 1, ENCODER_MIN_TICK_COUNT, ENCODER_MAX_TICK_COUNT);
+		
+		liftEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+		pidController.setSetpoint(encoderTicks);
+	}
+
+	public void hold() {
+		setVelocity(0);
+	}
+
 	public void moveTowards(double targetPosition) {
 		double distance = targetPosition - currentPosition();
+		//double velocity = MAX_LIFT_VELOCITY * Math.signum(distance);
+		
+		double power = distance;
 
-		setVelocity(distance); // TODO: translate distance to velocity
+	
+		double MIN_POWER = 1;
+		if (Math.abs(power) < MIN_POWER) {
+			setVelocity(Math.copySign(MIN_POWER, power)*MAX_LIFT_VELOCITY);
+			//power = ;
+		} else {
+			setVelocity(2*power*MAX_LIFT_VELOCITY);
+		}
+
+
+		// double velocity = power * MAX_LIFT_VELOCITY;
+		// //double velocity = 2*Util.map(power, -1, 1, -MAX_LIFT_VELOCITY, MAX_LIFT_VELOCITY);
+
+
+		// setVelocity(velocity); 
 	}
 
 	public void manualSet(double joystickValue) {
@@ -81,7 +120,7 @@ public class Lift extends Subsystem {
 
 
 	public double currentPosition() {
-		return Util.map(liftEncoder.getRaw(), -20_000, 0, 0, 1);
+		return Util.map(liftEncoder.getRaw(), ENCODER_MIN_TICK_COUNT, ENCODER_MAX_TICK_COUNT, 0, 1);
 	} 
 
 	public void stopMotors() {
