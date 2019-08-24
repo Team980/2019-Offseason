@@ -45,8 +45,13 @@ public class DriveSystem extends Subsystem {
 		leftEncoder.setPIDSourceType(PIDSourceType.kRate);
 		rightEncoder.setPIDSourceType(PIDSourceType.kRate);
 
-		leftPidController = new PIDController(0.0001, 0, 0, leftEncoder, leftDrive);
-		rightPidController = new PIDController(0.0001, 0, 0, rightEncoder, rightDrive);
+		leftPidController = new PIDController(0.06, 0, 0, leftEncoder, leftDrive);
+		rightPidController = new PIDController(0.06, 0, 0, rightEncoder, rightDrive);
+	}
+
+	public void enablePID(boolean enabled) {
+		leftPidController.setEnabled(enabled);
+		rightPidController.setEnabled(enabled);
 	}
 
 	@Override
@@ -55,6 +60,7 @@ public class DriveSystem extends Subsystem {
 	public void driveRobot(double move, double turn) {
 		differentialDrive.arcadeDrive(move, turn);
 	}
+
 
 	public void velocityControlDriveForward(double targetDistance) {
 		double currentLeftDistance = leftEncoder.getDistance();
@@ -72,8 +78,19 @@ public class DriveSystem extends Subsystem {
 	
 		//double alsoSpeed = Util.map(currentLeftDistance, leftDriveStartDistance, leftDriveStartDistance+distance, 0, 1);
 	
+
+		System.out.println(speed);
+		// leftDrive.set(speed);
+		// rightDrive.set(-speed);
+
+		
+		Robot.debugTable.getEntry("left pid").setNumber(leftEncoder.pidGet());
+		Robot.debugTable.getEntry("right pid").setNumber(rightEncoder.pidGet());
+		
 		leftPidController.setSetpoint(speed);
-		rightPidController.setSetpoint(speed);
+		rightPidController.setSetpoint(-speed);
+
+
 	}
 
 	public double getLeftDistance() {

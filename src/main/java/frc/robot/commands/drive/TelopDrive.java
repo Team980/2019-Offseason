@@ -26,6 +26,7 @@ public class TelopDrive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		Robot.debugTable.getEntry("drive speed").setNumber(Robot.robotMap.leftDriveEncoder.pidGet());
 		driveSystem.driveRobot(oi.getMove(), oi.getTurn());
 	}
 

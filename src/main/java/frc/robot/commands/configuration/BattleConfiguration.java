@@ -12,3 +12,5 @@ public class BattleConfiguration extends CommandGroup {
         addParallel(new SetWristAngle(100)); // pointing down
     }
 }
+
+

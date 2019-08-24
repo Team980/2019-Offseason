@@ -10,14 +10,18 @@ package frc.robot.auto;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.auto.DriveUntilLevelSurface;
 import frc.robot.commands.auto.TimedDrive;
+import frc.robot.commands.auto.VelocityControlDriveForward;
+
 
 public class CargoShipAuto extends CommandGroup {
   
   public CargoShipAuto() {
 
-    addSequential(new TimedDrive(1.0, 0.5));
+    addSequential(new VelocityControlDriveForward(5));
 
-    addSequential((new DriveUntilLevelSurface(0.5)));
+    // addSequential(new TimedDrive(1.0, 0.5));
+
+    // addSequential((new DriveUntilLevelSurface(0.5)));
 
 
 

@@ -15,24 +15,10 @@ import frc.robot.Robot;
 public class VelocityControlDriveForward extends Command {
 
 
-  PIDController leftPidController;
-  PIDController rightPidController;
-
   private double distance;
 
-  private double leftDriveStartDistance;
-  private double rightDriveStartDistance;
-
   public VelocityControlDriveForward(double distance) {
-    Robot.robotMap.leftDriveEncoder.setPIDSourceType(PIDSourceType.kRate);
-    Robot.robotMap.rightDriveEncoder.setPIDSourceType(PIDSourceType.kRate);
-
-    leftPidController = new PIDController(0.00001, 0, 0, Robot.robotMap.leftDriveEncoder, Robot.robotMap.rightDrive);
-    rightPidController = new PIDController(0.00001, 0, 0, Robot.robotMap.rightDriveEncoder, Robot.robotMap.leftDrive);
-
     this.distance = distance;
-    leftDriveStartDistance = Robot.robotMap.leftDriveEncoder.getDistance();
-    rightDriveStartDistance = Robot.robotMap.rightDriveEncoder.getDistance();
     
     requires(Robot.driveSystem);
   }
@@ -42,34 +28,32 @@ public class VelocityControlDriveForward extends Command {
   protected void initialize() {
     Robot.robotMap.leftDriveEncoder.reset(); // TODO: this is so painful
     Robot.robotMap.rightDriveEncoder.reset(); 
+
+    Robot.driveSystem.enablePID(true); //usotnaehuaoesnu haoe
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-  //   double currentLeftDistance = Robot.robotMap.leftDriveEncoder.getDistance();
-  //   double currentRightDistance = Robot.robotMap.rightDriveEncoder.getDistance();
-
-  //   double distanceToMove = currentLeftDistance - (leftDriveStartDistance+distance);
-    
-  //   double speed = (distanceToMove - currentLeftDistance) / distanceToMove;
-
-  //   //double alsoSpeed = Util.map(currentLeftDistance, leftDriveStartDistance, leftDriveStartDistance+distance, 0, 1);
-
-  //   leftPidController.setSetpoint(speed);
-  //   rightPidController.setSetpoint(speed);
+    Robot.driveSystem.velocityControlDriveForward(distance);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-
-    return false;
+    return Robot.driveSystem.getLeftDistance() > distance
+      || Robot.driveSystem.getRightDistance() > distance;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    //Robot.driveSystem.stopMotors();
+    Robot.driveSystem.enablePID(false);
+
+    Robot.driveSystem.driveRobot(0,0);
+
+    System.out.println("move forward stopped");
   }
 
   // Called when another command which requires one or more of the same

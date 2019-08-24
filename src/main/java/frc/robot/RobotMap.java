@@ -66,10 +66,13 @@ public class RobotMap {
 		leftDriveEncoder = new Encoder(7, 8, false, CounterBase.EncodingType.k4X); // UNDO
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
 		leftDriveEncoder.setDistancePerPulse(Util.TAU * (2.0 / 12) / 2048.0);
+		leftDriveEncoder.setName("left drive encoder");
 
 		rightDriveEncoder = new Encoder(4, 5, true, CounterBase.EncodingType.k4X); // UNDO: changed id's
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
 		rightDriveEncoder.setDistancePerPulse(Util.TAU * (2.0 / 12) / 2048.0);
+		rightDriveEncoder.setName("right drive encoder");
+		
 
 		shifter = new Solenoid(0); // FIXME: might be wrong
 
