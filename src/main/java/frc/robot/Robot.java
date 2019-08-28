@@ -10,7 +10,6 @@ package frc.robot;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -20,9 +19,7 @@ import frc.robot.auto.CrossHabAuto;
 import frc.robot.commands.drive.AutoShift;
 import frc.robot.commands.drive.TelopDrive;
 import frc.robot.commands.lift.HoldLift;
-import frc.robot.commands.lift.ManualLiftControl;
 import frc.robot.commands.wrist.HoldWrist;
-import frc.robot.commands.wrist.ManualWristControl;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.*;
 
@@ -56,18 +53,6 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		robotMap.liftEncoder.reset();
 
-		// default commands
-		
-		
-		ManualLiftControl liftControlCommand = new ManualLiftControl(); // UNDO uncomment
-		// ManualWristControl wristControlCommand = new ManualWristControl();
-		JoystickButton startLiftAndWristManualControl = new JoystickButton(oi.xBox, 8); // start button
-		startLiftAndWristManualControl.whenPressed(liftControlCommand);
-		// startLiftAndWristManualControl.whenPressed(wristControlCommand);
-
-		JoystickButton stopLiftAndWristManualControl = new JoystickButton(oi.xBox, 7); // back button
-		stopLiftAndWristManualControl.cancelWhenPressed(liftControlCommand);
-		// stopLiftAndWristManualControl.cancelWhenPressed(wristControlCommand);
 
 		// shuffleboard
 		SendableChooser<AutoChoice> autoChooser = new SendableChooser<>();

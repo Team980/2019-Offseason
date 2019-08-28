@@ -29,7 +29,7 @@ public class VelocityControlDriveForward extends Command {
     Robot.robotMap.leftDriveEncoder.reset(); // TODO: this is so painful
     Robot.robotMap.rightDriveEncoder.reset(); 
 
-    Robot.driveSystem.enablePID(true); //usotnaehuaoesnu haoe
+    //Robot.driveSystem.enablePID(true); //usotnaehuaoesnu haoe
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -49,16 +49,17 @@ public class VelocityControlDriveForward extends Command {
   @Override
   protected void end() {
     //Robot.driveSystem.stopMotors();
-    Robot.driveSystem.enablePID(false);
+    //Robot.driveSystem.enablePID(false);
 
     Robot.driveSystem.driveRobot(0,0);
 
-    System.out.println("move forward stopped");
+    //System.out.println("move forward stopped");
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.driveSystem.driveRobot(0,0);
   }
 }

@@ -8,8 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDSourceType;
+//import edu.wpi.first.wpilibj.PIDController;
+//import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -28,8 +28,8 @@ public class DriveSystem extends Subsystem {
 
 	private Solenoid shifterSolenoid;
 
-	PIDController leftPidController;
-	PIDController rightPidController;
+//	PIDController leftPidController;
+//	PIDController rightPidController;
 
 	public DriveSystem() {	
 		leftDrive = Robot.robotMap.leftDrive;
@@ -42,17 +42,17 @@ public class DriveSystem extends Subsystem {
 		leftEncoder = Robot.robotMap.leftDriveEncoder; 
 		rightEncoder = Robot.robotMap.rightDriveEncoder;
 
-		leftEncoder.setPIDSourceType(PIDSourceType.kRate);
-		rightEncoder.setPIDSourceType(PIDSourceType.kRate);
+//		leftEncoder.setPIDSourceType(PIDSourceType.kRate);
+//		rightEncoder.setPIDSourceType(PIDSourceType.kRate);
 
-		leftPidController = new PIDController(0.06, 0, 0, leftEncoder, leftDrive);
-		rightPidController = new PIDController(0.06, 0, 0, rightEncoder, rightDrive);
+//		leftPidController = new PIDController(0.06, 0, 0, leftEncoder, leftDrive);
+//		rightPidController = new PIDController(0.06, 0, 0, rightEncoder, rightDrive);
 	}
 
-	public void enablePID(boolean enabled) {
+/*	public void enablePID(boolean enabled) {
 		leftPidController.setEnabled(enabled);
 		rightPidController.setEnabled(enabled);
-	}
+	}*/
 
 	@Override
 	public void initDefaultCommand() {}
@@ -62,33 +62,24 @@ public class DriveSystem extends Subsystem {
 	}
 
 
-	public void velocityControlDriveForward(double targetDistance) {
-		double currentLeftDistance = leftEncoder.getDistance();
-		double currentRightDistance = rightEncoder.getDistance();
-	
-		//double speed = Util.map(currentLeftDistance, 0, targetDistance, 0, 1);
-
-		double speed = (targetDistance - currentLeftDistance) / targetDistance;
-
-		//double speed = currentLeftDistance / targetDistance;
-
-		// double distanceToMove = currentLeftDistance - targetDistance;
-		
-		// double speed = (distanceToMove - currentLeftDistance) / distanceToMove;
-	
-		//double alsoSpeed = Util.map(currentLeftDistance, leftDriveStartDistance, leftDriveStartDistance+distance, 0, 1);
-	
-
-		System.out.println(speed);
-		// leftDrive.set(speed);
-		// rightDrive.set(-speed);
+	public void velocityControlDriveForward(double targetDistance) {//velocity control is disabled right now
+		double currentDistance;
+		if (leftEncoder.getDistance() > rightEncoder.getDistance()){
+			currentDistance = leftEncoder.getDistance();
+		}
+		else{
+			currentDistance = rightEncoder.getDistance();
+		}
+		double speed = (targetDistance - currentDistance) / targetDistance;
 
 		
-		Robot.debugTable.getEntry("left pid").setNumber(leftEncoder.pidGet());
-		Robot.debugTable.getEntry("right pid").setNumber(rightEncoder.pidGet());
+//		Robot.debugTable.getEntry("left pid").setNumber(leftEncoder.pidGet());
+//		Robot.debugTable.getEntry("right pid").setNumber(rightEncoder.pidGet());
 		
-		leftPidController.setSetpoint(speed);
-		rightPidController.setSetpoint(-speed);
+//		leftPidController.setSetpoint(speed);
+//		rightPidController.setSetpoint(-speed);
+
+		driveRobot(speed, 0);//running without pid velocity control
 
 
 	}

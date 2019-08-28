@@ -15,7 +15,9 @@ import frc.robot.commands.configuration.BattleConfiguration;
 import frc.robot.commands.configuration.CargoScoreConfiguration;
 import frc.robot.commands.drive.StopDriveTrain;
 import frc.robot.commands.lift.IncrementLiftPosition;
+import frc.robot.commands.lift.ManualLiftControl;
 import frc.robot.commands.lift.SetLiftPosition;
+import frc.robot.commands.wrist.ManualWristControl;
 import frc.robot.commands.wrist.SetWristAngle;
 
 /**
@@ -40,6 +42,13 @@ public class OI {
 		xBox = new XboxController(2);
 
 		// configurations
+		JoystickButton startLiftAndWristManualControl = new JoystickButton(xBox, 8); // start button
+		startLiftAndWristManualControl.whenPressed(new ManualLiftControl());
+		// startLiftAndWristManualControl.whenPressed(new ManualWristControl());// UNDO uncomment
+
+		JoystickButton stopLiftAndWristManualControl = new JoystickButton(xBox, 7); // back button
+		stopLiftAndWristManualControl.cancelWhenPressed(new ManualLiftControl());
+		// stopLiftAndWristManualControl.cancelWhenPressed(new ManualWristControl());
 
 		// UNDO add all of this back
 // 		JoystickButton stopAuto = new JoystickButton(throttle, 7);
