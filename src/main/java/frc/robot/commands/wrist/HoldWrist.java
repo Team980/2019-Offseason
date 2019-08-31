@@ -26,7 +26,7 @@ public class HoldWrist extends Command {
 	@Override
 	protected void initialize() {
 		targetPosition = wrist.currentAngle();
-		//System.out.println("hold command" + targetPosition);
+		Robot.debugTable.getEntry("wrist target").setNumber(targetPosition);
 	}
 
 	@Override

@@ -141,7 +141,7 @@ public class OI {
 	}
 
 	public double getWristJoystickValue() {
-		double value = xBox.getY(Hand.kLeft);
+		double value = -xBox.getY(Hand.kLeft);
 		return applyDeadband(value, WRIST_DEADBAND);
 	}
 

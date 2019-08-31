@@ -82,6 +82,7 @@ public class RobotMap {
 		// wrist
 		wristPotentiometer = new Potentiometer(0);
 		wristMotor = new WPI_TalonSRX(11);
+		wristMotor.setName("wrist contreller");
 
 		// sensors
 		imu = new PigeonIMU(0);

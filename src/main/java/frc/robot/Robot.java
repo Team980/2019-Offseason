@@ -87,13 +87,14 @@ public class Robot extends TimedRobot {
   	public void robotPeriodic() {
 		robotMap.imu.getYawPitchRoll(ypr);
 		
+		robotMap.wristPotentiometer.updateSpeed();
+
 		debugTable.getEntry("wrist angle").setNumber(wrist.currentAngle());
 		debugTable.getEntry("lift scaled height").setNumber(lift.currentPosition());
 		debugTable.getEntry("lift encoder ticks").setNumber(robotMap.liftEncoder.getRaw());
 		debugTable.getEntry("yaw").setNumber(ypr[0]);
 		debugTable.getEntry("pitch").setNumber(ypr[1]);
 		debugTable.getEntry("roll").setNumber(ypr[2]);
-
 
 		Scheduler.getInstance().run();
   	}
@@ -142,6 +143,9 @@ public class Robot extends TimedRobot {
 		if (autoShiftCommand != null) {
 			autoShiftCommand.cancel();
 		}
+
+
+		
 
 		driveSystem.stopMotors();
 		endEffector.stopMotors();

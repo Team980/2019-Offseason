@@ -24,10 +24,16 @@ public class ManualWristControl extends Command {
         requires(wrist);
     }
 
+    @Override
+    protected void initialize() {
+        wrist.setPidEnabled(false);
+    }
+
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        wrist.rawSet(-oi.getWristJoystickValue());
+        Robot.debugTable.getEntry("wrist speed").setNumber(wrist.getVelocity());
+        wrist.rawSet(oi.getWristJoystickValue());
         //wrist.set(-oi.getWristJoystickValue()); TODO: add back soft stops
     }
 
@@ -40,6 +46,7 @@ public class ManualWristControl extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
+        wrist.setPidEnabled(true);
         wrist.stopMotors();
     }
 }

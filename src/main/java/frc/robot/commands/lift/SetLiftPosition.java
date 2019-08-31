@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Lift;
 
-import frc.robot.Robot.oi;
-
 
 public class SetLiftPosition extends Command {
 
@@ -23,11 +21,8 @@ public class SetLiftPosition extends Command {
 	public SetLiftPosition(double targetPosition) {
 		this.targetPosition = targetPosition;
 
-		lift = Robot.lift;
-		
-		
-		lift.resetTarget(targetPosition);
-		//requires(lift);
+		lift = Robot.lift;		
+		requires(lift);
 	}
 
 	@Override
@@ -35,7 +30,7 @@ public class SetLiftPosition extends Command {
 		
 		
 				// stuff is in periodic on lift now
-		//lift.moveTowards(targetPosition);
+		lift.moveTowards(targetPosition);
 	}
 
 	@Override

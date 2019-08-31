@@ -33,48 +33,10 @@ public class Lift extends Subsystem {
     private Encoder liftEncoder; 
     private SpeedController liftMotor; 
 
-	// change
-	public double targetPosition;
-
-	@Override
-	public void periodic() { // change
-		double distance = targetPosition - currentPosition();
-
-		double input;
-		if (isAtTargetPosition(targetPosition)) {
-			input = 0;
-		} 
-		else if (distance <= 0 && (distance > minSpeedDown)){
-			input = minSpeedDown;
-		}
-		else if (distance > 0 && (distance < minSpeedUp)){
-			input = minSpeedUp;
-		}
-		else {
-			input = distance;
-		}
-
-		System.out.println(input);
-		set(input);
-	}
-
-	public void resetTarget(double newTarget) { // change
-		targetPosition = newTarget;
-		Robot.debugTable.getEntry("lift target").setNumber(targetPosition);
-	}
-
-	public void incrementTargetPosition(double increment) {
-		resetTarget(currentPosition()+increment);
-	}
-
 	public Lift()  {
         liftEncoder = Robot.robotMap.liftEncoder;
-		liftMotor = Robot.robotMap.liftMotor;
-		
-		resetTarget(currentPosition()); // change
+		liftMotor = Robot.robotMap.liftMotor;	
 	}
-
-
 
 	public void rawSet(double input) {
 		liftMotor.set(input); // no holds barred
