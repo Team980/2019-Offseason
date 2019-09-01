@@ -17,7 +17,9 @@ import frc.robot.commands.drive.StopDriveTrain;
 import frc.robot.commands.drive.TrophyTruckDeploy;
 import frc.robot.commands.drive.TrophyTruckRetract;
 import frc.robot.commands.lift.IncrementLiftPosition;
+import frc.robot.commands.lift.ManualLiftControl;
 import frc.robot.commands.lift.SetLiftPosition;
+import frc.robot.commands.wrist.ManualWristControl;
 import frc.robot.commands.wrist.SetWristAngle;
 
 /**
@@ -92,6 +94,14 @@ public class OI {
 		};
 		povDown.whenActive(new TrophyTruckDeploy());
 		
+		JoystickButton startLiftAndWristManualControl = new JoystickButton(xBox, 8); // start button
+		startLiftAndWristManualControl.whenPressed(new ManualLiftControl());
+		startLiftAndWristManualControl.whenPressed(new ManualWristControl());
+
+		JoystickButton stopLiftAndWristManualControl = new JoystickButton(xBox, 7); // back button
+		stopLiftAndWristManualControl.cancelWhenPressed(new ManualLiftControl());
+		stopLiftAndWristManualControl.cancelWhenPressed(new ManualWristControl());
+
 //
 //
 //		Trigger povUp = new Trigger() { // rocket mid hatch

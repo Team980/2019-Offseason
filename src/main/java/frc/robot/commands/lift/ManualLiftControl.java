@@ -50,6 +50,13 @@ public class ManualLiftControl extends Command {
         return false;
     }
 
+  	// Called when another command which requires one or more of the same
+  	// subsystems is scheduled to run
+  	@Override
+ 	protected void interrupted() {
+		lift.stopMotors();
+    }
+    
     // Called once after isFinished returns true
     @Override
     protected void end() {

@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.Robot;
 import frc.robot.sensors.Potentiometer;
+import frc.robot.commands.wrist.HoldWrist;
 
 //import frc.robot.Util;
-//import frc.robot.commands.wrist.HoldWrist;
 //import edu.wpi.first.wpilibj.PIDController;
 //import edu.wpi.first.wpilibj.PIDSourceType;
 
@@ -100,7 +100,7 @@ public class Wrist extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-        //setDefaultCommand(new HoldWrist());
+        setDefaultCommand(new HoldWrist());
     }
 
 	/*public void setPidEnabled(boolean enabled) {

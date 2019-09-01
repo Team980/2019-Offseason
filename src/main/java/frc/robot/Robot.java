@@ -61,16 +61,6 @@ public class Robot extends TimedRobot {
 		// default commands
 		
 		
-		ManualLiftControl liftControlCommand = new ManualLiftControl();
-		ManualWristControl wristControlCommand = new ManualWristControl();
-		JoystickButton startLiftAndWristManualControl = new JoystickButton(oi.xBox, 8); // start button
-		startLiftAndWristManualControl.whenPressed(liftControlCommand);
-		startLiftAndWristManualControl.whenPressed(wristControlCommand);
-
-		JoystickButton stopLiftAndWristManualControl = new JoystickButton(oi.xBox, 7); // back button
-		stopLiftAndWristManualControl.cancelWhenPressed(liftControlCommand);
-		stopLiftAndWristManualControl.cancelWhenPressed(wristControlCommand);
-
 		// shuffleboard
 		autoChooser = new SendableChooser<>();
 		autoChooser.setName("Choose Autonomous");

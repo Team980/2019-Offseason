@@ -87,7 +87,7 @@ public class Lift extends Subsystem {
 	} 
 
 	public void stopMotors() {
-		liftMotor.stopMotor();
+		liftMotor.set(0);
 	}
 
     @Override
