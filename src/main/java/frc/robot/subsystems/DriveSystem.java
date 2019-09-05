@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
+import frc.robot.commands.drive.TelopDrive;
 
 public class DriveSystem extends Subsystem {
 	
@@ -32,7 +33,9 @@ public class DriveSystem extends Subsystem {
 	}
 
 	@Override
-	public void initDefaultCommand() {}
+	public void initDefaultCommand() {
+		//setDefaultCommand(new TelopDrive());
+	}
 
 	public void driveRobot(double move, double turn) {
 		differentialDrive.arcadeDrive(move, turn);

@@ -15,7 +15,7 @@ import frc.robot.commands.auto.TimedDrive;
 public class CargoShipAuto extends CommandGroup {
   
   public CargoShipAuto() {
-    addSequential(new TimedDrive(0.75, 1));
-    addSequential(new IMUTurn(-30));
+    addSequential(new TimedDrive(1.5, 0.75));
+    //addSequential(new IMUTurn(-30));
   }
 }

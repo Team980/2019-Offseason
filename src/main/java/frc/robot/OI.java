@@ -28,7 +28,7 @@ import frc.robot.commands.wrist.SetWristAngle;
  */
 public class OI {
 
-	private Joystick throttle;
+	 Joystick throttle;
 	private Joystick wheel;
 	XboxController xBox;
 
@@ -94,13 +94,7 @@ public class OI {
 		};
 		povDown.whenActive(new TrophyTruckDeploy());
 		
-		JoystickButton startLiftAndWristManualControl = new JoystickButton(xBox, 8); // start button
-		startLiftAndWristManualControl.whenPressed(new ManualLiftControl());
-		startLiftAndWristManualControl.whenPressed(new ManualWristControl());
 
-		JoystickButton stopLiftAndWristManualControl = new JoystickButton(xBox, 7); // back button
-		stopLiftAndWristManualControl.cancelWhenPressed(new ManualLiftControl());
-		stopLiftAndWristManualControl.cancelWhenPressed(new ManualWristControl());
 
 //
 //

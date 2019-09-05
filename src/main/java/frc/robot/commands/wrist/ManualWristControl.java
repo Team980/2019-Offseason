@@ -32,7 +32,8 @@ public class ManualWristControl extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        wrist.rawSet(oi.getWristJoystickValue());
+        double input = oi.getWristJoystickValue();
+        wrist.rawSet(input);
         //Robot.debugTable.getEntry("wrist speed").setNumber(wrist.getVelocity());
         //wrist.set(-oi.getWristJoystickValue()); TODO: add back soft stops
     }

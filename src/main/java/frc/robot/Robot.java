@@ -12,6 +12,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,6 +26,7 @@ import frc.robot.commands.wrist.HoldWrist;
 import frc.robot.commands.wrist.ManualWristControl;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.DriveSystem.Gear;
 
 import java.util.Arrays;
 
@@ -45,6 +47,8 @@ public class Robot extends TimedRobot {
 	private AutoShift autoShiftCommand;
 
 	public static NetworkTable debugTable;
+
+
 
 	@Override
   	public void robotInit() {
@@ -71,6 +75,15 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData(autoChooser);
 
 		debugTable = NetworkTableInstance.getDefault().getTable("debug");
+
+		Command manualLiftCommand = new ManualLiftControl();
+		Command manualWristCommand = new ManualWristControl();
+		JoystickButton startLiftAndWristManualControl = new JoystickButton(oi.xBox, 8); // start button
+		startLiftAndWristManualControl.whenPressed(manualLiftCommand);
+		startLiftAndWristManualControl.whenPressed(manualWristCommand);
+		JoystickButton stopLiftAndWristManualControl = new JoystickButton(oi.xBox, 7); // back button
+		stopLiftAndWristManualControl.cancelWhenPressed(manualLiftCommand);
+		stopLiftAndWristManualControl.cancelWhenPressed(manualWristCommand);
 	}
 
   	@Override
@@ -92,9 +105,9 @@ public class Robot extends TimedRobot {
   	@Override
   	public void autonomousInit() {
 		// reset imu
-		robotMap.imu.setYaw(0);
+		// robotMap.imu.setYaw(0);
 
-		// // start up auto command
+		// start up auto command
   		// AutoChoice autoChoice = autoChooser.getSelected();
   		// if (autoChoice == null) {
 		// 	autoChoice = AutoChoice.CARGO_SHIP_AUTO; // default value
@@ -113,6 +126,14 @@ public class Robot extends TimedRobot {
 		// auto shifting
 		autoShiftCommand = new AutoShift(); // TODO: check if there is a better way to start & cancel this command
 		autoShiftCommand.start();
+
+		JoystickButton forceLow = new JoystickButton(oi.throttle, 1);
+		forceLow.whileActive(new InstantCommand(() -> {
+			autoShiftCommand.cancel();
+			driveSystem.setGear(Gear.LOW);
+		}));
+		forceLow.whenReleased(autoShiftCommand);
+
 
 		driveSystem.setDefaultCommand(new TelopDrive());
 	}
