@@ -55,9 +55,9 @@ public class Robot extends TimedRobot {
 		robotMap = new RobotMap();
 
 		driveSystem = new DriveSystem();
-		endEffector = new EndEffector();
+		//endEffector = new EndEffector();
 		lift = new Lift();
-		wrist = new Wrist();
+		//wrist = new Wrist();
 
 		oi = new OI();
 		robotMap.liftEncoder.reset();
@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
   	public void robotPeriodic() {
 		robotMap.imu.getYawPitchRoll(ypr);
 		
-		robotMap.wristPotentiometer.updateSpeed();
+		//robotMap.wristPotentiometer.updateSpeed(); UNDO
 
 		debugTable.getEntry("wrist angle").setNumber(wrist.currentAngle());
 		debugTable.getEntry("lift scaled height").setNumber(lift.currentPosition());

@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.drive;
+package frc.robot.commands.trophy_truck;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.InstantCommand;
@@ -20,7 +20,7 @@ public class TrophyTruckDeploy extends InstantCommand {
     public TrophyTruckDeploy() {
         super();
 
-        trophyTruckSolenoid = Robot.robotMap.trophyTruckSolenoid;
+        //trophyTruckSolenoid = Robot.robotMap.trophyTruckSolenoid; UNDO
     }
 
     // Called once when the command executes

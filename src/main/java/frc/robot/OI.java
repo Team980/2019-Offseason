@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
 import frc.robot.commands.configuration.BattleConfiguration;
 import frc.robot.commands.configuration.CargoScoreConfiguration;
 import frc.robot.commands.drive.StopDriveTrain;
-import frc.robot.commands.drive.TrophyTruckDeploy;
-import frc.robot.commands.drive.TrophyTruckRetract;
+import frc.robot.commands.trophy_truck.TrophyTruckRetract;
+import frc.robot.commands.trophy_truck.TrophyTruckDeploy;;
 import frc.robot.commands.lift.IncrementLiftPosition;
 import frc.robot.commands.lift.ManualLiftControl;
 import frc.robot.commands.lift.SetLiftPosition;
@@ -49,21 +49,21 @@ public class OI {
 		stopAuto.whenPressed(new StopDriveTrain());
 		
 		JoystickButton aButton = new JoystickButton(xBox, 1); // ball floor pickup
-		aButton.whenPressed(new SetWristAngle(200));
+		//aButton.whenPressed(new SetWristAngle(200)); UNDO
 		aButton.whenPressed(new SetLiftPosition(0)); 
 
 		JoystickButton bButton = new JoystickButton(xBox, 2); // low ball score
-		bButton.whenPressed(new SetWristAngle(124.5));
+		//bButton.whenPressed(new SetWristAngle(124.5)); UNDO
 		bButton.whenPressed(new SetLiftPosition(0.03));
 
 
 		JoystickButton xButton = new JoystickButton(xBox, 3); // cargo ship dump
-		xButton.whenPressed(new SetWristAngle(120.2)); // used to be 140.2
+		//xButton.whenPressed(new SetWristAngle(120.2)); // used to be 140.2 UNDO
 		xButton.whenPressed(new SetLiftPosition(0.96));
 
 
 		JoystickButton yButton = new JoystickButton(xBox, 4); // mid ball score 
-		yButton.whenPressed(new SetWristAngle(101.337)); 
+		//yButton.whenPressed(new SetWristAngle(101.337));  UNDO
  		yButton.whenPressed(new SetLiftPosition(0.9731));
 
 
@@ -73,7 +73,7 @@ public class OI {
 				return xBox.getPOV() == 90;
 			}
 		};
-		povRight.whenActive(new SetWristAngle(56));
+		//povRight.whenActive(new SetWristAngle(56)); UNDO
 		povRight.whenActive(new SetLiftPosition(0));
 
 
@@ -94,10 +94,6 @@ public class OI {
 		};
 		povDown.whenActive(new TrophyTruckDeploy());
 		
-
-
-//
-//
 //		Trigger povUp = new Trigger() { // rocket mid hatch
 //			@Override
 //			public boolean get() {
@@ -109,7 +105,7 @@ public class OI {
 
 
 		JoystickButton leftThumb = new JoystickButton(xBox, 9); // battle configuration
-		leftThumb.whenPressed(new SetWristAngle(287));
+		//leftThumb.whenPressed(new SetWristAngle(287)); UNDO
 		leftThumb.whenPressed(new SetLiftPosition(0.97));
 
 
@@ -119,8 +115,6 @@ public class OI {
 
 		JoystickButton rightBumper = new JoystickButton(xBox, 6); // spit out hatch
 		rightBumper.whenPressed(new IncrementLiftPosition(-0.285));
-
-		
 	}
 
 	public double getSuckInSpeed() {

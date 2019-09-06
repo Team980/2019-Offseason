@@ -4,8 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
-package frc.robot.commands.drive;
+package frc.robot.commands.trophy_truck;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.InstantCommand;
@@ -20,7 +19,7 @@ public class TrophyTruckRetract extends InstantCommand {
     public TrophyTruckRetract() {
         super();
 
-        trophyTruckSolenoid = Robot.robotMap.trophyTruckSolenoid;
+        //trophyTruckSolenoid = Robot.robotMap.trophyTruckSolenoid; UNDO
     }
 
     // Called once when the command executes

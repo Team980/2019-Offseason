@@ -38,8 +38,8 @@ public class Wrist extends Subsystem {
 	//private PIDController pidController; 
 
 	public Wrist()  {
-        wristPotentiometer = Robot.robotMap.wristPotentiometer;
-		wristMotor = Robot.robotMap.wristMotor;
+        //wristPotentiometer = Robot.robotMap.wristPotentiometer; UNDO
+		//wristMotor = Robot.robotMap.wristMotor; UNDO
 		
 
 		/*wristPotentiometer.setPIDSourceType(PIDSourceType.kRate);
