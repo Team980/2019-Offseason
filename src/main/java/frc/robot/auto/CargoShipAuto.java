@@ -16,6 +16,7 @@ public class CargoShipAuto extends CommandGroup {
   
   public CargoShipAuto() {
     addSequential(new TimedDrive(1.5, 0.75));
+
     //addSequential(new IMUTurn(-30));
   }
 }

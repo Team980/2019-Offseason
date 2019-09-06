@@ -11,12 +11,14 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.PIDrive;
 import frc.robot.Robot;
 import frc.robot.commands.drive.TelopDrive;
 
 public class DriveSystem extends Subsystem {
 	
-	private DifferentialDrive differentialDrive;
+	//private DifferentialDrive differentialDrive;
+	private PIDrive differentialDrive;
 
 	private Encoder leftEncoder; 
 	private Encoder rightEncoder; 
@@ -24,11 +26,14 @@ public class DriveSystem extends Subsystem {
 	private Solenoid shifterSolenoid;
 
 	public DriveSystem() {
-		differentialDrive = new DifferentialDrive(Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
+		//differentialDrive = new DifferentialDrive(Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
 	
 		leftEncoder = Robot.robotMap.leftDriveEncoder; 
 		rightEncoder = Robot.robotMap.rightDriveEncoder;
 		
+		differentialDrive = new PIDrive(leftEncoder, rightEncoder, Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
+
+
 		shifterSolenoid = Robot.robotMap.shifter;
 	}
 

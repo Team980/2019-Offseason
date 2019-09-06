@@ -15,12 +15,12 @@ import frc.robot.commands.configuration.BattleConfiguration;
 import frc.robot.commands.configuration.CargoScoreConfiguration;
 import frc.robot.commands.drive.StopDriveTrain;
 import frc.robot.commands.trophy_truck.TrophyTruckRetract;
-import frc.robot.commands.trophy_truck.TrophyTruckDeploy;;
+import frc.robot.commands.trophy_truck.TrophyTruckDeploy;
 import frc.robot.commands.lift.IncrementLiftPosition;
 import frc.robot.commands.lift.ManualLiftControl;
 import frc.robot.commands.lift.SetLiftPosition;
-import frc.robot.commands.wrist.ManualWristControl;
-import frc.robot.commands.wrist.SetWristAngle;
+//import frc.robot.commands.wrist.ManualWristControl;
+//import frc.robot.commands.wrist.SetWristAngle;
 
 /**
  * This class is the glue that binds the controls on the physical operator

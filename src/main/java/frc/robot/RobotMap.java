@@ -55,7 +55,7 @@ public class RobotMap {
 		leftDrive = new SpeedControllerGroup(leftFront, leftBack, leftTop);
 		rightDrive = new SpeedControllerGroup(rightFront, rightBack, rightTop);
 
-		leftDriveEncoder = new Encoder(7, 8, false, CounterBase.EncodingType.k4X); // UNDO
+		leftDriveEncoder     = new Encoder(7, 8, false, CounterBase.EncodingType.k4X); // UNDO
 
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
 

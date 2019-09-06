@@ -10,10 +10,12 @@ package frc.robot.auto;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.auto.DriveUntilLevelSurface;
 import frc.robot.commands.auto.TimedDrive;
+import frc.robot.commands.drive.TelopDrive;
 
 public class CrossHabAuto extends CommandGroup {
     public CrossHabAuto() {
         addSequential(new TimedDrive(0.75, 1));
+        addSequential(new TelopDrive());
         //addSequential((new DriveUntilLevelSurface(0.4))); TODO: this never stopped
     }
 }

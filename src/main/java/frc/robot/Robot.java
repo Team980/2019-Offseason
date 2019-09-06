@@ -23,7 +23,7 @@ import frc.robot.commands.drive.TelopDrive;
 import frc.robot.commands.lift.HoldLift;
 import frc.robot.commands.lift.ManualLiftControl;
 import frc.robot.commands.wrist.HoldWrist;
-import frc.robot.commands.wrist.ManualWristControl;
+//import frc.robot.commands.wrist.ManualWristControl;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.DriveSystem.Gear;
@@ -55,9 +55,9 @@ public class Robot extends TimedRobot {
 		robotMap = new RobotMap();
 
 		driveSystem = new DriveSystem();
-		//endEffector = new EndEffector();
+		//endEffector = new EndEffector(); UNDO
 		lift = new Lift();
-		//wrist = new Wrist();
+		//wrist = new Wrist(); UNDO
 
 		oi = new OI();
 		robotMap.liftEncoder.reset();
@@ -76,14 +76,14 @@ public class Robot extends TimedRobot {
 
 		debugTable = NetworkTableInstance.getDefault().getTable("debug");
 
-		Command manualLiftCommand = new ManualLiftControl();
-		Command manualWristCommand = new ManualWristControl();
+		Command manualLiftCommand = new ManualLiftControl(); //UNDO
+		//Command manualWristCommand = new ManualWristControl();
 		JoystickButton startLiftAndWristManualControl = new JoystickButton(oi.xBox, 8); // start button
 		startLiftAndWristManualControl.whenPressed(manualLiftCommand);
-		startLiftAndWristManualControl.whenPressed(manualWristCommand);
+		//startLiftAndWristManualControl.whenPressed(manualWristCommand);
 		JoystickButton stopLiftAndWristManualControl = new JoystickButton(oi.xBox, 7); // back button
 		stopLiftAndWristManualControl.cancelWhenPressed(manualLiftCommand);
-		stopLiftAndWristManualControl.cancelWhenPressed(manualWristCommand);
+		//stopLiftAndWristManualControl.cancelWhenPressed(manualWristCommand);*/
 	}
 
   	@Override
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
 		
 		//robotMap.wristPotentiometer.updateSpeed(); UNDO
 
-		debugTable.getEntry("wrist angle").setNumber(wrist.currentAngle());
+		//debugTable.getEntry("wrist angle").setNumber(wrist.currentAngle()); UNDO
 		debugTable.getEntry("lift scaled height").setNumber(lift.currentPosition());
 		debugTable.getEntry("lift encoder ticks").setNumber(robotMap.liftEncoder.getRaw());
 		debugTable.getEntry("yaw").setNumber(ypr[0]);
@@ -105,14 +105,14 @@ public class Robot extends TimedRobot {
   	@Override
   	public void autonomousInit() {
 		// reset imu
-		// robotMap.imu.setYaw(0);
+		robotMap.imu.setYaw(0);
 
 		// start up auto command
   		// AutoChoice autoChoice = autoChooser.getSelected();
   		// if (autoChoice == null) {
 		// 	autoChoice = AutoChoice.CARGO_SHIP_AUTO; // default value
 		// }
-		AutoChoice autoChoice = AutoChoice.CARGO_SHIP_AUTO; // default value
+		AutoChoice autoChoice = AutoChoice.CROSS_HAB_AUTO; // default value
 		Command autoCommand = autoChoice.command;
   		autoCommand.start();
   	}
@@ -159,9 +159,13 @@ public class Robot extends TimedRobot {
 		
 
 		driveSystem.stopMotors();
-		endEffector.stopMotors();
+		//endEffector.stopMotors(); UNDO
 		lift.stopMotors();
-		wrist.stopMotors();
+		//wrist.stopMotors(); UNDO
+	}
+
+	@Override
+	public void disabledPeriodic() {
 	}
 
   	@Override
