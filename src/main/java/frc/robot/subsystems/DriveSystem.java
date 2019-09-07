@@ -33,7 +33,6 @@ public class DriveSystem extends Subsystem {
 		
 		differentialDrive = new PIDrive(leftEncoder, rightEncoder, Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
 
-
 		shifterSolenoid = Robot.robotMap.shifter;
 	}
 
