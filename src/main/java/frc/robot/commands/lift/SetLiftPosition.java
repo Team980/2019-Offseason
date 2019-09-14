@@ -27,8 +27,6 @@ public class SetLiftPosition extends Command {
 
 	@Override
 	protected void execute() {
-		
-		
 				// stuff is in periodic on lift now
 		lift.moveTowards(targetPosition);
 	}

@@ -82,8 +82,7 @@ public class Lift extends Subsystem {
 	}
 
 	public double currentPosition() {
-		//return Util.map(liftEncoder.getRaw(), -20_000, 0, 0, 1); UNDO
-		return Util.map(liftEncoder.getRaw(), 0, 190_000, 0, 1); 
+		return Util.map(liftEncoder.getRaw(), -20_000, 0, 0, 1); 
 	} 
 
 	public void stopMotors() {

@@ -1,6 +1,6 @@
 package frc.robot;
 
-import edu.wpi.first.wpil   ibj.Encoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -26,7 +26,7 @@ public class PIDrive {
 
         leftController.disable(); 
         rightController.disable();
-    }
+     }
 
     public void tankDrive(double left, double right) {
         left = limit(left);

@@ -17,7 +17,7 @@ public class EndEffector extends Subsystem {
     private SpeedController intakeMotor;
 
 	public EndEffector()  {
-        ///intakeMotor = Robot.robotMap.endEffectorIntakeMotor; UNDO
+        intakeMotor = Robot.robotMap.endEffectorIntakeMotor;
     }
 
     public void set(double input) {
