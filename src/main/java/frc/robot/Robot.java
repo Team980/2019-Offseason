@@ -27,6 +27,8 @@ import frc.robot.commands.wrist.HoldWrist;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.DriveSystem.Gear;
+import frc.robot.commands.drive.CheckPID;
+
 
 import java.util.Arrays;
 
@@ -64,7 +66,6 @@ public class Robot extends TimedRobot {
 
 		// default commands
 		
-		
 		// shuffleboard
 		autoChooser = new SendableChooser<>();
 		autoChooser.setName("Choose Autonomous");
@@ -84,6 +85,8 @@ public class Robot extends TimedRobot {
 		JoystickButton stopLiftAndWristManualControl = new JoystickButton(oi.xBox, 7); // back button
 		stopLiftAndWristManualControl.cancelWhenPressed(manualLiftCommand);
 		//stopLiftAndWristManualControl.cancelWhenPressed(manualWristCommand);*/
+
+		new CheckPID().start();
 	}
 
   	@Override
@@ -98,6 +101,7 @@ public class Robot extends TimedRobot {
 		debugTable.getEntry("yaw").setNumber(ypr[0]);
 		debugTable.getEntry("pitch").setNumber(ypr[1]);
 		debugTable.getEntry("roll").setNumber(ypr[2]);
+		debugTable.getEntry("drive pid enabled").setBoolean(driveSystem.isPIDEnabled());
 
 		Scheduler.getInstance().run();
   	}

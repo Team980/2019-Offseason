@@ -15,25 +15,86 @@ import frc.robot.PIDrive;
 import frc.robot.Robot;
 import frc.robot.commands.drive.TelopDrive;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.SpeedController;
+
+
 public class DriveSystem extends Subsystem {
-	
+	private static final double P = 0.005;
+	private static final double I = 0;
+	private static final double D = 0;
+	private static final double MAX_VELOCITY = 17; 
+
 	//private DifferentialDrive differentialDrive;
-	private PIDrive differentialDrive;
 
 	private Encoder leftEncoder; 
 	private Encoder rightEncoder; 
 
 	private Solenoid shifterSolenoid;
 
-	public DriveSystem() {
-		//differentialDrive = new DifferentialDrive(Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
-	
+    private PIDController leftController;
+	private PIDController rightController;
+
+	private SpeedController leftMotor;
+	private SpeedController rightMotor;
+
+	public DriveSystem() {	
+		leftMotor = Robot.robotMap.leftDrive;
+		rightMotor = Robot.robotMap.rightDrive;
 		leftEncoder = Robot.robotMap.leftDriveEncoder; 
 		rightEncoder = Robot.robotMap.rightDriveEncoder;
 		
-		differentialDrive = new PIDrive(leftEncoder, rightEncoder, Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
+		leftEncoder.setPIDSourceType(PIDSourceType.kRate);
+		rightEncoder.setPIDSourceType(PIDSourceType.kRate);
+		
+		leftController = new PIDController(P, I, D, leftEncoder, leftMotor);
+		rightController = new PIDController(P, I, D, rightEncoder, rightMotor);
+
+		leftController.enable();//change to disable if you want manual default
+		rightController.enable();
 
 		shifterSolenoid = Robot.robotMap.shifter;
+	}
+
+	public boolean isPIDEnabled() {
+		return leftController.isEnabled() && rightController.isEnabled();
+	}
+
+	public void arcadeDrive(double xSpeed, double zRotation) {
+		xSpeed = Math.copySign(xSpeed*xSpeed, xSpeed); // squaring inputs
+		zRotation = Math.copySign(zRotation*zRotation, zRotation);
+	
+		double maxInput = Math.copySign(Math.max(Math.abs(xSpeed), Math.abs(zRotation)), xSpeed);
+		if (xSpeed * zRotation >= 0) { // signs are the same
+			tankDrive(maxInput, xSpeed-zRotation);
+		} else {
+			tankDrive(xSpeed+zRotation, maxInput);
+		}
+	}
+
+	public void tankDrive(double left, double right) {
+		left = limit(left);
+		right = limit(right);
+
+		if (isPIDEnabled()) {
+        	leftController.setSetpoint(left * MAX_VELOCITY);
+        	rightController.setSetpoint(right * MAX_VELOCITY); 
+		} else {
+			leftMotor.set(left);
+			rightMotor.set(right);
+		}
+	}
+
+	public void enablePID() {
+		leftController.enable();
+		rightController.enable();
+	}
+
+	public void disablePID() {
+		leftController.disable();
+		rightController.disable();
 	}
 
 	@Override
@@ -42,7 +103,7 @@ public class DriveSystem extends Subsystem {
 	}
 
 	public void driveRobot(double move, double turn) {
-		differentialDrive.arcadeDrive(move, turn);
+		arcadeDrive(move, turn);
 	}
 
 	public double getLeftDistance() {
@@ -75,12 +136,18 @@ public class DriveSystem extends Subsystem {
 	}
 
 	public void stopMotors() {
-		differentialDrive.stopMotor(); 
+		disablePID();
+		leftMotor.stopMotor();
+		rightMotor.stopMotor();
 	}
 
 	public enum Gear {
 		LOW,
 		HIGH
+	}
+
+	public static double limit(double x) {
+		return Math.abs(x) > 1 ? Math.signum(x) : x;
 	}
 }
 

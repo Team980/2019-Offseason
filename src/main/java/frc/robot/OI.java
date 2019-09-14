@@ -19,6 +19,7 @@ import frc.robot.commands.trophy_truck.TrophyTruckDeploy;
 import frc.robot.commands.lift.IncrementLiftPosition;
 import frc.robot.commands.lift.ManualLiftControl;
 import frc.robot.commands.lift.SetLiftPosition;
+
 //import frc.robot.commands.wrist.ManualWristControl;
 //import frc.robot.commands.wrist.SetWristAngle;
 
@@ -31,6 +32,7 @@ public class OI {
 	 Joystick throttle;
 	private Joystick wheel;
 	XboxController xBox;
+	public Joystick prajBox;
 
 	private static final double MOVE_DEADBAND = 0.1;
 	private static final double TURN_DEADBAND = 0.1;
@@ -42,6 +44,7 @@ public class OI {
 		throttle = new Joystick(0);
 		wheel = new Joystick(1);
 		xBox = new XboxController(2);
+		prajBox = new Joystick(3);
 
 		// configurations
 
@@ -115,6 +118,10 @@ public class OI {
 
 		JoystickButton rightBumper = new JoystickButton(xBox, 6); // spit out hatch
 		rightBumper.whenPressed(new IncrementLiftPosition(-0.285));
+
+
+		JoystickButton pidEnabledSwitch = new JoystickButton(prajBox, 7);
+
 	}
 
 	public double getSuckInSpeed() {

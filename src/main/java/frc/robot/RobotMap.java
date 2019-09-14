@@ -27,6 +27,7 @@ public class RobotMap {
 	// lift
 	public WPI_TalonSRX liftMotor; // actually a talon
 	public Encoder liftEncoder;
+	public double encoderDistanceConstant = Util.Tau * (2.0/12) / 2048;
 
 	// wrist
 //	public Potentiometer wristPotentiometer; UNDO
@@ -60,12 +61,12 @@ public class RobotMap {
 
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
 
-		leftDriveEncoder.setDistancePerPulse(Util.TAU * (2.0 / 12) / 2048.0);
+		leftDriveEncoder.setDistancePerPulse(encoderDistanceConstant);//convert encoder value to feet per second
 		leftDriveEncoder.setName("left drive encoder");
 
 		rightDriveEncoder = new Encoder(4, 5, true, CounterBase.EncodingType.k4X); // UNDO: changed id's
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
-		rightDriveEncoder.setDistancePerPulse(Util.TAU * (2.0 / 12) / 2048.0);
+		rightDriveEncoder.setDistancePerPulse(encoderDistanceConstant);// convert encoder value to feet per second
 		rightDriveEncoder.setName("right drive encoder");
 
 		shifter = new Solenoid(0); // FIXME: might be wrong

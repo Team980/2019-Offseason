@@ -27,11 +27,11 @@ public class Lift extends Subsystem {
 
 	// private static final double ENCODER_MIN_TICK_COUNT = -20_000;
 
-    // private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: determine experimentally
-    private static final double DEADBAND = 0.04;
+    // private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: determine experimentall
+     private static final double DEADBAND = 0.04;
 	
-    private Encoder liftEncoder; 
-    private SpeedController liftMotor; 
+	private Encoder liftEncoder; 
+	private SpeedController liftMotor; 
 
 	public Lift()  {
         liftEncoder = Robot.robotMap.liftEncoder;
