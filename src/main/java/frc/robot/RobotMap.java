@@ -111,7 +111,7 @@ public class RobotMap {
 	public WPI_TalonSRX wristMotor;
 
 	// sensors
-	PigeonIMU imu;
+	//PigeonIMU imu;
 	public Limelight limelight;
 
 	public Solenoid trophyTruckSolenoid;
@@ -130,6 +130,7 @@ public class RobotMap {
 
 		leftDrive = new SpeedControllerGroup(leftFront, leftBack, leftTop);
 		rightDrive = new SpeedControllerGroup(rightFront, rightBack, rightTop);
+		rightDrive.setInverted(true);
 
 		leftDriveEncoder = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
@@ -154,7 +155,9 @@ public class RobotMap {
 		wristMotor.setName("wrist contreller");
 
 		// sensors
-		imu = new PigeonIMU(0);
+
+		// TODO:
+		//imu = new PigeonIMU(0);
 		limelight = new Limelight();
 
 		trophyTruckSolenoid = new Solenoid(2);

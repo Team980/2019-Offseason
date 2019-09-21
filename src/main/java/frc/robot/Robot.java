@@ -23,7 +23,7 @@ import frc.robot.commands.drive.TelopDrive;
 import frc.robot.commands.lift.HoldLift;
 import frc.robot.commands.lift.ManualLiftControl;
 import frc.robot.commands.wrist.HoldWrist;
-//import frc.robot.commands.wrist.ManualWristControl;
+import frc.robot.commands.wrist.ManualWristControl;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.DriveSystem.Gear;
@@ -47,6 +47,7 @@ public class Robot extends TimedRobot {
 	private SendableChooser<AutoChoice> autoChooser;
 
 	private AutoShift autoShiftCommand;
+	private Command checkPID;
 
 	public static NetworkTable debugTable;
 
@@ -78,20 +79,18 @@ public class Robot extends TimedRobot {
 		debugTable = NetworkTableInstance.getDefault().getTable("debug");
 
 		Command manualLiftCommand = new ManualLiftControl(); //UNDO
-		//Command manualWristCommand = new ManualWristControl();
+		Command manualWristCommand = new ManualWristControl();
 		JoystickButton startLiftAndWristManualControl = new JoystickButton(oi.xBox, 8); // start button
 		startLiftAndWristManualControl.whenPressed(manualLiftCommand);
-		//startLiftAndWristManualControl.whenPressed(manualWristCommand);
+		startLiftAndWristManualControl.whenPressed(manualWristCommand);
 		JoystickButton stopLiftAndWristManualControl = new JoystickButton(oi.xBox, 7); // back button
 		stopLiftAndWristManualControl.cancelWhenPressed(manualLiftCommand);
-		//stopLiftAndWristManualControl.cancelWhenPressed(manualWristCommand);*/
-
-		new CheckPID().start();
+		stopLiftAndWristManualControl.cancelWhenPressed(manualWristCommand);
 	}
 
   	@Override
   	public void robotPeriodic() {
-		robotMap.imu.getYawPitchRoll(ypr);
+		//robotMap.imu.getYawPitchRoll(ypr); UNDO
 		
 		robotMap.wristPotentiometer.updateSpeed();
 
@@ -109,7 +108,7 @@ public class Robot extends TimedRobot {
   	@Override
   	public void autonomousInit() {
 		// reset imu
-		robotMap.imu.setYaw(0);
+		//robotMap.imu.setYaw(0); UNDO
 
 		// start up auto command
   		// AutoChoice autoChoice = autoChooser.getSelected();
@@ -118,7 +117,8 @@ public class Robot extends TimedRobot {
 		// }
 		AutoChoice autoChoice = AutoChoice.CROSS_HAB_AUTO; // default value
 		Command autoCommand = autoChoice.command;
-  		autoCommand.start();
+		autoCommand.start();
+		  
   	}
 
   	@Override
@@ -140,6 +140,10 @@ public class Robot extends TimedRobot {
 
 
 		driveSystem.setDefaultCommand(new TelopDrive());
+
+		checkPID = new CheckPID();
+		checkPID.start();
+		System.out.println("init");
 	}
 
 	@Override

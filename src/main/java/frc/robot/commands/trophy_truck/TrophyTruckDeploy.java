@@ -20,7 +20,7 @@ public class TrophyTruckDeploy extends InstantCommand {
     public TrophyTruckDeploy() {
         super();
 
-        //trophyTruckSolenoid = Robot.robotMap.trophyTruckSolenoid; UNDO
+        trophyTruckSolenoid = Robot.robotMap.trophyTruckSolenoid;  
     }
 
     // Called once when the command executes

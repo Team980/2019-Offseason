@@ -33,7 +33,7 @@ public class ManualWristControl extends Command {
     @Override
     protected void execute() {
         double input = oi.getWristJoystickValue();
-        wrist.rawSet(input);
+        wrist.rawSet(input/3);
         //Robot.debugTable.getEntry("wrist speed").setNumber(wrist.getVelocity());
         //wrist.set(-oi.getWristJoystickValue()); TODO: add back soft stops
     }

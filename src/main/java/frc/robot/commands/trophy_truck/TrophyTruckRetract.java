@@ -19,7 +19,7 @@ public class TrophyTruckRetract extends InstantCommand {
     public TrophyTruckRetract() {
         super();
 
-        //trophyTruckSolenoid = Robot.robotMap.trophyTruckSolenoid; UNDO
+        trophyTruckSolenoid = Robot.robotMap.trophyTruckSolenoid;
     }
 
     // Called once when the command executes

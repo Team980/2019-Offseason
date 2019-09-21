@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 
 public class DriveSystem extends Subsystem {
-	private static final double P = 0.005;
+	private static final double P = 0.01;
 	private static final double I = 0;
 	private static final double D = 0;
 	private static final double MAX_VELOCITY = 17; 
@@ -79,8 +79,8 @@ public class DriveSystem extends Subsystem {
 		right = limit(right);
 
 		if (isPIDEnabled()) {
-        	leftController.setSetpoint(left * MAX_VELOCITY);
-        	rightController.setSetpoint(right * MAX_VELOCITY); 
+        		leftController.setSetpoint(left * MAX_VELOCITY);
+        		rightController.setSetpoint(right * MAX_VELOCITY); 
 		} else {
 			leftMotor.set(left);
 			rightMotor.set(right);

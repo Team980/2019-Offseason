@@ -31,12 +31,12 @@ public class CheckPID extends Command {
   @Override
   protected void initialize() {
     startSwitchState = stick.getRawButton(7);
-    System.out.println("started");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+
     boolean currentSwitchState = stick.getRawButton(7); // white switch
 
     if (startSwitchState == currentSwitchState) {
@@ -44,7 +44,6 @@ public class CheckPID extends Command {
     } else {
       driveSystem.disablePID();
     }
-
   }
 
   // Make this return true when this Command no longer needs to run execute()
