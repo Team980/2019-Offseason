@@ -27,7 +27,9 @@ public class RobotMap {
 	// lift
 	public WPI_TalonSRX liftMotor; // actually a talon
 	public Encoder liftEncoder;
-	public double encoderDistanceConstant = Util.Tau * (2.0/12) / 2048;
+	public double ENCODER_DISTANCE_PER_TICK = Util.TAU * (2.0/12) / 2048;
+
+	public WPI_TalonSRX pigeonLink;
 
 	// wrist
 //	public Potentiometer wristPotentiometer; UNDO
@@ -61,12 +63,12 @@ public class RobotMap {
 
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
 
-		leftDriveEncoder.setDistancePerPulse(encoderDistanceConstant);//convert encoder value to feet per second
+		leftDriveEncoder.setDistancePerPulse(ENCODER_DISTANCE_PER_TICK);//convert encoder value to feet per second
 		leftDriveEncoder.setName("left drive encoder");
 
 		rightDriveEncoder = new Encoder(4, 5, true, CounterBase.EncodingType.k4X); // UNDO: changed id's
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
-		rightDriveEncoder.setDistancePerPulse(encoderDistanceConstant);// convert encoder value to feet per second
+		rightDriveEncoder.setDistancePerPulse(ENCODER_DISTANCE_PER_TICK);// convert encoder value to feet per second
 		rightDriveEncoder.setName("right drive encoder");
 
 		shifter = new Solenoid(0); // FIXME: might be wrong
@@ -74,6 +76,12 @@ public class RobotMap {
 		liftMotor = new WPI_TalonSRX(11); // UNDO changed id's
 		liftEncoder = new Encoder(1, 2, false, CounterBase.EncodingType.k4X); // UNDO: changed id's
 		// wrist
+ 
+		
+		
+		pigeonLink = new WPI_TalonSRX(20);
+		
+
 
 //		wristPotentiometer = new Potentiometer(0); UNDO
 //		wristMotor = new WPI_VictorSPX(11); UNDO
@@ -81,7 +89,8 @@ public class RobotMap {
 //		endEffectorIntakeMotor = new WPI_VictorSPX(13); UNDO
 		// sensors
 
-		imu = new PigeonIMU(0);
+		//imu = new PigeonIMU(0); UNDO
+		imu = new PigeonIMU(pigeonLink);
 		limelight = new Limelight();
 	}
 
