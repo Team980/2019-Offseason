@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Trigger;
-import frc.robot.commands.configuration.BattleConfiguration;
-import frc.robot.commands.configuration.CargoScoreConfiguration;
 import frc.robot.commands.drive.StopDriveTrain;
 import frc.robot.commands.drive.TrophyTruckDeploy;
 import frc.robot.commands.drive.TrophyTruckRetract;
 import frc.robot.commands.lift.IncrementLiftPosition;
-import frc.robot.commands.lift.ManualLiftControl;
 import frc.robot.commands.lift.SetLiftPosition;
-import frc.robot.commands.wrist.ManualWristControl;
 import frc.robot.commands.wrist.SetWristAngle;
+//import frc.robot.commands.configuration.BattleConfiguration;
+//import frc.robot.commands.configuration.CargoScoreConfiguration;
+//import frc.robot.commands.lift.ManualLiftControl;
+//import frc.robot.commands.wrist.ManualWristControl;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -117,7 +117,7 @@ public class OI {
 		JoystickButton leftBumper = new JoystickButton(xBox, 5); // snag hatch
 		leftBumper.whenPressed(new IncrementLiftPosition(0.285));
 
-		JoystickButton rightBumper = new JoystickButton(xBox, 6); // spit out hatch
+		JoystickButton rightBumper = new JoystickButton(xBox, 6); // release hatch
 		rightBumper.whenPressed(new IncrementLiftPosition(-0.285));
 
 		

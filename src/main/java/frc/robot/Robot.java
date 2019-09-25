@@ -19,16 +19,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.auto.CargoShipAuto;
 import frc.robot.auto.CrossHabAuto;
 import frc.robot.commands.drive.AutoShift;
-import frc.robot.commands.drive.TelopDrive;
-import frc.robot.commands.lift.HoldLift;
 import frc.robot.commands.lift.ManualLiftControl;
-import frc.robot.commands.wrist.HoldWrist;
 import frc.robot.commands.wrist.ManualWristControl;
-import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.DriveSystem.Gear;
-
-import java.util.Arrays;
+import frc.robot.commands.drive.TelopDrive;
+//import frc.robot.subsystems.DriveSystem.Gear;
+//import frc.robot.commands.lift.HoldLift;
+//import frc.robot.commands.wrist.HoldWrist;
+//import frc.robot.sensors.Limelight;
 
 public class Robot extends TimedRobot {
 
@@ -76,6 +74,7 @@ public class Robot extends TimedRobot {
 
 		debugTable = NetworkTableInstance.getDefault().getTable("debug");
 
+		//button controls that don't work in OI
 		Command manualLiftCommand = new ManualLiftControl();
 		Command manualWristCommand = new ManualWristControl();
 		JoystickButton startLiftAndWristManualControl = new JoystickButton(oi.xBox, 8); // start button
@@ -112,6 +111,7 @@ public class Robot extends TimedRobot {
   		// if (autoChoice == null) {
 		// 	autoChoice = AutoChoice.CARGO_SHIP_AUTO; // default value
 		// }
+		driveSystem.setDefaultCommand(new TelopDrive());
 		AutoChoice autoChoice = AutoChoice.CARGO_SHIP_AUTO; // default value
 		Command autoCommand = autoChoice.command;
   		autoCommand.start();
@@ -130,7 +130,7 @@ public class Robot extends TimedRobot {
 		JoystickButton forceLow = new JoystickButton(oi.throttle, 1);
 		forceLow.whileActive(new InstantCommand(() -> {
 			autoShiftCommand.cancel();
-			driveSystem.setGear(Gear.LOW);
+			driveSystem.setGear(true);
 		}));
 		forceLow.whenReleased(autoShiftCommand);
 

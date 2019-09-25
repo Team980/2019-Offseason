@@ -9,15 +9,15 @@ package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveSystem;
+//import frc.robot.subsystems.DriveSystem;
 
 public class StopDriveTrain extends Command {
-  DriveSystem driveSystem;
+  //DriveSystem driveSystem;
   public StopDriveTrain() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    driveSystem = Robot.driveSystem;
-    requires(driveSystem);
+    //driveSystem = Robot.driveSystem;
+    requires(Robot.driveSystem);
   }
 
   // Called just before this Command runs the first time
@@ -39,7 +39,7 @@ public class StopDriveTrain extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    driveSystem.stopMotors();
+    Robot.driveSystem.stopMotors();
   }
 
   // Called when another command which requires one or more of the same

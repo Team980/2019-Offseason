@@ -9,25 +9,25 @@ package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveSystem;
-import frc.robot.subsystems.DriveSystem.Gear;
+//import frc.robot.subsystems.DriveSystem;
+//import frc.robot.subsystems.DriveSystem.Gear;
 
 public class AutoShift extends Command {
   
-	private DriveSystem driveSystem;
+	//private DriveSystem driveSystem;
 
 	public AutoShift() {
-		driveSystem = Robot.driveSystem;
+		//driveSystem = Robot.driveSystem;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Math.abs(driveSystem.getLeftSpeed()) > 4.5 || Math.abs(driveSystem.getRightSpeed()) > 4.5) {
-			driveSystem.setGear(Gear.HIGH);
+		if (Math.abs(Robot.driveSystem.getLeftSpeed()) > 4.5 || Math.abs(Robot.driveSystem.getRightSpeed()) > 4.5) {
+			Robot.driveSystem.setGear(false);
 
-		} else if (Math.abs(driveSystem.getLeftSpeed()) < 3.75 && Math.abs(driveSystem.getRightSpeed()) < 3.75) {
-			driveSystem.setGear(Gear.LOW);
+		} else if (Math.abs(Robot.driveSystem.getLeftSpeed()) < 3.75 && Math.abs(Robot.driveSystem.getRightSpeed()) < 3.75) {
+			Robot.driveSystem.setGear(true);
 		}
 	}
   

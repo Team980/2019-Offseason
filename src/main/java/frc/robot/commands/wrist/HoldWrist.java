@@ -9,30 +9,29 @@ package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Wrist;
+//import frc.robot.subsystems.Wrist;
 
 public class HoldWrist extends Command {
 
-    private Wrist wrist;
+	//private Wrist wrist;
 
     private double targetPosition;
 
 	public HoldWrist() {
-        wrist = Robot.wrist;
+    //    wrist = Robot.wrist;
 
-		requires(wrist);
+		requires(Robot.wrist);
 	}
 
 	@Override
 	protected void initialize() {
-		targetPosition = wrist.currentAngle();
+		targetPosition = Robot.wrist.currentAngle();
 		Robot.debugTable.getEntry("wrist target").setNumber(targetPosition);
 	}
 
 	@Override
 	protected void execute() {
-		wrist.moveTowards(targetPosition);
-		//System.out.println("hold command" + targetPosition);
+		Robot.wrist.moveTowards(targetPosition);
 	}
 
 	@Override
@@ -44,12 +43,12 @@ public class HoldWrist extends Command {
   	// subsystems is scheduled to run
   	@Override
  	protected void interrupted() {
-		wrist.stopMotors();
+		Robot.wrist.stopMotors();
 	}
 	  
 	@Override
 	protected void end() {
-		wrist.stopMotors();
+		Robot.wrist.stopMotors();
 	}
 }
 

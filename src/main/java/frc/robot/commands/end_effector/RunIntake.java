@@ -8,19 +8,19 @@
 package frc.robot.commands.end_effector;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.EndEffector;
+//import frc.robot.subsystems.EndEffector;
+//import frc.robot.OI;
 
 public class RunIntake extends Command {
-  private EndEffector endEffector;
-  private OI oi;
+  //private EndEffector endEffector;
+  //private OI oi;
 
   public RunIntake() {
-    endEffector = Robot.endEffector;
-    oi = Robot.oi;
+    //endEffector = Robot.endEffector;
+    //oi = Robot.oi;
 
-    requires(endEffector);
+    requires(Robot.endEffector);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -33,17 +33,17 @@ public class RunIntake extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double inSpeed = oi.getSuckInSpeed();
-    double outSpeed = oi.getSpitOutSpeed();
+    double inSpeed = Robot.oi.getSuckInSpeed();
+    double outSpeed = Robot.oi.getSpitOutSpeed();
 
     if (inSpeed > 0) {
-      endEffector.set(inSpeed);
+      Robot.endEffector.set(inSpeed);
     } 
     else if (outSpeed > 0) {
-      endEffector.set(-outSpeed);
+      Robot.endEffector.set(-outSpeed);
     } 
     else {
-      endEffector.set(0);
+      Robot.endEffector.set(0);
     }
   }
 
@@ -56,11 +56,13 @@ public class RunIntake extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.endEffector.set(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.endEffector.stopMotors();
   }
 }

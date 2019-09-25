@@ -9,11 +9,11 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveSystem;
+//import frc.robot.subsystems.DriveSystem;
 
 public class TimedDrive extends TimedCommand {
   
-  private DriveSystem driveSystem;
+  //private DriveSystem driveSystem;
 
   private double speed;
 	
@@ -22,22 +22,20 @@ public class TimedDrive extends TimedCommand {
     
     	speed = forwardSpeed;
 
-		driveSystem = Robot.driveSystem;
+		//driveSystem = Robot.driveSystem;
 
-		requires(driveSystem);
+		requires(Robot.driveSystem);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-    	driveSystem.driveRobot(speed, 0);
+    	Robot.driveSystem.driveRobot(speed, 0);
 	}
 
 	// Called once after timeout
 	@Override
 	protected void end() {
-		//driveSystem.stopMotors();
-		driveSystem.driveRobot(0, 0);
-    	//driveSystem.stopMotors();
+		Robot.driveSystem.driveRobot(0, 0);
 	}
 }

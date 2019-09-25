@@ -1,15 +1,15 @@
 package frc.robot.sensors;
 
-import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import frc.robot.Robot;
 import frc.robot.Util;
 
+//import edu.wpi.first.wpilibj.PIDSource;
+//import edu.wpi.first.wpilibj.PIDSourceType;
+//import java.util.ArrayList;
 
-public class Potentiometer implements PIDSource {
+public class Potentiometer /*implements PIDSource*/ {
     public AnalogInput analogInput;
 
     private static final double MIN_VOLTAGE = 0;
@@ -17,13 +17,13 @@ public class Potentiometer implements PIDSource {
 
     private static final double REFRESH_INTERVAL_SECONDS = 0.02; 
 
-    private PIDSourceType sourceType;
+   //private PIDSourceType sourceType;
     
     double prevPosition;
     double currPosition;
 
     public Potentiometer(int channel) {
-        sourceType = PIDSourceType.kDisplacement;
+        //sourceType = PIDSourceType.kDisplacement;
 
         analogInput = new AnalogInput(channel);
 
@@ -55,7 +55,7 @@ public class Potentiometer implements PIDSource {
         return Util.map(voltage, MIN_VOLTAGE, MAX_VOLTAGE, 0, 360);
     }
 
-    @Override
+    /*@Override
     public void setPIDSourceType(PIDSourceType pidType) {
         sourceType = pidType;
         analogInput.setPIDSourceType(pidType);
@@ -73,5 +73,5 @@ public class Potentiometer implements PIDSource {
         } else {
             return getRate();
         }
-    }
+    }*/
 }

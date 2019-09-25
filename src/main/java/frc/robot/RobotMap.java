@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import java.util.Arrays;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
@@ -22,11 +20,11 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class RobotMap {
 
 	// drive stuff
-	public Encoder leftDriveEncoder;
-	public Encoder rightDriveEncoder;
-
 	public SpeedControllerGroup leftDrive;
 	public SpeedControllerGroup rightDrive;
+
+	public Encoder leftDriveEncoder;
+	public Encoder rightDriveEncoder;
 
 	public Solenoid shifter;
 
@@ -38,13 +36,14 @@ public class RobotMap {
 	public Encoder liftEncoder;
 
 	// wrist
-	public Potentiometer wristPotentiometer;
 	public WPI_TalonSRX wristMotor;
+	public Potentiometer wristPotentiometer;
 
 	// sensors
-	PigeonIMU imu;
+	public PigeonIMU imu;
 	public Limelight limelight;
 
+	//trophy trucks
 	public Solenoid trophyTruckSolenoid;
 
 	RobotMap() {
@@ -70,10 +69,10 @@ public class RobotMap {
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
 		rightDriveEncoder.setDistancePerPulse(Util.TAU * (2.0 / 12) / 2048.0);
 
-		shifter = new Solenoid(0); // FIXME: might be wrong
+		shifter = new Solenoid(0); 
 
 		// end effector
-		endEffectorIntakeMotor = new WPI_TalonSRX(13); // FIXME: probably
+		endEffectorIntakeMotor = new WPI_TalonSRX(13); 
 
 		// lift
 		liftMotor = new WPI_TalonSRX(15);

@@ -9,29 +9,29 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.Util;
-import frc.robot.subsystems.DriveSystem;
+//import frc.robot.subsystems.DriveSystem;
+//import frc.robot.Util;
 
 public class DriveUntilLevelSurface extends Command {
 
     private static final double PITCH_DEADBAND = 5.0; // degrees
 
-    private DriveSystem driveSystem;
+    //private DriveSystem driveSystem;
 
     private double move;
 
     public DriveUntilLevelSurface(double move) {
-        driveSystem = Robot.driveSystem;
+        //driveSystem = Robot.driveSystem;
 
         this.move = move;
 
-        requires(driveSystem);
+        requires(Robot.driveSystem);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        driveSystem.driveRobot(move, 0);
+        Robot.driveSystem.driveRobot(move, 0);
     }
 
     @Override
@@ -42,6 +42,6 @@ public class DriveUntilLevelSurface extends Command {
 
     @Override
     protected void end() {
-        driveSystem.stopMotors();
+        Robot.driveSystem.driveRobot(0, 0);
     }
 }

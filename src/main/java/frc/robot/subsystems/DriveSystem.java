@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
-import frc.robot.commands.drive.TelopDrive;
+//import frc.robot.commands.drive.TelopDrive;
 
 public class DriveSystem extends Subsystem {
 	
@@ -63,11 +63,16 @@ public class DriveSystem extends Subsystem {
 	}
 
 	public Gear getGear() {
-		return shifterSolenoid.get()? Gear.LOW : Gear.HIGH; // returns Gear.LOW when shifterSolenoid.get() is true
-	}	
+		if (shifterSolenoid.get()){
+			return Gear.LOW;
+		}
+		else{
+			return Gear.HIGH;
+		}
+	}//end getGear	
 
-	public void setGear(Gear gear) {
-		shifterSolenoid.set(gear == Gear.LOW);
+	public void setGear(boolean gear) {//false = high gear, true = low gear
+		shifterSolenoid.set(gear);
 	}
 
 	public void stopMotors() {

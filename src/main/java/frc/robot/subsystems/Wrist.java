@@ -9,11 +9,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.Robot;
 import frc.robot.sensors.Potentiometer;
 import frc.robot.commands.wrist.HoldWrist;
 
+//import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 //import frc.robot.Util;
 //import edu.wpi.first.wpilibj.PIDController;
 //import edu.wpi.first.wpilibj.PIDSourceType;
@@ -74,9 +74,9 @@ public class Wrist extends Subsystem {
 	 		input = 0;
 		} 
 		 
-		else if (targetAngle > 270 && Math.abs(difference) < 30) { // TODO: hack until pid
+/*		else if (targetAngle > 270 && Math.abs(difference) < 30) { // TODO: hack until pid
 	 		input = 0.6;
-	 	}
+	 	}*/
 
 	 	set(input);
 	}

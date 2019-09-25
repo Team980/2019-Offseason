@@ -73,7 +73,6 @@ public class Lift extends Subsystem {
 			input = distance;
 		}
 
-		System.out.println(input);
 		set(input);
 	}
 

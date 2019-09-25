@@ -25,7 +25,7 @@ public class EndEffector extends Subsystem {
     }
 
     public void stopMotors() {
-        intakeMotor.stopMotor();
+        intakeMotor.set(0);
     }
 
     @Override
