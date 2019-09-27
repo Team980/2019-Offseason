@@ -17,8 +17,8 @@ import frc.robot.commands.lift.HoldLift;
 
 public class Lift extends Subsystem {
 
-	private static final double EXCLUSION_MIN = 0.03;
-	private static final double EXCLUSION_MAX = 0.97;
+	private static final double EXCLUSION_MIN = 0.02;
+	private static final double EXCLUSION_MAX = 1;
 	private double minSpeedUp = .35;
 	private double minSpeedDown = -.15;
 
@@ -28,7 +28,7 @@ public class Lift extends Subsystem {
 	// private static final double ENCODER_MIN_TICK_COUNT = -20_000;
 
     // private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: determine experimentally
-    private static final double DEADBAND = 0.04;
+    private static final double DEADBAND = 0.01;
 	
     private Encoder liftEncoder; 
     private SpeedController liftMotor; 

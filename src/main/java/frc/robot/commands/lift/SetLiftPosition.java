@@ -9,7 +9,9 @@ package frc.robot.commands.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.drive.TrophyTruckDeploy;
 //import frc.robot.subsystems.Lift;
+import frc.robot.commands.drive.TrophyTruckRetract;
 
 
 public class SetLiftPosition extends Command {
@@ -21,8 +23,20 @@ public class SetLiftPosition extends Command {
 	public SetLiftPosition(double targetPosition) {
 		this.targetPosition = targetPosition;
 
+
 		//lift = Robot.lift;		
 		requires(Robot.lift);
+	}
+	
+
+
+	@Override
+	protected void initialize() {
+		// if (targetPosition < 0.15) {
+		// 	Robot.robotMap.trophyTruckSolenoid.set(true);
+		// } else {
+		// 	Robot.robotMap.trophyTruckSolenoid.set(false);
+		// }
 	}
 
 	@Override

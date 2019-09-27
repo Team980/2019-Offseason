@@ -63,8 +63,8 @@ public class OI {
 
 
 		JoystickButton yButton = new JoystickButton(xBox, 4); // mid ball score 
-		yButton.whenPressed(new SetWristAngle(101.337)); 
- 		yButton.whenPressed(new SetLiftPosition(0.9731));
+		yButton.whenPressed(new SetWristAngle(105.337)); 
+ 		yButton.whenPressed(new SetLiftPosition(1));
 
 
 		Trigger povRight = new Trigger() { // low hatch 
@@ -73,8 +73,9 @@ public class OI {
 				return xBox.getPOV() == 90;
 			}
 		};
-		povRight.whenActive(new SetWristAngle(56));
+		povRight.whenActive(new SetWristAngle(81));
 		povRight.whenActive(new SetLiftPosition(0));
+
 
 
 		Trigger povUp = new Trigger() { // trophy truck retract
@@ -109,8 +110,8 @@ public class OI {
 
 
 		JoystickButton leftThumb = new JoystickButton(xBox, 9); // battle configuration
-		leftThumb.whenPressed(new SetWristAngle(287));
-		leftThumb.whenPressed(new SetLiftPosition(0.97));
+		leftThumb.whenPressed(new SetWristAngle(45));
+		leftThumb.whenPressed(new SetLiftPosition(1));
 
 
 		// snag & release hatch

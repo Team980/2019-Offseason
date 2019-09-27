@@ -84,7 +84,7 @@ public class RobotMap {
 		wristMotor.setName("wrist contreller");
 
 		// sensors
-		imu = new PigeonIMU(0);
+		imu = new PigeonIMU(rightBack);
 		limelight = new Limelight();
 
 		trophyTruckSolenoid = new Solenoid(2);

@@ -26,6 +26,11 @@ public class SetWristAngle extends Command {
 	}
 
 	@Override
+	protected void initialize() {
+		Robot.debugTable.getEntry("wrist target").setNumber(targetAngle);
+	}
+
+	@Override
 	protected void execute() {
 		Robot.wrist.moveTowards(targetAngle);
 	}
