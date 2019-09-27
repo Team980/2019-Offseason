@@ -8,34 +8,25 @@
 package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Wrist;
 
 public class ManualWristControl extends Command {
 
-    private Wrist wrist;
-    private OI oi;
-
     public ManualWristControl() {
-        wrist = Robot.wrist;
-        oi = Robot.oi;
 
-        requires(wrist);
+        requires(Robot.wrist);
+        requires(Robot.pidWrist);
     }
 
     @Override
     protected void initialize() {
-        //wrist.setPidEnabled(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        double input = oi.getWristJoystickValue();
-        wrist.rawSet(input/3);
-        //Robot.debugTable.getEntry("wrist speed").setNumber(wrist.getVelocity());
-        //wrist.set(-oi.getWristJoystickValue()); TODO: add back soft stops
+        double input = Robot.oi.getWristJoystickValue();
+        Robot.wrist.rawSet(input/3);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -48,13 +39,13 @@ public class ManualWristControl extends Command {
   	// subsystems is scheduled to run
   	@Override
  	protected void interrupted() {
-		wrist.stopMotors();
+		Robot.wrist.stopMotors();
 	}
 	  
     // Called once after isFinished returns true
     @Override
     protected void end() {
         //wrist.setPidEnabled(true);
-        wrist.stopMotors();
+        Robot.wrist.stopMotors();
     }
 }

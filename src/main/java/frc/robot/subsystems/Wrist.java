@@ -20,10 +20,10 @@ import frc.robot.commands.wrist.HoldWrist;
 
 public class Wrist extends Subsystem {
 
-    private static final double DEADBAND = 5;
+    private static final double DEADBAND = 1;
 
     // the minimum angles so we don't crash into ourselves
-    private static final double MINIMUM_ANGLE = 30; // TODO NEED TO GET THE NEW NUMBERS AFTER WE CHANGED THE POTENTIOMETER
+    private static final double MINIMUM_ANGLE = 30; 
 	private static final double MAXIMUM_ANGLE = 288;
 
 

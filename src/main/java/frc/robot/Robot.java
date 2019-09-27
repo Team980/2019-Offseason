@@ -23,7 +23,6 @@ import frc.robot.commands.drive.TelopDrive;
 import frc.robot.commands.lift.ManualLiftControl;
 import frc.robot.commands.wrist.ManualWristControl;
 import frc.robot.subsystems.*;
-import frc.robot.commands.drive.CheckPID;
 
 
 public class Robot extends TimedRobot {
@@ -36,6 +35,7 @@ public class Robot extends TimedRobot {
 	public static EndEffector endEffector;
 	public static Lift lift;
 	public static Wrist wrist;
+	public static PIDWrist pidWrist;
 	public static double[] ypr = new double[3];
 
 	public static OI oi;
@@ -59,6 +59,7 @@ public class Robot extends TimedRobot {
 		endEffector = new EndEffector();
 		lift = new Lift();
 		wrist = new Wrist();
+		pidWrist = new PIDWrist();
 
 		oi = new OI();
 		robotMap.liftEncoder.reset();
@@ -88,7 +89,7 @@ public class Robot extends TimedRobot {
 
   	@Override
   	public void robotPeriodic() {
-		//robotMap.imu.getYawPitchRoll(ypr); UNDO
+		robotMap.imu.getYawPitchRoll(ypr);
 		
 		robotMap.wristPotentiometer.updateSpeed();
 
@@ -138,9 +139,6 @@ public class Robot extends TimedRobot {
 
 		driveSystem.setDefaultCommand(new TelopDrive());
 
-		checkPID = new CheckPID();
-		checkPID.start();
-		System.out.println("init");
 	}
 
 	@Override
