@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SpeedController;
 
-public class PIDrive {
+public class PIDriveOld {
     private static final double P = 0.01;//totally arbitary. Do tests
     private static final double I = 0;
     private static final double D = 0;
@@ -16,7 +16,7 @@ public class PIDrive {
     private PIDController rightController;
         
 
-    public PIDrive(Encoder leftEncoder, Encoder rightEncoder, SpeedController leftMotor, SpeedController rightMotor) {
+    public PIDriveOld(Encoder leftEncoder, Encoder rightEncoder, SpeedController leftMotor, SpeedController rightMotor) {
         //black box
         leftEncoder.setPIDSourceType(PIDSourceType.kRate);
         rightEncoder.setPIDSourceType(PIDSourceType.kRate);

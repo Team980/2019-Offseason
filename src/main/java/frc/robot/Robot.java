@@ -20,23 +20,19 @@ import frc.robot.auto.CargoShipAuto;
 import frc.robot.auto.CrossHabAuto;
 import frc.robot.commands.drive.AutoShift;
 import frc.robot.commands.drive.TelopDrive;
-import frc.robot.commands.lift.HoldLift;
 import frc.robot.commands.lift.ManualLiftControl;
-import frc.robot.commands.wrist.HoldWrist;
 import frc.robot.commands.wrist.ManualWristControl;
-import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.DriveSystem.Gear;
 import frc.robot.commands.drive.CheckPID;
 
-
-import java.util.Arrays;
 
 public class Robot extends TimedRobot {
 
 	public static RobotMap robotMap;
 
 	public static DriveSystem driveSystem;
+	public static PIDLeftDrive pidLeftDrive;
+	public static PIDRightDrive pidRightDrive;
 	public static EndEffector endEffector;
 	public static Lift lift;
 	public static Wrist wrist;
@@ -58,6 +54,8 @@ public class Robot extends TimedRobot {
 		robotMap = new RobotMap();
 
 		driveSystem = new DriveSystem();
+		pidLeftDrive = new PIDLeftDrive();
+		pidRightDrive = new PIDRightDrive();
 		endEffector = new EndEffector();
 		lift = new Lift();
 		wrist = new Wrist();
@@ -100,8 +98,7 @@ public class Robot extends TimedRobot {
 		debugTable.getEntry("yaw").setNumber(ypr[0]);
 		debugTable.getEntry("pitch").setNumber(ypr[1]);
 		debugTable.getEntry("roll").setNumber(ypr[2]);
-		debugTable.getEntry("drive pid enabled").setBoolean(driveSystem.isPIDEnabled());
-
+	
 		Scheduler.getInstance().run();
   	}
 
@@ -134,7 +131,7 @@ public class Robot extends TimedRobot {
 		JoystickButton forceLow = new JoystickButton(oi.throttle, 1);
 		forceLow.whileActive(new InstantCommand(() -> {
 			autoShiftCommand.cancel();
-			driveSystem.setGear(Gear.LOW);
+			driveSystem.setGear(true);
 		}));
 		forceLow.whenReleased(autoShiftCommand);
 

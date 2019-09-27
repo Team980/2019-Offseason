@@ -23,6 +23,9 @@ import frc.robot.commands.lift.SetLiftPosition;
 import frc.robot.commands.wrist.ManualWristControl;
 import frc.robot.commands.wrist.SetWristAngle;
 
+import frc.robot.commands.drive.PIDDrive;
+
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -47,6 +50,8 @@ public class OI {
 		prajBox = new Joystick(3);
 
 		// configurations
+		JoystickButton enablePIDDrive = new JoystickButton(prajBox, 1);//need to identify the number for the right switch
+		enablePIDDrive.whileHeld(new PIDDrive());
 
 		JoystickButton stopAuto = new JoystickButton(throttle, 7);
 		stopAuto.whenPressed(new StopDriveTrain());

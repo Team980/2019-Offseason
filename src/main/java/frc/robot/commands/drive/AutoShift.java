@@ -9,25 +9,21 @@ package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveSystem;
-import frc.robot.subsystems.DriveSystem.Gear;
 
 public class AutoShift extends Command {
   
-	private DriveSystem driveSystem;
 
 	public AutoShift() {
-		driveSystem = Robot.driveSystem;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		if (Math.abs(driveSystem.getLeftSpeed()) > 4.5 || Math.abs(driveSystem.getRightSpeed()) > 4.5) { // low to high
-			driveSystem.setGear(Gear.HIGH);
+		if (Math.abs(Robot.driveSystem.getLeftSpeed()) > 4.5 || Math.abs(Robot.driveSystem.getRightSpeed()) > 4.5) { // low to high
+			Robot.driveSystem.setGear(false);
 
-		} else if (Math.abs(driveSystem.getLeftSpeed()) < 1 && Math.abs(driveSystem.getRightSpeed()) < 1) { // high to low
-			driveSystem.setGear(Gear.LOW);
+		} else if (Math.abs(Robot.driveSystem.getLeftSpeed()) < 1 && Math.abs(Robot.driveSystem.getRightSpeed()) < 1) { // high to low
+			Robot.driveSystem.setGear(true);
 		}
 	}
   
@@ -40,6 +36,7 @@ public class AutoShift extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
+		Robot.driveSystem.setGear(false);
 	}
 
 }
