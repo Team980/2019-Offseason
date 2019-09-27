@@ -16,6 +16,7 @@ public class HoldLift extends Command {
 	//private Lift lift;
 
 	private double targetPosition;
+	private double stickIncrement = .05;//amount target postition can be changed by the stick each loop
 
 	public HoldLift() {
 		//lift = Robot.lift;
@@ -29,6 +30,13 @@ public class HoldLift extends Command {
 
 	@Override
 	protected void execute() {
+		if (Robot.oi.getLiftJoystickValue() > 0){//experimental fine lift control without disabling automation
+			targetPosition += stickIncrement;
+		}
+		else if(Robot.oi.getLiftJoystickValue() < 0){
+			targetPosition -= stickIncrement;
+		}
+
 		Robot.lift.moveTowards(targetPosition);
 	}
 
@@ -43,7 +51,7 @@ public class HoldLift extends Command {
    }
 		 @Override
 	protected void end() {
-		Robot.lift.stopMotors();
+		Robot.lift.set(0);
 	}
 }
 

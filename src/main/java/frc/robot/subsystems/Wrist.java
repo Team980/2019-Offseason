@@ -20,10 +20,12 @@ import frc.robot.commands.wrist.HoldWrist;
 
 public class Wrist extends Subsystem {
 
-    private static final double DEADBAND = 1;
+	private static final double DEADBAND = 1;
+	
+	private double wristSpeed = 0.5;// for removing wrist proportional control, may be used as minSpeed if P control put back
 
     // the minimum angles so we don't crash into ourselves
-    private static final double MINIMUM_ANGLE = 30; // TODO NEED TO GET THE NEW NUMBERS AFTER WE CHANGED THE POTENTIOMETER
+    private static final double MINIMUM_ANGLE = 30; 
 	private static final double MAXIMUM_ANGLE = 288;
 
 
@@ -43,7 +45,7 @@ public class Wrist extends Subsystem {
 		
 
 		/*wristPotentiometer.setPIDSourceType(PIDSourceType.kRate);
-		pidController = new PIDController(0.0001, 0, 0, wristPotentiometer, wristMotor); // TODO: set constants
+		pidController = new PIDController(0.0001, 0, 0, wristPotentiometer, wristMotor);
 		pidController.setName("wrist pid controller");
 		pidController.enable();
 
@@ -66,19 +68,20 @@ public class Wrist extends Subsystem {
 	}
 
 	public void moveTowards(double targetAngle) {
-        double difference = targetAngle - currentAngle();
+/*        double difference = targetAngle - currentAngle();
 
+		double input = 1.5 * difference / 260 ; // figure out which velocity we want to be
+		if (input < wristSpeed){//implements minimum wrist speed in case we need P control back
+			input = wristSpeed;
+		}*/
 
+		double input = wristSpeed;//non proportional wrist control
 
-
-
-        double input = 1.5 * difference / 260 ; // figure out which velocity we want to be
-
-	 	if (isAtTargetAngle(targetAngle) /*|| isInExclusionZone()*/) {
+	 	if (isAtTargetAngle(targetAngle)) {
 	 		input = 0;
 		} 
 		 
-/*		else if (targetAngle > 270 && Math.abs(difference) < 30) { // TODO: hack until pid
+/*		else if (targetAngle > 270 && Math.abs(difference) < 30) { // hack fixed by stowing on top instead
 	 		input = 0.6;
 	 	}*/
 
@@ -144,7 +147,7 @@ public class Wrist extends Subsystem {
 
 	// accepts scaled velocity
 	/*public void setVelocity(double scaledVelocity) {
-  		pidController.setSetpoint(scaledVelocity*MAX_SPEED_DEGREES_PER_SECOND); // TODO: Exclusion
+  		pidController.setSetpoint(scaledVelocity*MAX_SPEED_DEGREES_PER_SECOND); 
 	}*/
 
     /*private boolean isInExclusionZone() {

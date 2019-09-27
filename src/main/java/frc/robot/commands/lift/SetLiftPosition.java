@@ -9,9 +9,9 @@ package frc.robot.commands.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.commands.drive.TrophyTruckDeploy;
 //import frc.robot.subsystems.Lift;
-import frc.robot.commands.drive.TrophyTruckRetract;
+//import frc.robot.commands.drive.TrophyTruckRetract;
+//import frc.robot.commands.drive.TrophyTruckDeploy;
 
 
 public class SetLiftPosition extends Command {

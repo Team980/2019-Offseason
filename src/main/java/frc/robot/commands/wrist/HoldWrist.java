@@ -15,7 +15,8 @@ public class HoldWrist extends Command {
 
 	//private Wrist wrist;
 
-    private double targetPosition;
+	private double targetPosition;
+	private double stickIncrement = 1;//amount target position can be changed by the stick each loop
 
 	public HoldWrist() {
     //    wrist = Robot.wrist;
@@ -31,6 +32,13 @@ public class HoldWrist extends Command {
 
 	@Override
 	protected void execute() {
+		if (Robot.oi.getWristJoystickValue() > 0){//experimental fine wrist control without disabling automation
+			targetPosition += stickIncrement;
+		}
+		else if(Robot.oi.getWristJoystickValue() < 0){
+			targetPosition -= stickIncrement;
+		}
+
 		Robot.wrist.moveTowards(targetPosition);
 	}
 

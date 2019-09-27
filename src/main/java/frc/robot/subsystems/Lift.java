@@ -22,16 +22,15 @@ public class Lift extends Subsystem {
 	private double minSpeedUp = .35;
 	private double minSpeedDown = -.15;
 
-	// private static final double EXCLUSION_MIN = 0.2;
-	// private static final double EXCLUSION_MAX = 1.1;
-
-	// private static final double ENCODER_MIN_TICK_COUNT = -20_000;
-
-    // private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: determine experimentally
-    private static final double DEADBAND = 0.01;
+	private static final double DEADBAND = 0.01;
 	
     private Encoder liftEncoder; 
     private SpeedController liftMotor; 
+
+	// private static final double EXCLUSION_MIN = 0.2;
+	// private static final double EXCLUSION_MAX = 1.1;
+	// private static final double ENCODER_MIN_TICK_COUNT = -20_000;
+    // private static final double ENCODER_MAX_TICK_COUNT = 22_000; // determine experimentally
 
 	public Lift()  {
         liftEncoder = Robot.robotMap.liftEncoder;
@@ -58,12 +57,19 @@ public class Lift extends Subsystem {
 
 	public void moveTowards(double targetPosition) {
 		double distance = targetPosition - currentPosition();
-
 		double input;
+
+	/*	if (distance <= 0){//for disabling lift positional control
+			input = minSpeedDown;
+		}
+		else{
+			input = minSpeedUp;
+		}*/
+
 		if (isAtTargetPosition(targetPosition)) {
 			input = 0;
 		} 
-		else if (distance <= 0 && (distance > minSpeedDown)){
+		else if (distance <= 0 && (distance > minSpeedDown)){//comment out to disable positional control
 				input = minSpeedDown;
 		}
 		else if (distance > 0 && (distance < minSpeedUp)){
@@ -71,7 +77,7 @@ public class Lift extends Subsystem {
 		}
 		else {
 			input = distance;
-		}
+		}//where you finish commenting out
 
 		set(input);
 	}
