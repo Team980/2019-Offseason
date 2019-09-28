@@ -32,12 +32,12 @@ public class HoldWrist extends Command {
 
 	@Override
 	protected void execute() {
-		if (Robot.oi.getWristJoystickValue() > 0){//experimental fine wrist control without disabling automation
+		/*if (Robot.oi.getWristJoystickValue() > 0){//experimental fine wrist control without disabling automation
 			targetPosition += stickIncrement;
 		}
 		else if(Robot.oi.getWristJoystickValue() < 0){
 			targetPosition -= stickIncrement;
-		}
+		}*/
 
 		Robot.wrist.moveTowards(targetPosition);
 	}

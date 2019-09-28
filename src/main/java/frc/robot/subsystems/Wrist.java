@@ -20,9 +20,9 @@ import frc.robot.commands.wrist.HoldWrist;
 
 public class Wrist extends Subsystem {
 
-	private static final double DEADBAND = 1;
+	private static final double DEADBAND = 7;
 	
-	private double wristSpeed = 0.5;// for removing wrist proportional control, may be used as minSpeed if P control put back
+	private double wristSpeed = 0.35;// for removing wrist proportional control, may be used as minSpeed if P control put back
 
     // the minimum angles so we don't crash into ourselves
     private static final double MINIMUM_ANGLE = 30; 
@@ -68,14 +68,16 @@ public class Wrist extends Subsystem {
 	}
 
 	public void moveTowards(double targetAngle) {
-/*        double difference = targetAngle - currentAngle();
+        double difference = targetAngle - currentAngle();
 
 		double input = 1.5 * difference / 260 ; // figure out which velocity we want to be
-		if (input < wristSpeed){//implements minimum wrist speed in case we need P control back
+		if (difference > 0 && input < wristSpeed){//implements minimum wrist speed in case we need P control back
 			input = wristSpeed;
-		}*/
+		}else if (difference < 0 && input > -wristSpeed){
+			input = -wristSpeed;
+		}
 
-		double input = wristSpeed;//non proportional wrist control
+		//double input = Math.copySign(wristSpeed, difference);//non proportional wrist control
 
 	 	if (isAtTargetAngle(targetAngle)) {
 	 		input = 0;
