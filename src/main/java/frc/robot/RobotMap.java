@@ -40,7 +40,7 @@ public class RobotMap {
 	public Potentiometer wristPotentiometer;
 
 	// sensors
-	public PigeonIMU imu;
+	//public PigeonIMU imu;
 	public Limelight limelight;
 
 	//trophy trucks
@@ -84,7 +84,7 @@ public class RobotMap {
 		wristMotor.setName("wrist contreller");
 
 		// sensors
-		imu = new PigeonIMU(rightBack);
+		//imu = new PigeonIMU(rightBack);
 		limelight = new Limelight();
 
 		trophyTruckSolenoid = new Solenoid(2);

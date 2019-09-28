@@ -87,7 +87,7 @@ public class Robot extends TimedRobot {
 
   	@Override
   	public void robotPeriodic() {
-		robotMap.imu.getYawPitchRoll(ypr);
+		//robotMap.imu.getYawPitchRoll(ypr);
 		
 		robotMap.wristPotentiometer.updateSpeed();
 

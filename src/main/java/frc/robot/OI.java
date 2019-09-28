@@ -58,7 +58,7 @@ public class OI {
 
 
 		JoystickButton xButton = new JoystickButton(xBox, 3); // cargo ship dump
-		xButton.whenPressed(new SetWristAngle(120.2)); // used to be 140.2
+		xButton.whenPressed(new SetWristAngle(130.2)); // used to be 140.2
 		xButton.whenPressed(new SetLiftPosition(0.96));
 
 
