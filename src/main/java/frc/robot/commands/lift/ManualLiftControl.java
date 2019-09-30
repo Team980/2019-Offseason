@@ -9,24 +9,17 @@ package frc.robot.commands.lift;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Lift;
 
 public class ManualLiftControl extends Command {
 
-    private Lift lift;
-    private OI oi;
     Timer t1;
    
     private double lastUpdated;
 
 
     public ManualLiftControl() {
-        lift = Robot.lift;
-        oi = Robot.oi;
-       
-        requires(lift);
+         requires(Robot.lift);
     }
 
     @Override
@@ -39,8 +32,8 @@ public class ManualLiftControl extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.debugTable.getEntry("lift control speed").setNumber(lift.getSpeed());
-        lift.rawSet(oi.getLiftJoystickValue());
+        Robot.debugTable.getEntry("lift control speed").setNumber(Robot.lift.getSpeed());
+        Robot.lift.rawSet(Robot.oi.getLiftJoystickValue());
         //lift.set(oi.getLiftJoystickValue()); TODO: add back in soft stops
     }
 
@@ -54,12 +47,12 @@ public class ManualLiftControl extends Command {
   	// subsystems is scheduled to run
   	@Override
  	protected void interrupted() {
-		lift.stopMotors();
+		Robot.lift.stopMotors();
     }
     
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        lift.stopMotors();
+        Robot.lift.stopMotors();
     }
 }

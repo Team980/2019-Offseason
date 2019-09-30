@@ -34,6 +34,7 @@ public class Robot extends TimedRobot {
 	public static PIDRightDrive pidRightDrive;
 	public static EndEffector endEffector;
 	public static Lift lift;
+	public static PIDLift pidLift;
 	public static Wrist wrist;
 	public static PIDWrist pidWrist;
 	public static double[] ypr = new double[3];
@@ -58,6 +59,7 @@ public class Robot extends TimedRobot {
 		pidRightDrive = new PIDRightDrive();
 		endEffector = new EndEffector();
 		lift = new Lift();
+		pidLift = new PIDLift();
 		wrist = new Wrist();
 		pidWrist = new PIDWrist();
 

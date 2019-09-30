@@ -9,35 +9,32 @@ package frc.robot.commands.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Lift;
 
 
 public class SetLiftPosition extends Command {
 
-	private Lift lift;
 
 	private double targetPosition;
 
 	public SetLiftPosition(double targetPosition) {
 		this.targetPosition = targetPosition;
 
-		lift = Robot.lift;		
-		requires(lift);
+		requires(Robot.lift);
 	}
 
 	@Override
 	protected void execute() {
 				// stuff is in periodic on lift now
-		lift.moveTowards(targetPosition);
+		Robot.lift.moveTowards(targetPosition);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return lift.isAtTargetPosition(targetPosition);
+		return Robot.lift.isAtTargetPosition(targetPosition);
 	}
 
 	@Override
 	protected void end() {
-		lift.stopMotors();
+		Robot.lift.stopMotors();
 	}
 }

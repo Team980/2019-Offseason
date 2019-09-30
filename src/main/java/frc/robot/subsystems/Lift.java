@@ -21,6 +21,7 @@ public class Lift extends Subsystem {
 	private static final double EXCLUSION_MAX = 0.97;
 	private double minSpeedUp = .35;
 	private double minSpeedDown = -.15;
+	private double maxLiftSpeed = 5; //TODO: get lift max speed
 
 	// private static final double EXCLUSION_MIN = 0.2;
 	// private static final double EXCLUSION_MAX = 1.1;
@@ -44,10 +45,10 @@ public class Lift extends Subsystem {
 
 	public void set(double input) { 
 		if ((input < 0 && currentPosition() > EXCLUSION_MIN) || (input > 0 && currentPosition() < EXCLUSION_MAX)) {
-			liftMotor.set(input);
+			Robot.pidLift.setSetpoint(input * maxLiftSpeed);
 		} 
 		else {
-			liftMotor.set(0);
+			Robot.pidLift.setSetpoint(0);
 		}
 	}
 
@@ -86,7 +87,7 @@ public class Lift extends Subsystem {
 	} 
 
 	public void stopMotors() {
-		liftMotor.set(0);
+		Robot.pidLift.setSetpoint(0);
 	}
 
     @Override

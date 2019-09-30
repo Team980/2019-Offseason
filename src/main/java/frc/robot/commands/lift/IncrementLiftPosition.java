@@ -8,47 +8,43 @@
 package frc.robot.commands.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Lift;
 
 public class IncrementLiftPosition extends Command {
 
-	private Lift lift;
   private double targetPosition;
   private double increment;
 
   public IncrementLiftPosition(double increment) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    lift = Robot.lift;
-
+  
     this.increment = increment;
 
-    requires(lift);
+    requires(Robot.lift);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    targetPosition = lift.currentPosition() + increment;
+    targetPosition = Robot.lift.currentPosition() + increment;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    lift.moveTowards(targetPosition);
+    Robot.lift.moveTowards(targetPosition);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-		return lift.isAtTargetPosition(targetPosition);
+		return Robot.lift.isAtTargetPosition(targetPosition);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    lift.stopMotors();
+    Robot.lift.stopMotors();
   }
 }

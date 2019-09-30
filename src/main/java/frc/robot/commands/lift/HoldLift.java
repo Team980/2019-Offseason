@@ -9,27 +9,23 @@ package frc.robot.commands.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Lift;
 
 public class HoldLift extends Command {
-
-	private Lift lift;
 
 	private double targetPosition;
 
 	public HoldLift() {
-		lift = Robot.lift;
-		requires(lift);
+		requires(Robot.lift);
 	}
 
 	@Override
 	protected void initialize() {
-		targetPosition = lift.currentPosition();
+		targetPosition = Robot.lift.currentPosition();
 	}
 
 	@Override
 	protected void execute() {
-		lift.moveTowards(targetPosition);
+		Robot.lift.moveTowards(targetPosition);
 	}
 
 	@Override
@@ -39,7 +35,7 @@ public class HoldLift extends Command {
 
 	@Override
 	protected void end() {
-		lift.stopMotors();
+		Robot.lift.stopMotors();
 	}
 }
 
