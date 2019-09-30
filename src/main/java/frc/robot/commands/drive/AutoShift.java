@@ -29,6 +29,7 @@ public class AutoShift extends Command {
 		} else if (Math.abs(Robot.driveSystem.getLeftSpeed()) < 3.75 && Math.abs(Robot.driveSystem.getRightSpeed()) < 3.75) {
 			Robot.driveSystem.setGear(true);
 		}
+		//Robot.driveSystem.setGear(true);
 	}
   
 	// Make this return true when this Command no longer needs to run execute()
