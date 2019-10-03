@@ -20,13 +20,17 @@ public class SetWristAngle extends Command {
 
 		//requires(Robot.wrist);
 		requires(Robot.pidWrist);
-		requires(Robot.wrist);
 	}
 
 	@Override
 	protected void execute() {
-		Robot.pidWrist.setSetpoint(targetAngle);
-		//Robot.wrist.moveTowards(targetAngle);
+		if (Robot.oi.getEnablePIDWrist()){
+			Robot.pidWrist.enable();
+			Robot.pidWrist.setSetpoint(targetAngle);
+		}
+		else{
+			Robot.pidWrist.moveTowards(targetAngle);
+		}
 	}
 
 	@Override
@@ -38,11 +42,10 @@ public class SetWristAngle extends Command {
   	// subsystems is scheduled to run
   	@Override
  	protected void interrupted() {
-		Robot.wrist.stopMotors();
+		Robot.pidWrist.stopMotors();
 	}
 	  
 	@Override
 	protected void end() {
-		Robot.wrist.stopMotors();
 	}
 }

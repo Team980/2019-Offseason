@@ -19,18 +19,35 @@ public class SetLiftPosition extends Command {
 	public SetLiftPosition(double targetPosition) {
 		this.targetPosition = targetPosition;
 
-		requires(Robot.lift);
+		requires(Robot.pidLift);
+		requires(Robot.pidPositionalLift);
+	}
+
+	@Override
+	protected void initialize() {
+		if (Robot.oi.getEnablePIDLift()){
+			Robot.pidLift.enable();
+		}
+		else if (Robot.oi.getEnablePIDPositionalLift()){
+			Robot.pidPositionalLift.enable();
+		}
+		
 	}
 
 	@Override
 	protected void execute() {
-				// stuff is in periodic on lift now
-		Robot.lift.moveTowards(targetPosition);
+		if (Robot.oi.getEnablePIDPositionalLift()){
+			Robot.pidPositionalLift.setSetpoint(targetPosition);
+		}
+		else{
+			Robot.pidLift.moveTowards(targetPosition);
+		}
+		
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.lift.isAtTargetPosition(targetPosition);
+		return Robot.pidLift.isAtTargetPosition(targetPosition);
 	}
 
 	@Override

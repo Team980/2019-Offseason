@@ -7,26 +7,21 @@
 
 package frc.robot.commands.drive;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveSystem;
 
 public class TelopDrive extends Command {
 
-	private DriveSystem driveSystem;
-	private OI oi;
-
 	public TelopDrive() {
-		driveSystem  = Robot.driveSystem;
-		oi = Robot.oi;
-		
-		requires(driveSystem);
+	
+		requires(Robot.pidRightDrive);
+    	requires(Robot.pidLeftDrive);
+		requires(Robot.driveSystem);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		driveSystem.driveRobot(oi.getMove(), oi.getTurn());
+		Robot.driveSystem.driveRobot(Robot.oi.getMove(), Robot.oi.getTurn());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -38,6 +33,6 @@ public class TelopDrive extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		driveSystem.stopMotors();
+		Robot.driveSystem.stopMotors();
 	}
 }

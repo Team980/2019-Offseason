@@ -119,11 +119,6 @@ public class OI {
 
 		JoystickButton rightBumper = new JoystickButton(xBox, 6); // spit out hatch
 		rightBumper.whenPressed(new IncrementLiftPosition(-0.285));
-
-
-		JoystickButton pidEnabledSwitch = new JoystickButton(prajBox, 7);
-
-
 	}
 
 	public double getSuckInSpeed() {
@@ -151,6 +146,19 @@ public class OI {
 		double value = -xBox.getY(Hand.kLeft);
 		return applyDeadband(value, WRIST_DEADBAND);
 	}
+
+	//PID Activators
+	public boolean getEnablePIDWrist(){
+		return prajBox.getRawButton(2);//TODO: get actual button ids
+	}
+
+	public boolean getEnablePIDLift(){
+		return prajBox.getRawButton(3);
+	}
+	public boolean getEnablePIDPositionalLift(){
+		return prajBox.getRawButton(4);
+	}
+	
 
 	/**
      * Returns 0.0 if the given value is within the specified range around zero. The remaining range

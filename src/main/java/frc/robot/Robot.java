@@ -33,9 +33,8 @@ public class Robot extends TimedRobot {
 	public static PIDLeftDrive pidLeftDrive;
 	public static PIDRightDrive pidRightDrive;
 	public static EndEffector endEffector;
-	public static Lift lift;
 	public static PIDLift pidLift;
-	public static Wrist wrist;
+	public static PIDPositionalLift pidPositionalLift;
 	public static PIDWrist pidWrist;
 	public static double[] ypr = new double[3];
 
@@ -44,7 +43,6 @@ public class Robot extends TimedRobot {
 	private SendableChooser<AutoChoice> autoChooser;
 
 	private AutoShift autoShiftCommand;
-	private Command checkPID;
 
 	public static NetworkTable debugTable;
 
@@ -58,9 +56,8 @@ public class Robot extends TimedRobot {
 		pidLeftDrive = new PIDLeftDrive();
 		pidRightDrive = new PIDRightDrive();
 		endEffector = new EndEffector();
-		lift = new Lift();
 		pidLift = new PIDLift();
-		wrist = new Wrist();
+		pidPositionalLift = new PIDPositionalLift();
 		pidWrist = new PIDWrist();
 
 		oi = new OI();
@@ -93,10 +90,8 @@ public class Robot extends TimedRobot {
   	public void robotPeriodic() {
 		robotMap.imu.getYawPitchRoll(ypr);
 		
-		robotMap.wristPotentiometer.updateSpeed();
-
-		debugTable.getEntry("wrist angle").setNumber(wrist.currentAngle()); 
-		debugTable.getEntry("lift scaled height").setNumber(lift.currentPosition());
+		debugTable.getEntry("wrist angle").setNumber(pidWrist.currentAngle()); 
+		debugTable.getEntry("lift height").setNumber(robotMap.liftEncoder.getDistance());
 		debugTable.getEntry("lift encoder ticks").setNumber(robotMap.liftEncoder.getRaw());
 		debugTable.getEntry("yaw").setNumber(ypr[0]);
 		debugTable.getEntry("pitch").setNumber(ypr[1]);
@@ -107,6 +102,8 @@ public class Robot extends TimedRobot {
 
   	@Override
   	public void autonomousInit() {
+		driveSystem.setDefaultCommand(new TelopDrive());
+
 		// reset imu
 		//robotMap.imu.setYaw(0); UNDO
 
@@ -128,7 +125,7 @@ public class Robot extends TimedRobot {
   	@Override
   	public void teleopInit() {
 		// auto shifting
-		autoShiftCommand = new AutoShift(); // TODO: check if there is a better way to start & cancel this command
+		autoShiftCommand = new AutoShift();
 		autoShiftCommand.start();
 
 		JoystickButton forceLow = new JoystickButton(oi.throttle, 1);
@@ -162,8 +159,8 @@ public class Robot extends TimedRobot {
 
 		driveSystem.stopMotors();
 		endEffector.stopMotors(); 
-		lift.stopMotors();
-		wrist.stopMotors();
+		pidLift.stopMotors();
+		pidWrist.stopMotors();
 	}
 
 	@Override

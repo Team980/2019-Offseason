@@ -14,19 +14,19 @@ public class ManualWristControl extends Command {
 
     public ManualWristControl() {
 
-        requires(Robot.wrist);
         requires(Robot.pidWrist);
     }
 
     @Override
     protected void initialize() {
+        Robot.pidWrist.disable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
         double input = Robot.oi.getWristJoystickValue();
-        Robot.wrist.rawSet(input/3);
+        Robot.pidWrist.rawSet(input/3);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -39,13 +39,13 @@ public class ManualWristControl extends Command {
   	// subsystems is scheduled to run
   	@Override
  	protected void interrupted() {
-		Robot.wrist.stopMotors();
+		Robot.pidWrist.stopMotors();
 	}
 	  
     // Called once after isFinished returns true
     @Override
     protected void end() {
         //wrist.setPidEnabled(true);
-        Robot.wrist.stopMotors();
+        Robot.pidWrist.stopMotors();
     }
 }

@@ -15,17 +15,37 @@ public class HoldLift extends Command {
 	private double targetPosition;
 
 	public HoldLift() {
-		requires(Robot.lift);
+		requires(Robot.pidLift);
+		requires(Robot.pidPositionalLift);
 	}
 
 	@Override
 	protected void initialize() {
-		targetPosition = Robot.lift.currentPosition();
+		if (Robot.oi.getEnablePIDLift()){
+			Robot.pidLift.enable();
+		}
+		else if (Robot.oi.getEnablePIDPositionalLift()){
+			Robot.pidPositionalLift.enable();
+			targetPosition = Robot.pidPositionalLift.getPosition();
+		}
+		else{
+			targetPosition = Robot.pidLift.currentPosition();
+		}
+		
 	}
 
 	@Override
 	protected void execute() {
-		Robot.lift.moveTowards(targetPosition);
+		if (Robot.oi.getEnablePIDLift()){
+			Robot.pidLift.setSetpoint(0);
+		}
+		else if (Robot.oi.getEnablePIDPositionalLift()){
+			Robot.pidPositionalLift.setSetpoint(targetPosition);
+		}
+		else{
+			Robot.pidLift.moveTowards(targetPosition);
+		}
+		
 	}
 
 	@Override
@@ -35,7 +55,7 @@ public class HoldLift extends Command {
 
 	@Override
 	protected void end() {
-		Robot.lift.stopMotors();
+		Robot.pidLift.stopMotors();
 	}
 }
 

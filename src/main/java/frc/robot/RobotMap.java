@@ -1,9 +1,8 @@
 package frc.robot;
 
 
-import java.util.Arrays;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -104,7 +103,8 @@ public class RobotMap {
 	public WPI_TalonSRX liftMotor;
 	public Encoder liftEncoder;
 
-	public static final double ENCODER_DISTANCE_PER_TICK = Util.TAU * (2.0/12) / 2048;
+	public static final double ENCODER_DISTANCE_PER_TICK = 2 * Math.PI * (2.0/12) / 2048;
+	public double liftDistancePerTick = 2 * Math.PI * (2.0/12) / 2048; //TODO: find radius of lift pulley
 
 	// wrist
 	public Potentiometer wristPotentiometer;
@@ -140,19 +140,20 @@ public class RobotMap {
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
 		rightDriveEncoder.setDistancePerPulse(ENCODER_DISTANCE_PER_TICK);
 
-		shifter = new Solenoid(0); // FIXME: might be wrong
+		shifter = new Solenoid(0);
 
 		// end effector
-		endEffectorIntakeMotor = new WPI_TalonSRX(13); // FIXME: probably
-
+		endEffectorIntakeMotor = new WPI_TalonSRX(13);
+		 
 		// lift
 		liftMotor = new WPI_TalonSRX(15);
 		liftEncoder = new Encoder(0, 1, false, CounterBase.EncodingType.k4X);
+		liftEncoder.setDistancePerPulse(liftDistancePerTick);
 
 		// wrist
 		wristPotentiometer = new Potentiometer(0);
 		wristMotor = new WPI_TalonSRX(11);
-		wristMotor.setName("wrist contreller");
+		wristMotor.setName("wrist controller");
 
 		// sensors
 

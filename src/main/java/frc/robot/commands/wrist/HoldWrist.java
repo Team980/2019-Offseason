@@ -18,19 +18,29 @@ public class HoldWrist extends Command {
 	public HoldWrist() {
 
 		requires(Robot.pidWrist);
-		requires(Robot.wrist);
 	}
 
 	@Override
 	protected void initialize() {
-		targetPosition = Robot.pidWrist.getPosition();
+		if (Robot.oi.getEnablePIDWrist()){
+			Robot.pidWrist.enable();
+			targetPosition = Robot.pidWrist.getPosition();
+		}
+		else{
+			targetPosition = Robot.pidWrist.currentAngle();
+		}
+		
 		//Robot.debugTable.getEntry("wrist target").setNumber(targetPosition);
 	}
 
 	@Override
 	protected void execute() {
-		Robot.pidWrist.setSetpoint(targetPosition);
-		//System.out.println("hold command" + targetPosition);
+		if (Robot.oi.getEnablePIDWrist()){
+			Robot.pidWrist.setSetpoint(targetPosition);
+		}
+		else{
+			Robot.pidWrist.moveTowards(targetPosition);
+		}
 	}
 
 	@Override

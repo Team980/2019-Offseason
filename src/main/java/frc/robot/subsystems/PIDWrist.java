@@ -19,6 +19,13 @@ import frc.robot.sensors.Potentiometer;
 public class PIDWrist extends PIDSubsystem {
   private SpeedController wristMotor;
   private Potentiometer wristPot;
+
+  private static final double DEADBAND = 7;
+
+  // the minimum angles so we don't crash into ourselves
+  private static final double MINIMUM_ANGLE = 30; 
+  private static final double MAXIMUM_ANGLE = 288;
+
   /**
    * Add your docs here.
    */
@@ -32,8 +39,8 @@ public class PIDWrist extends PIDSubsystem {
     // to
     // enable() - Enables the PID controller.
     enable();
-    setInputRange(30 , 288);
-    setAbsoluteTolerance(2);
+    setInputRange(MINIMUM_ANGLE , MAXIMUM_ANGLE);
+    setAbsoluteTolerance(DEADBAND);
   }
 
   @Override
@@ -57,4 +64,50 @@ public class PIDWrist extends PIDSubsystem {
     // e.g. yourMotor.set(output);
     wristMotor.set(output);
   }
+
+  public void rawSet(double input) {
+		wristMotor.set(input);
+	}
+	public void set(double input) {
+    if ((input < 0 && currentAngle() > MINIMUM_ANGLE) || (input > 0 && currentAngle() < MAXIMUM_ANGLE)) {
+      wristMotor.set(input);
+    } // the softstop check needs to be here where the motor is running, this way both manual and automation use the soft stop protection
+
+   else {
+      wristMotor.set(0);
+    }
+ }
+
+ public void moveTowards(double targetAngle) {
+       double difference = targetAngle - currentAngle();
+
+       double input = 1.5 * difference / 260 ; // figure out which velocity we want to be
+
+    if (isAtTargetAngle(targetAngle)) {
+      input = 0;
+   } 
+    
+    set(input);
+ }
+
+ public boolean isAtTargetAngle(double targetAngle) {
+   double distance = Math.abs(targetAngle - currentAngle());
+   Robot.debugTable.getEntry("distance").setNumber(distance);
+
+   return distance < DEADBAND;
+ }
+
+ public double currentAngle() {
+   return wristPot.getAngle();
+ }
+
+ public void stopMotors() {
+   if (Robot.oi.getEnablePIDWrist()){
+    disable();
+   }
+   //pidController.setSetpoint(0);
+   //wristMotor.stopMotor();
+   wristMotor.set(0);
+ }
+
 }
