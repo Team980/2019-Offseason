@@ -17,36 +17,28 @@ import frc.robot.commands.lift.HoldLift;
  * Add your docs here.
  */
 public class PIDLift extends PIDSubsystem {
-  private static final double EXCLUSION_MIN = 0.03;
+  private static final double EXCLUSION_MIN = 0.03;//TODO: get actual distances in ft
 	private static final double EXCLUSION_MAX = 0.97;
-	private double minSpeedUp = .35;
+	private double minSpeedUp = .35;//used directly, do not convert
 	private double minSpeedDown = -.15;
-	private double maxLiftSpeed = 5; //TODO: get lift max speed
-
-	// private static final double EXCLUSION_MIN = 0.2;
-	// private static final double EXCLUSION_MAX = 1.1;
+	private double maxLiftSpeed = 5; //TODO: get lift max speed ft/s
+	private double fullLiftDistance = 4;//TODO: get the full range of lift motion in ft
+  private static final double DEADBAND = 0.04;//TODO: use distance values for deadband
 
 	// private static final double ENCODER_MIN_TICK_COUNT = -20_000;
 
-    // private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: determine experimentall
-     private static final double DEADBAND = 0.04;
-	
-
   private SpeedController liftMotor;
   private Encoder liftEncoder;
-  /**
-   * Add your docs here.
-   */
-  public PIDLift() {
+	
+	public PIDLift() {//Velocity controlled lift
     // Intert a subsystem name and PID values here
     super("SubsystemName", 1, 0, 0);
 
     liftMotor = Robot.robotMap.liftMotor;
     liftEncoder = Robot.robotMap.liftEncoder;
     // Use these to get going:
-    // setSetpoint() - Sets where the PID controller should move the system
-    // to
-    // enable() - Enables the PID controller.
+    // setSetpoint() - Sets where the PID controller should move the system to
+    enable();// - Enables the PID controller.
   }
 
   @Override
@@ -58,8 +50,7 @@ public class PIDLift extends PIDSubsystem {
 
   @Override
   protected double returnPIDInput() {
-    // Return your input value for the PID loop
-    // e.g. a sensor, like a potentiometer:
+    // Return your input value for the PID loop e.g. a sensor, like a potentiometer:
     // yourPot.getAverageVoltage() / kYourMaxVoltage;
     return liftEncoder.getRate();
   }
@@ -71,8 +62,10 @@ public class PIDLift extends PIDSubsystem {
     liftMotor.set(output);
   }
 
+
+	//no velocity control option, but velocity control uses a lot of these methods as well
   public void rawSet(double input) {
-		liftMotor.set(input); // no holds barred
+		liftMotor.set(input); // manual override
 	}
 
 	public void set(double input) { 
@@ -80,7 +73,7 @@ public class PIDLift extends PIDSubsystem {
 			liftMotor.set(input);
 		} 
 		else {
-			setSetpoint(0);
+			liftMotor.set(0);
 		}
   }
   
@@ -106,13 +99,13 @@ public class PIDLift extends PIDSubsystem {
 			input = 0;
 		} 
 		else if (distance <= 0 && (distance > minSpeedDown)){
-				input = minSpeedDown;
+			input = minSpeedDown;
 		}
 		else if (distance > 0 && (distance < minSpeedUp)){
-				input = minSpeedUp;
+			input = minSpeedUp;
 		}
 		else {
-			input = distance;
+			input = distance / fullLiftDistance;
 		}
     if (Robot.oi.getEnablePIDLift()){
       PIDSet(input);
@@ -134,12 +127,9 @@ public class PIDLift extends PIDSubsystem {
 
 	public void stopMotors() {
     if (Robot.oi.getEnablePIDLift()){
-      setSetpoint(0);
+     disable();
     }
-    else{
-      liftMotor.set(0);
-    }
-		
+     liftMotor.set(0);
 	}
 
 }

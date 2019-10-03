@@ -13,19 +13,21 @@ import frc.robot.Robot;
 public class ManualLiftControl extends Command {
 
     public ManualLiftControl() {
-         requires(Robot.lift);
+         requires(Robot.pidLift);
+         requires(Robot.pidPositionalLift);
     }
 
     @Override
     public void initialize() {
         Robot.pidLift.disable();
+        Robot.pidPositionalLift.disable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.debugTable.getEntry("lift control speed").setNumber(Robot.lift.getSpeed());
-        Robot.lift.rawSet(Robot.oi.getLiftJoystickValue());
+//        Robot.debugTable.getEntry("lift control speed").setNumber(Robot.lift.getSpeed());
+        Robot.pidLift.rawSet(Robot.oi.getLiftJoystickValue());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,14 +40,12 @@ public class ManualLiftControl extends Command {
   	// subsystems is scheduled to run
   	@Override
  	protected void interrupted() {
-        Robot.lift.stopMotors();
-        Robot.pidLift.enable();
+        Robot.pidLift.stopMotors();
     }
     
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.lift.stopMotors();
-        Robot.pidLift.enable();
+        Robot.pidLift.stopMotors();
     }
 }

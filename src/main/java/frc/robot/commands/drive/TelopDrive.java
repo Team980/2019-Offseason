@@ -17,6 +17,11 @@ public class TelopDrive extends Command {
     	requires(Robot.pidLeftDrive);
 		requires(Robot.driveSystem);
 	}
+	// Called just before this Command runs the first time
+	@Override
+	protected void initialize() {
+		System.out.println("Compeition Drive activated");
+	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
@@ -33,6 +38,5 @@ public class TelopDrive extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		Robot.driveSystem.stopMotors();
 	}
 }

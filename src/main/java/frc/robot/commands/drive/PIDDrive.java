@@ -25,6 +25,7 @@ public class PIDDrive extends Command {
   protected void initialize() {
     Robot.pidLeftDrive.enable();
     Robot.pidRightDrive.enable();
+    System.out.println("PID Drive activated");
   }
 
   // Called repeatedly when this Command is scheduled to run

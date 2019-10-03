@@ -22,6 +22,8 @@ public class PIDWrist extends PIDSubsystem {
 
   private static final double DEADBAND = 7;
 
+  private double minWristSpeed = 0.35;// minSpeed for P only control
+
   // the minimum angles so we don't crash into ourselves
   private static final double MINIMUM_ANGLE = 30; 
   private static final double MAXIMUM_ANGLE = 288;
@@ -65,9 +67,12 @@ public class PIDWrist extends PIDSubsystem {
     wristMotor.set(output);
   }
 
+//non PID control option
+
   public void rawSet(double input) {
-		wristMotor.set(input);
-	}
+		wristMotor.set(input);//manual override
+  }
+  
 	public void set(double input) {
     if ((input < 0 && currentAngle() > MINIMUM_ANGLE) || (input > 0 && currentAngle() < MAXIMUM_ANGLE)) {
       wristMotor.set(input);
@@ -82,6 +87,13 @@ public class PIDWrist extends PIDSubsystem {
        double difference = targetAngle - currentAngle();
 
        double input = 1.5 * difference / 260 ; // figure out which velocity we want to be
+
+       if (difference > 0 && input < minWristSpeed){
+       input = minWristSpeed;
+      }
+      else if (difference < 0 && input > -minWristSpeed){
+       input = -minWristSpeed;
+      }
 
     if (isAtTargetAngle(targetAngle)) {
       input = 0;
@@ -105,8 +117,6 @@ public class PIDWrist extends PIDSubsystem {
    if (Robot.oi.getEnablePIDWrist()){
     disable();
    }
-   //pidController.setSetpoint(0);
-   //wristMotor.stopMotor();
    wristMotor.set(0);
  }
 

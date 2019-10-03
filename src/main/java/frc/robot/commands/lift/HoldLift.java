@@ -23,12 +23,16 @@ public class HoldLift extends Command {
 	protected void initialize() {
 		if (Robot.oi.getEnablePIDLift()){
 			Robot.pidLift.enable();
+			Robot.pidPositionalLift.disable();
 		}
 		else if (Robot.oi.getEnablePIDPositionalLift()){
-			Robot.pidPositionalLift.enable();
+			Robot.pidLift.enable();Robot.pidPositionalLift.enable();
+			Robot.pidLift.disable();
 			targetPosition = Robot.pidPositionalLift.getPosition();
 		}
 		else{
+			Robot.pidPositionalLift.disable();
+			Robot.pidLift.disable();
 			targetPosition = Robot.pidLift.currentPosition();
 		}
 		
@@ -55,7 +59,6 @@ public class HoldLift extends Command {
 
 	@Override
 	protected void end() {
-		Robot.pidLift.stopMotors();
 	}
 }
 

@@ -56,4 +56,10 @@ public class PIDPositionalLift extends PIDSubsystem {
     // e.g. yourMotor.set(output);
     Robot.robotMap.liftMotor.set(output);
   }
+
+  public void stopMotors() {
+    disable();
+    liftMotor.set(0);
+	}
+
 }

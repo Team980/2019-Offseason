@@ -11,15 +11,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Trigger;
-import frc.robot.commands.drive.StopDriveTrain;
 import frc.robot.commands.trophy_truck.TrophyTruckRetract;
 import frc.robot.commands.trophy_truck.TrophyTruckDeploy;
 import frc.robot.commands.lift.IncrementLiftPosition;
 import frc.robot.commands.lift.SetLiftPosition;
 
 import frc.robot.commands.wrist.SetWristAngle;
-
+import frc.robot.commands.drive.DisableRobot;
 import frc.robot.commands.drive.PIDDrive;
+import frc.robot.commands.drive.TelopDrive;
 
 
 /**
@@ -47,10 +47,11 @@ public class OI {
 
 		// configurations
 		JoystickButton enablePIDDrive = new JoystickButton(prajBox, 1);//need to identify the number for the right switch
-		enablePIDDrive.whileHeld(new PIDDrive());
+		enablePIDDrive.whenPressed(new PIDDrive());
+		enablePIDDrive.whenReleased(new TelopDrive());
 
-		JoystickButton stopAuto = new JoystickButton(throttle, 7);
-		stopAuto.whenPressed(new StopDriveTrain());
+		JoystickButton disableRobot = new JoystickButton(throttle, 7);
+		disableRobot.whenPressed(new DisableRobot());
 		
 		JoystickButton aButton = new JoystickButton(xBox, 1); // ball floor pickup
 		aButton.whenPressed(new SetWristAngle(200));
@@ -108,7 +109,7 @@ public class OI {
 //		povUp.whenActive(new SetLiftPosition(0.35));
 
 
-		JoystickButton leftThumb = new JoystickButton(xBox, 9); // battle configuration
+		JoystickButton leftThumb = new JoystickButton(xBox, 9); // stowed configuration
 		leftThumb.whenPressed(new SetWristAngle(287)); 
 		leftThumb.whenPressed(new SetLiftPosition(0.97));
 

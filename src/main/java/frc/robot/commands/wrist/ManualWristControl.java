@@ -45,7 +45,6 @@ public class ManualWristControl extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        //wrist.setPidEnabled(true);
         Robot.pidWrist.stopMotors();
     }
 }

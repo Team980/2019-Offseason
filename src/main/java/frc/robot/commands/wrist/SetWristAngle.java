@@ -23,9 +23,19 @@ public class SetWristAngle extends Command {
 	}
 
 	@Override
-	protected void execute() {
+    protected void initialize() {
 		if (Robot.oi.getEnablePIDWrist()){
 			Robot.pidWrist.enable();
+			System.out.println("PID Wrist Active");
+		}
+		else{
+			System.out.println("Competition Wrist Active");
+		}
+    }
+
+	@Override
+	protected void execute() {
+		if (Robot.oi.getEnablePIDWrist()){
 			Robot.pidWrist.setSetpoint(targetAngle);
 		}
 		else{
@@ -35,14 +45,18 @@ public class SetWristAngle extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.pidWrist.onTarget();
+		if (Robot.oi.getEnablePIDWrist()){
+			return false;
+		}
+		else{
+			return Robot.pidWrist.onTarget();
+		}
 	}
 
   	// Called when another command which requires one or more of the same
   	// subsystems is scheduled to run
   	@Override
  	protected void interrupted() {
-		Robot.pidWrist.stopMotors();
 	}
 	  
 	@Override

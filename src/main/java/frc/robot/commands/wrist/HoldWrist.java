@@ -25,9 +25,12 @@ public class HoldWrist extends Command {
 		if (Robot.oi.getEnablePIDWrist()){
 			Robot.pidWrist.enable();
 			targetPosition = Robot.pidWrist.getPosition();
+			System.out.println("PID Wrist Active");
 		}
 		else{
+			Robot.pidWrist.disable();
 			targetPosition = Robot.pidWrist.currentAngle();
+			System.out.println("Competition Wrist Active");
 		}
 		
 		//Robot.debugTable.getEntry("wrist target").setNumber(targetPosition);

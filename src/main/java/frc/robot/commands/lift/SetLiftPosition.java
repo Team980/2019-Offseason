@@ -27,9 +27,18 @@ public class SetLiftPosition extends Command {
 	protected void initialize() {
 		if (Robot.oi.getEnablePIDLift()){
 			Robot.pidLift.enable();
+			Robot.pidPositionalLift.disable();
+			System.out.println("Lift velocity control active");
 		}
 		else if (Robot.oi.getEnablePIDPositionalLift()){
-			Robot.pidPositionalLift.enable();
+			Robot.pidLift.enable();Robot.pidPositionalLift.enable();
+			Robot.pidLift.disable();
+			System.out.println("Lift positional PID control active");
+		}
+		else{
+			Robot.pidPositionalLift.disable();
+			Robot.pidLift.disable();
+			System.out.println("Competition Lift active");
 		}
 		
 	}
@@ -47,11 +56,15 @@ public class SetLiftPosition extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.pidLift.isAtTargetPosition(targetPosition);
+		if (Robot.oi.getEnablePIDPositionalLift()){
+			return false;
+		}
+		else{
+			return Robot.pidLift.isAtTargetPosition(targetPosition);
+		}
 	}
 
 	@Override
 	protected void end() {
-		Robot.lift.stopMotors();
 	}
 }
