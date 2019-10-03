@@ -80,8 +80,8 @@ public class DriveSystem extends Subsystem {
 	}
 
 	public void stopMotors() {
-		leftMotor.stopMotor();
-		rightMotor.stopMotor();
+		leftMotor.set(0);
+		rightMotor.set(0);
 	}
 
 	public enum Gear {

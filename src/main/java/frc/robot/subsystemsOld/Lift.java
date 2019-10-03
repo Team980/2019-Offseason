@@ -21,14 +21,14 @@ public class Lift extends Subsystem {
 	private static final double EXCLUSION_MAX = 0.97;
 	private double minSpeedUp = .35;
 	private double minSpeedDown = -.15;
-	private double maxLiftSpeed = 5; //TODO: get lift max speed
+	private double maxLiftSpeed = 5; //get lift max speed
 
 	// private static final double EXCLUSION_MIN = 0.2;
 	// private static final double EXCLUSION_MAX = 1.1;
 
 	// private static final double ENCODER_MIN_TICK_COUNT = -20_000;
 
-    // private static final double ENCODER_MAX_TICK_COUNT = 22_000; // TODO: determine experimentall
+    // private static final double ENCODER_MAX_TICK_COUNT = 22_000; // determine experimentall
      private static final double DEADBAND = 0.04;
 	
 	private Encoder liftEncoder; 

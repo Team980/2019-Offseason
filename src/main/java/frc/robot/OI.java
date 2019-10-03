@@ -110,8 +110,8 @@ public class OI {
 
 
 		JoystickButton leftThumb = new JoystickButton(xBox, 9); // stowed configuration
-		leftThumb.whenPressed(new SetWristAngle(287)); 
-		leftThumb.whenPressed(new SetLiftPosition(0.97));
+		leftThumb.whenPressed(new SetWristAngle(45)); 
+		leftThumb.whenPressed(new SetLiftPosition(4));//TODO: need full height of the lift in ft
 
 
 		// snag & release hatch

@@ -115,8 +115,6 @@ public class PIDLift extends PIDSubsystem {
     }
 		
 	}
-
-
 	public double getSpeed() {
 		return liftEncoder.getRate();
 	}

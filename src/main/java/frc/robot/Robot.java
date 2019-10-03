@@ -21,6 +21,7 @@ import frc.robot.auto.CrossHabAuto;
 import frc.robot.commands.drive.AutoShift;
 import frc.robot.commands.drive.TelopDrive;
 import frc.robot.commands.lift.ManualLiftControl;
+import frc.robot.commands.wrist.CalcWristRate;
 import frc.robot.commands.wrist.ManualWristControl;
 import frc.robot.subsystems.*;
 
@@ -36,13 +37,15 @@ public class Robot extends TimedRobot {
 	public static PIDLift pidLift;
 	public static PIDPositionalLift pidPositionalLift;
 	public static PIDWrist pidWrist;
-	public static double[] ypr = new double[3];
+	public static double[] ypr;
 
 	public static OI oi;
 
 	private SendableChooser<AutoChoice> autoChooser;
 
 	private AutoShift autoShiftCommand;
+
+	public Command wristRate;
 
 	public static NetworkTable debugTable;
 
@@ -59,7 +62,7 @@ public class Robot extends TimedRobot {
 		pidLift = new PIDLift();
 		pidPositionalLift = new PIDPositionalLift();
 		pidWrist = new PIDWrist();
-
+		ypr = new double[3];
 		oi = new OI();
 		robotMap.liftEncoder.reset();
 
@@ -84,6 +87,9 @@ public class Robot extends TimedRobot {
 		JoystickButton stopLiftAndWristManualControl = new JoystickButton(oi.xBox, 7); // back button
 		stopLiftAndWristManualControl.cancelWhenPressed(manualLiftCommand);
 		stopLiftAndWristManualControl.cancelWhenPressed(manualWristCommand);
+
+		wristRate = new CalcWristRate();
+		wristRate.start();
 	}
 
   	@Override
@@ -91,6 +97,7 @@ public class Robot extends TimedRobot {
 		robotMap.imu.getYawPitchRoll(ypr);
 		
 		debugTable.getEntry("wrist angle").setNumber(pidWrist.currentAngle()); 
+		debugTable.getEntry("wrist rate").setNumber(robotMap.wristPotentiometer.getRate()); 
 		debugTable.getEntry("lift height").setNumber(robotMap.liftEncoder.getDistance());
 		debugTable.getEntry("lift encoder ticks").setNumber(robotMap.liftEncoder.getRaw());
 		debugTable.getEntry("yaw").setNumber(ypr[0]);
@@ -98,6 +105,7 @@ public class Robot extends TimedRobot {
 		debugTable.getEntry("roll").setNumber(ypr[2]);
 	
 		Scheduler.getInstance().run();
+
   	}
 
   	@Override

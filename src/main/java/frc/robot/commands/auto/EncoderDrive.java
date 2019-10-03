@@ -9,54 +9,62 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveSystem;
 
 public class EncoderDrive extends Command {
   
-	private static final double FORWARD_SPEED = 0.75;
+	private static final double minimumSpeed = 0.3;
+	private double pCoefficient = 2;
+	private double yawCorrectCoefficient = 4;
 
-	private DriveSystem driveSystem;
+	private double distanceRemaining;
 
-	private double leftStartDistance;
-	private double rightStartDistance;
+	private double distance;
+	private double speed;
 
-	private double displacement;
+	public EncoderDrive(double distance) {
+		this.distance = distance;
 
-	public EncoderDrive(double displacement) {
-		this.displacement = displacement;
-
-        driveSystem = Robot.driveSystem;
-        requires(driveSystem);
+         requires(Robot.driveSystem);
 	}
 
     @Override
 	protected void initialize() {
-		leftStartDistance = driveSystem.getLeftDistance();
-		rightStartDistance = driveSystem.getRightDistance();
+		Robot.robotMap.leftDriveEncoder.reset();
+		Robot.robotMap.rightDriveEncoder.reset();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		driveSystem.driveRobot(Math.copySign(FORWARD_SPEED, displacement), 0);
+		if (Robot.driveSystem.getLeftDistance() <= Robot.driveSystem.getRightDistance()){
+			distanceRemaining = distance - Robot.driveSystem.getLeftDistance();
+		}
+		else{
+			distanceRemaining = distance - Robot.driveSystem.getRightDistance();
+
+		}
+		speed = pCoefficient * distanceRemaining / distance;
+		if (speed < minimumSpeed){
+			speed = minimumSpeed;
+		}
+		Robot.driveSystem.driveRobot(speed , -yawCorrectCoefficient * Robot.ypr[0] / 180);
     }
   
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		if (displacement > 0) {
-			return leftStartDistance + displacement > driveSystem.getLeftDistance() 
-				|| rightStartDistance + displacement > driveSystem.getRightDistance();
-		} else {
-			return leftStartDistance - displacement < driveSystem.getLeftDistance() 
-				|| rightStartDistance - displacement < driveSystem.getRightDistance();
+		if (distanceRemaining < 1 && distanceRemaining > -1) {
+			return true;
+		} 
+		else {
+			return false;
 		}
 	}
 
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-		driveSystem.stopMotors();
+		Robot.driveSystem.stopMotors();
 	}
 
 }

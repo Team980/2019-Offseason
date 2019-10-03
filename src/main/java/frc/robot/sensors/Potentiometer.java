@@ -1,7 +1,5 @@
 package frc.robot.sensors;
 
-import java.util.ArrayList;
-
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -19,32 +17,27 @@ public class Potentiometer implements PIDSource {
 
     private PIDSourceType sourceType;
     
-    double prevPosition;
-    double currPosition;
-
+    private double rate;
+ 
     public Potentiometer(int channel) {
         sourceType = PIDSourceType.kDisplacement;
 
         analogInput = new AnalogInput(channel);
 
-        prevPosition = getAngle();
-        currPosition = getAngle();
+        rate = 0;
     }
 
     public void updateSpeed() {
         Robot.debugTable.getEntry("wrist speed 3").setNumber(getRate());
 
-        prevPosition = currPosition;
-        currPosition = getAngle();
     }
 
     public double getRate() {
-        double rate = (currPosition - prevPosition) / REFRESH_INTERVAL_SECONDS;
-        if (Math.abs(rate) < 5) {
-            return 0;
-        } else {
-            return rate;
-        }
+       return rate;
+    }
+
+    public void setRate(double rate){
+        this.rate = rate;
     }
 
     public double getAngle() {

@@ -42,7 +42,7 @@ public class Wrist extends Subsystem {
 		
 
 		/*wristPotentiometer.setPIDSourceType(PIDSourceType.kRate);
-		pidController = new PIDController(0.0001, 0, 0, wristPotentiometer, wristMotor); // TODO: set constants
+		pidController = new PIDController(0.0001, 0, 0, wristPotentiometer, wristMotor); // set constants
 		pidController.setName("wrist pid controller");
 		pidController.enable();
 
@@ -73,7 +73,7 @@ public class Wrist extends Subsystem {
 	 		input = 0;
 		} 
 		 
-		else if (targetAngle > 270 && Math.abs(difference) < 30) { // TODO: hack until pid
+		else if (targetAngle > 270 && Math.abs(difference) < 30) { // hack until pid
 	 		input = 0.6;
 	 	}
 
@@ -139,7 +139,7 @@ public class Wrist extends Subsystem {
 
 	// accepts scaled velocity
 	/*public void setVelocity(double scaledVelocity) {
-  		pidController.setSetpoint(scaledVelocity*MAX_SPEED_DEGREES_PER_SECOND); // TODO: Exclusion
+  		pidController.setSetpoint(scaledVelocity*MAX_SPEED_DEGREES_PER_SECOND); // Exclusion
 	}*/
 
     /*private boolean isInExclusionZone() {

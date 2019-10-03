@@ -7,8 +7,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import frc.robot.Robot;
 import frc.robot.commands.lift.HoldLift;
@@ -17,8 +15,6 @@ import frc.robot.commands.lift.HoldLift;
  * Add your docs here.
  */
 public class PIDPositionalLift extends PIDSubsystem {
-  private SpeedController liftMotor;
-  private Encoder liftEncoder;
 
   /**
    * Add your docs here.
@@ -30,9 +26,6 @@ public class PIDPositionalLift extends PIDSubsystem {
     // setSetpoint() - Sets where the PID controller should move the system
     // to
     // enable() - Enables the PID controller.
-    liftMotor = Robot.robotMap.liftMotor;
-    liftEncoder = Robot.robotMap.liftEncoder;
-
   }
 
   @Override
@@ -59,7 +52,7 @@ public class PIDPositionalLift extends PIDSubsystem {
 
   public void stopMotors() {
     disable();
-    liftMotor.set(0);
+    Robot.robotMap.liftMotor.set(0);
 	}
 
 }

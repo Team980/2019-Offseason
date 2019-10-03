@@ -9,32 +9,33 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.Util;
-import frc.robot.subsystems.DriveSystem;
 
 public class IMUTurn extends Command {
 
    private static final double DEADBAND = 1.0; // degrees
 
-   private static final double ABSOLUTE_TURN_SPEED = 0.5;
-
-   private DriveSystem driveSystem;
+   private static final double minTurnSpeed = 0.3;
+   private double pCoefficient = 2;
 
    private double targetAngle;
+   private double turnSpeed;
 
 	public IMUTurn(double targetAngle) {
-       driveSystem = Robot.driveSystem;
-
+   
        this.targetAngle = targetAngle;
 
-       requires(driveSystem);
+       requires(Robot.driveSystem);
    }
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
        // figure out if we want to turn clockwise or counterclockwise
-       driveSystem.driveRobot(0, Math.copySign(ABSOLUTE_TURN_SPEED, Robot.ypr[0] - targetAngle));
+       turnSpeed = -1 * pCoefficient * (targetAngle - Robot.ypr[0]) / 180; //imu angle is reverse sign from the control stick
+       if (turnSpeed < minTurnSpeed){
+         turnSpeed = minTurnSpeed;
+       }
+       Robot.driveSystem.driveRobot(0, turnSpeed);
    }
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -46,7 +47,7 @@ public class IMUTurn extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-        driveSystem.stopMotors();
+        Robot.driveSystem.stopMotors();
 	}
 
 }
