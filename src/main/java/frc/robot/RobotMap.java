@@ -37,7 +37,7 @@ public class RobotMap {
 	public WPI_TalonSRX wristMotor;
 
 	// sensors
-	public PigeonIMU imu;
+	//public PigeonIMU imu;
 	public Limelight limelight;
 
 	public Solenoid trophyTruckSolenoid;
@@ -84,7 +84,7 @@ public class RobotMap {
 		// sensors
 
 		
-		imu = new PigeonIMU(rightBack);
+		//imu = new PigeonIMU(rightBack);
 		limelight = new Limelight();
 
 		trophyTruckSolenoid = new Solenoid(2);

@@ -94,7 +94,7 @@ public class Robot extends TimedRobot {
 
   	@Override
   	public void robotPeriodic() {
-		robotMap.imu.getYawPitchRoll(ypr);
+		//robotMap.imu.getYawPitchRoll(ypr);
 		
 		debugTable.getEntry("wrist angle").setNumber(pidWrist.currentAngle()); 
 		debugTable.getEntry("wrist rate").setNumber(robotMap.wristPotentiometer.getRate()); 
