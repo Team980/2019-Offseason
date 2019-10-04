@@ -7,38 +7,15 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
 
-import edu.wpi.first.wpilibj.SpeedController;
-
-
 public class DriveSystem extends Subsystem {
-/*	private static final double P = 0.01;
-	private static final double I = 0;
-	private static final double D = 0;
-	private static final double MAX_VELOCITY = 17;*/ 
-
 	private DifferentialDrive differentialDrive;
-
-	private Encoder leftEncoder; 
-	private Encoder rightEncoder; 
-
-	private Solenoid shifterSolenoid;
-
-	private SpeedController leftMotor;
-	private SpeedController rightMotor;
 
 	public DriveSystem() {
 		differentialDrive = new DifferentialDrive(Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
-	
-		leftEncoder = Robot.robotMap.leftDriveEncoder; 
-		rightEncoder = Robot.robotMap.rightDriveEncoder;
-		
-		shifterSolenoid = Robot.robotMap.shifter;
 	}
 
 	@Override
@@ -51,32 +28,32 @@ public class DriveSystem extends Subsystem {
 	}
 
 	public double getLeftDistance() {
-		return leftEncoder.getDistance();
+		return Robot.robotMap.leftDriveEncoder.getDistance();
 	}
 
 	public double getRightDistance() {
-		return rightEncoder.getDistance();
+		return Robot.robotMap.rightDriveEncoder.getDistance();
 	}
 
 	public void resetEncoderDistance() {
-		leftEncoder.reset();
-		rightEncoder.reset();
+		Robot.robotMap.leftDriveEncoder.reset();
+		Robot.robotMap.rightDriveEncoder.reset();
 	}
 
 	public double getLeftSpeed() {
-		return leftEncoder.getRate();
+		return Robot.robotMap.leftDriveEncoder.getRate();
 	}
 
 	public double getRightSpeed() {
-		return rightEncoder.getRate();
+		return Robot.robotMap.rightDriveEncoder.getRate();
 	}
 
 	public Gear getGear() {
-		return shifterSolenoid.get()? Gear.LOW : Gear.HIGH; // returns Gear.LOW when shifterSolenoid.get() is true
+		return Robot.robotMap.shifter.get()? Gear.LOW : Gear.HIGH; // returns Gear.LOW when shifterSolenoid.get() is true
 	}	
 
 	public void setGear(boolean gear) {
-		shifterSolenoid.set(gear);
+		Robot.robotMap.shifter.set(gear);
 	}
 
 	public void stopMotors() {

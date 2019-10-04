@@ -48,7 +48,7 @@ public class DriveTowardsBallUntilBallOutOfView extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return !limelight.hasTarget(); // we finish when we lose the target, FIXME: could finish when area becomes too large
+        return !limelight.hasTarget(); // we finish when we lose the target, could finish when area becomes too large
     }
 
     // Called once after isFinished returns true

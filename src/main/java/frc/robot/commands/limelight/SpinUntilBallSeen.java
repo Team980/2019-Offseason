@@ -9,22 +9,18 @@ package frc.robot.commands.limelight;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.Util;
 import frc.robot.sensors.Limelight;
-import frc.robot.subsystems.DriveSystem;
 
 
 public class SpinUntilBallSeen extends Command {
     private static final double TURN_SPEED = 0.5;
 
-    private DriveSystem driveSystem;
     private Limelight limelight;
 
     SpinUntilBallSeen() {
-        driveSystem = Robot.driveSystem;
         limelight = Robot.robotMap.limelight;
 
-        requires(driveSystem);
+        requires(Robot.driveSystem);
     }
 
     @Override
@@ -40,7 +36,7 @@ public class SpinUntilBallSeen extends Command {
      */
     @Override
     protected void execute() {
-        driveSystem.driveRobot(0, TURN_SPEED);
+        Robot.driveSystem.driveRobot(0, TURN_SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -52,6 +48,6 @@ public class SpinUntilBallSeen extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        driveSystem.stopMotors();
+        Robot.driveSystem.stopMotors();
     }
 }

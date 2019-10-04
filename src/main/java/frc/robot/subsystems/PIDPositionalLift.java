@@ -24,7 +24,7 @@ public class PIDPositionalLift extends PIDSubsystem {
    */
   public PIDPositionalLift() {
     // Intert a subsystem name and PID values here
-    super("SubsystemName", 2, 0, 0);
+    super("SubsystemName", 2, 0, 0);//adjust the P vaue up to give it more speed and have enough power to get to the target positions
     // Use these to get going:
     // setSetpoint() - Sets where the PID controller should move the system
     // to

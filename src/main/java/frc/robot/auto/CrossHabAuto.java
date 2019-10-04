@@ -16,6 +16,6 @@ public class CrossHabAuto extends CommandGroup {
     public CrossHabAuto() {
         addSequential(new TimedDrive(0.75, 1));
         addSequential(new TelopDrive());
-        //addSequential((new DriveUntilLevelSurface(0.4))); TODO: this never stopped
+        //addSequential((new DriveUntilLevelSurface(0.4))); this never stopped
     }
 }

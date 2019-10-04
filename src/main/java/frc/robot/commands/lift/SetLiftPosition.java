@@ -31,7 +31,7 @@ public class SetLiftPosition extends Command {
 			System.out.println("Lift velocity control active");
 		}
 		else if (Robot.oi.getEnablePIDPositionalLift()){
-			Robot.pidLift.enable();Robot.pidPositionalLift.enable();
+			Robot.pidPositionalLift.enable();
 			Robot.pidLift.disable();
 			System.out.println("Lift positional PID control active");
 		}

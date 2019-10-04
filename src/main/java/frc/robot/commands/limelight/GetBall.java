@@ -12,9 +12,9 @@ import frc.robot.commands.auto.EncoderDrive;
 
 public class GetBall extends CommandGroup {
     public GetBall() {
+        // TODO: move the wrist and endEffector
         addSequential(new SpinUntilBallSeen());
         addSequential(new DriveTowardsBallUntilBallOutOfView());
         addSequential(new EncoderDrive(1.5));
-        // TODO: move the wrist and endEffector
     }
 }

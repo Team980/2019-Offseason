@@ -13,8 +13,6 @@ public class Potentiometer implements PIDSource {
     private static final double MIN_VOLTAGE = 0;
     private static final double MAX_VOLTAGE = 5;
 
-    private static final double REFRESH_INTERVAL_SECONDS = 0.02; 
-
     private PIDSourceType sourceType;
     
     private double rate;

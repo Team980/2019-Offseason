@@ -10,7 +10,6 @@ package frc.robot.sensors;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * The limelight camera. This extends subsystem because there is only one limelight on the robot and it keeps state; ie, one

@@ -24,10 +24,11 @@ public class HoldLift extends Command {
 		if (Robot.oi.getEnablePIDLift()){
 			Robot.pidLift.enable();
 			Robot.pidPositionalLift.disable();
+			targetPosition = Robot.pidLift.currentPosition();
 			System.out.println("velocity control lift active");
 		}
 		else if (Robot.oi.getEnablePIDPositionalLift()){
-			Robot.pidLift.enable();Robot.pidPositionalLift.enable();
+			Robot.pidPositionalLift.enable();
 			Robot.pidLift.disable();
 			targetPosition = Robot.pidPositionalLift.getPosition();
 			System.out.println("position control lift active");
