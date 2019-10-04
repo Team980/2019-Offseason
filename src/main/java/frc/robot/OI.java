@@ -150,14 +150,14 @@ public class OI {
 
 	//PID Activators
 	public boolean getEnablePIDWrist(){
-		return prajBox.getRawButton(2);//TODO: get actual button ids
+		return prajBox.getRawButton(7);//TODO: get actual button ids
 	}
 
 	public boolean getEnablePIDLift(){
-		return prajBox.getRawButton(3);
+		return prajBox.getRawButton(2);
 	}
 	public boolean getEnablePIDPositionalLift(){
-		return prajBox.getRawButton(4);
+		return prajBox.getRawButton(3);
 	}
 	
 

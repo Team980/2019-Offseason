@@ -30,7 +30,7 @@ public class RobotMap {
 	public Encoder liftEncoder;
 
 	public static final double ENCODER_DISTANCE_PER_TICK = 2 * Math.PI * (2.0/12) / 2048;
-	public double liftDistancePerTick = 2 * Math.PI * (2.0/12) / 2048; //TODO: find radius of lift pulley
+	public double liftDistancePerTick = Math.PI * (2.899/12) / 2048; //used diameter of 2.899
 
 	// wrist
 	public Potentiometer wristPotentiometer;
