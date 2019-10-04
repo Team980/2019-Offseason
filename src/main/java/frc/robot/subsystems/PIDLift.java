@@ -17,13 +17,13 @@ import frc.robot.commands.lift.HoldLift;
  * Add your docs here.
  */
 public class PIDLift extends PIDSubsystem {
-  private static final double EXCLUSION_MIN = 0.03;//TODO: get actual distances in ft
-	private static final double EXCLUSION_MAX = 0.97;
-	private double minSpeedUp = .35;//used directly, do not convert
-	private double minSpeedDown = -.15;
-	private double maxLiftSpeed = 5; //TODO: get lift max speed ft/s
-	private double fullLiftDistance = 4;//TODO: get the full range of lift motion in ft
-  private static final double DEADBAND = 0.04;//TODO: use distance values for deadband
+  private static final double EXCLUSION_MIN = 0.03;//ft
+	private static final double EXCLUSION_MAX = 1.8;
+	private double minSpeedUp = .5;//used directly, do not convert
+	private double minSpeedDown = -.15;//used directly, do not convert
+	private double maxLiftSpeed = 2.5; //ft/s
+	private double fullLiftDistance = 1.8;//ft
+  private static final double DEADBAND = 0.1;//ft
 
 	// private static final double ENCODER_MIN_TICK_COUNT = -20_000;
 
@@ -32,7 +32,7 @@ public class PIDLift extends PIDSubsystem {
 	
 	public PIDLift() {//Velocity controlled lift
     // Intert a subsystem name and PID values here
-    super("SubsystemName", 1, 0, 0);
+    super("SubsystemName", .01, 0, 0);
 
     liftMotor = Robot.robotMap.liftMotor;
     liftEncoder = Robot.robotMap.liftEncoder;

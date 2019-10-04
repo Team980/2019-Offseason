@@ -99,7 +99,7 @@ public class Robot extends TimedRobot {
 		debugTable.getEntry("wrist angle").setNumber(pidWrist.currentAngle()); 
 		debugTable.getEntry("wrist rate").setNumber(robotMap.wristPotentiometer.getRate()); 
 		debugTable.getEntry("lift height").setNumber(robotMap.liftEncoder.getDistance());
-		debugTable.getEntry("lift encoder ticks").setNumber(robotMap.liftEncoder.getRaw());
+		debugTable.getEntry("lift rate").setNumber(robotMap.liftEncoder.getRate());
 		debugTable.getEntry("yaw").setNumber(ypr[0]);
 		debugTable.getEntry("pitch").setNumber(ypr[1]);
 		debugTable.getEntry("roll").setNumber(ypr[2]);

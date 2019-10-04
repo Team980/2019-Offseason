@@ -55,7 +55,7 @@ public class OI {
 		
 		JoystickButton aButton = new JoystickButton(xBox, 1); // ball floor pickup
 		aButton.whenPressed(new SetWristAngle(200));
-		aButton.whenPressed(new SetLiftPosition(0)); 
+		aButton.whenPressed(new SetLiftPosition(0.03)); 
 
 		JoystickButton bButton = new JoystickButton(xBox, 2); // low ball score
 		bButton.whenPressed(new SetWristAngle(124.5)); 
@@ -64,12 +64,12 @@ public class OI {
 
 		JoystickButton xButton = new JoystickButton(xBox, 3); // cargo ship dump
 		xButton.whenPressed(new SetWristAngle(120.2)); // used to be 140.2 
-		xButton.whenPressed(new SetLiftPosition(0.96));
+		xButton.whenPressed(new SetLiftPosition(1.728));
 
 
 		JoystickButton yButton = new JoystickButton(xBox, 4); // mid ball score 
 		yButton.whenPressed(new SetWristAngle(101.337));
- 		yButton.whenPressed(new SetLiftPosition(0.9731));
+ 		yButton.whenPressed(new SetLiftPosition(1.75158));
 
 
 		Trigger povRight = new Trigger() { // low hatch 
@@ -79,7 +79,7 @@ public class OI {
 			}
 		};
 		povRight.whenActive(new SetWristAngle(56)); 
-		povRight.whenActive(new SetLiftPosition(0));
+		povRight.whenActive(new SetLiftPosition(0.03));
 
 
 		Trigger povUp = new Trigger() { // trophy truck retract
@@ -111,15 +111,15 @@ public class OI {
 
 		JoystickButton leftThumb = new JoystickButton(xBox, 9); // stowed configuration
 		leftThumb.whenPressed(new SetWristAngle(45)); 
-		leftThumb.whenPressed(new SetLiftPosition(4));//TODO: need full height of the lift in ft
+		leftThumb.whenPressed(new SetLiftPosition(.03));//starting in low position
 
 
 		// snag & release hatch
 		JoystickButton leftBumper = new JoystickButton(xBox, 5); // snag hatch
-		leftBumper.whenPressed(new IncrementLiftPosition(0.285));
+		leftBumper.whenPressed(new IncrementLiftPosition(0.158));
 
 		JoystickButton rightBumper = new JoystickButton(xBox, 6); // spit out hatch
-		rightBumper.whenPressed(new IncrementLiftPosition(-0.285));
+		rightBumper.whenPressed(new IncrementLiftPosition(-0.158));
 	}
 
 	public double getSuckInSpeed() {

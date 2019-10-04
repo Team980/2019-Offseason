@@ -29,6 +29,7 @@ public class SetWristAngle extends Command {
 			System.out.println("PID Wrist Active");
 		}
 		else{
+			Robot.pidWrist.disable();
 			System.out.println("Competition Wrist Active");
 		}
     }
@@ -49,7 +50,7 @@ public class SetWristAngle extends Command {
 			return false;
 		}
 		else{
-			return Robot.pidWrist.onTarget();
+			return Robot.pidWrist.isAtTargetAngle(targetAngle);
 		}
 	}
 

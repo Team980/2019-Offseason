@@ -32,9 +32,9 @@ public class DriveSystem extends Subsystem {
 	private SpeedController leftMotor;
 	private SpeedController rightMotor;
 
-	public DriveSystem() {	
-		leftMotor = Robot.robotMap.leftDrive;
-		rightMotor = Robot.robotMap.rightDrive;
+	public DriveSystem() {
+		differentialDrive = new DifferentialDrive(Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
+	
 		leftEncoder = Robot.robotMap.leftDriveEncoder; 
 		rightEncoder = Robot.robotMap.rightDriveEncoder;
 		
@@ -80,8 +80,7 @@ public class DriveSystem extends Subsystem {
 	}
 
 	public void stopMotors() {
-		leftMotor.set(0);
-		rightMotor.set(0);
+		differentialDrive.arcadeDrive(0 , 0);
 	}
 
 	public enum Gear {
