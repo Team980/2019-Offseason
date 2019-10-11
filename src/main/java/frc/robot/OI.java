@@ -18,8 +18,7 @@ import frc.robot.commands.lift.SetLiftPosition;
 
 import frc.robot.commands.wrist.SetWristAngle;
 import frc.robot.commands.drive.DisableRobot;
-import frc.robot.commands.drive.PIDDrive;
-import frc.robot.commands.drive.TelopDrive;
+
 
 
 /**
@@ -46,10 +45,6 @@ public class OI {
 		prajBox = new Joystick(3);
 
 		// configurations
-		JoystickButton enablePIDDrive = new JoystickButton(prajBox, 1);//need to identify the number for the right switch
-		enablePIDDrive.whenPressed(new PIDDrive());
-		enablePIDDrive.whenReleased(new TelopDrive());
-
 		JoystickButton disableRobot = new JoystickButton(throttle, 7);
 		disableRobot.whenPressed(new DisableRobot());
 		
@@ -149,13 +144,19 @@ public class OI {
 	}
 
 	//PID Activators
+	public boolean getEnablePIDDrive(){
+		return prajBox.getRawButton(1);
+	}
+
 	public boolean getEnablePIDWrist(){
 		return prajBox.getRawButton(7);
 	}
 
 	public boolean getEnablePIDLift(){
-		return prajBox.getRawButton(2);
+		//return prajBox.getRawButton(2);
+		return false; //did not work so hard code disabling it
 	}
+
 	public boolean getEnablePIDPositionalLift(){
 		return prajBox.getRawButton(3);
 	}

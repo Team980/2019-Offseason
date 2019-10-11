@@ -8,14 +8,17 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.DifferentialDrive980;
 //import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
 
 public class DriveSystem extends Subsystem {
 	//private DifferentialDrive differentialDrive;
+	private DifferentialDrive980 drive980;
 
 	public DriveSystem() {
 		//differentialDrive = new DifferentialDrive(Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
+		drive980 = new DifferentialDrive980(Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
 	}
 
 	@Override
@@ -25,6 +28,26 @@ public class DriveSystem extends Subsystem {
 
 	public void driveRobot(double move, double turn) {
 		//differentialDrive.arcadeDrive(move, turn);
+	
+/**
+ * if the enable PID switch is on and the PID controllers are not already enabled
+ * enable them
+ * if the enable PID switch is off and the PID controllers are currently enabled
+ * disable them
+ */	
+		if (Robot.oi.getEnablePIDDrive()){
+			if (!drive980.isPIDEnabled()){
+				drive980.enablePID();
+				System.out.println("PID Drive active");
+			}
+		}
+		else{
+			if (drive980.isPIDEnabled()){
+				drive980.disablePID();
+				System.out.println("Competition Drive active");
+			}
+		}
+		drive980.arcadeDrive(move, turn);
 	}
 
 	public double getLeftDistance() {
@@ -58,6 +81,7 @@ public class DriveSystem extends Subsystem {
 
 	public void stopMotors() {
 		//differentialDrive.arcadeDrive(0 , 0);
+		drive980.arcadeDrive(0, 0);
 	}
 
 	public enum Gear {
@@ -65,34 +89,9 @@ public class DriveSystem extends Subsystem {
 		HIGH
 	}
 
-	public static double limit(double x) {
+/*	public static double limit(double x) {
 		return Math.abs(x) > 1 ? Math.signum(x) : x;
-	}
-/*	public void arcadeDrive(double xSpeed, double zRotation) {
-		xSpeed = Math.copySign(xSpeed*xSpeed, xSpeed); // squaring inputs
-		zRotation = Math.copySign(zRotation*zRotation, zRotation);
-	
-		double maxInput = Math.copySign(Math.max(Math.abs(xSpeed), Math.abs(zRotation)), xSpeed);
-		if (xSpeed * zRotation >= 0) { // signs are the same
-			tankDrive(maxInput, xSpeed-zRotation);
-		} else {
-			tankDrive(xSpeed+zRotation, maxInput);
-		}
-	}
-
-	public void tankDrive(double left, double right) {
-		left = limit(left);
-		right = limit(right);
-
-		if (isPIDEnabled()) {
-        		leftController.setSetpoint(left * MAX_VELOCITY);
-        		rightController.setSetpoint(right * MAX_VELOCITY); 
-		} else {
-			leftMotor.set(left);
-			rightMotor.set(right);
-		}
 	}*/
-
 
 }
 

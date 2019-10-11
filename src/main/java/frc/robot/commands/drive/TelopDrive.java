@@ -13,14 +13,11 @@ public class TelopDrive extends Command {
 
 	public TelopDrive() {
 	
-		requires(Robot.pidRightDrive);
-    	requires(Robot.pidLeftDrive);
 		requires(Robot.driveSystem);
 	}
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		System.out.println("Compeition Drive activated");
 	}
 
 	// Called repeatedly when this Command is scheduled to run

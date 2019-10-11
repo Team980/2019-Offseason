@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
+// ver 3.1
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -31,8 +31,6 @@ public class Robot extends TimedRobot {
 	public static RobotMap robotMap;
 
 	public static DriveSystem driveSystem;
-	public static PIDLeftDrive pidLeftDrive;
-	public static PIDRightDrive pidRightDrive;
 	public static EndEffector endEffector;
 	public static PIDLift pidLift;
 	public static PIDPositionalLift pidPositionalLift;
@@ -56,8 +54,6 @@ public class Robot extends TimedRobot {
 		robotMap = new RobotMap();
 
 		driveSystem = new DriveSystem();
-		pidLeftDrive = new PIDLeftDrive();
-		pidRightDrive = new PIDRightDrive();
 		endEffector = new EndEffector();
 		pidLift = new PIDLift();
 		pidPositionalLift = new PIDPositionalLift();
