@@ -25,7 +25,7 @@ public class PIDLeftDrive extends PIDSubsystem {
    */
   public PIDLeftDrive() {
     // Intert a subsystem name and PID values here
-    super("PIDLeftDrive", .01, 0, 0 ,0);
+    super("PIDLeftDrive", .08, 0, 0 ,0);
 
     leftDrive = Robot.robotMap.leftDrive;
     leftEncoder = Robot.robotMap.leftDriveEncoder;
