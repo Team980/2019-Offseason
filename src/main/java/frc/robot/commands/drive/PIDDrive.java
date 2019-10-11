@@ -26,6 +26,7 @@ public class PIDDrive extends Command {
     Robot.pidLeftDrive.enable();
     Robot.pidRightDrive.enable();
     System.out.println("PID Drive activated");
+    Robot.robotMap.rightDrive.setInverted(true);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -47,6 +48,7 @@ public class PIDDrive extends Command {
     Robot.pidRightDrive.setSetpoint(0);
     Robot.pidLeftDrive.disable();
     Robot.pidLeftDrive.disable();
+    Robot.robotMap.rightDrive.setInverted(false);
  }
 
   // Called when another command which requires one or more of the same
@@ -57,6 +59,7 @@ public class PIDDrive extends Command {
     Robot.pidRightDrive.setSetpoint(0);
     Robot.pidLeftDrive.disable();
     Robot.pidLeftDrive.disable();
+    Robot.robotMap.rightDrive.setInverted(false);
   }
 
   public void arcadeDrivePID(double xSpeed, double zRotation) {

@@ -56,7 +56,7 @@ public class RobotMap {
 
 		leftDrive = new SpeedControllerGroup(leftFront, leftBack, leftTop);
 		rightDrive = new SpeedControllerGroup(rightFront, rightBack, rightTop);
-		rightDrive.setInverted(true);
+		//rightDrive.setInverted(true);
 
 		leftDriveEncoder = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)

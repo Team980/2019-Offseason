@@ -25,7 +25,7 @@ public class PIDLeftDrive extends PIDSubsystem {
    */
   public PIDLeftDrive() {
     // Intert a subsystem name and PID values here
-    super("PIDLeftDrive", .08, 0, 0 ,0);
+    super("PIDLeftDrive", .01, 0, 0 ,0);
 
     leftDrive = Robot.robotMap.leftDrive;
     leftEncoder = Robot.robotMap.leftDriveEncoder;
@@ -34,6 +34,7 @@ public class PIDLeftDrive extends PIDSubsystem {
     // to
     // enable() - Enables the PID controller.
     setInputRange(-maxVelocity, maxVelocity);
+    setAbsoluteTolerance(0.01);
   }
 
   @Override
@@ -48,6 +49,7 @@ public class PIDLeftDrive extends PIDSubsystem {
     // e.g. a sensor, like a potentiometer:
     // yourPot.getAverageVoltage() / kYourMaxVoltage;
     return leftEncoder.getRate();
+    
   }
 
   @Override

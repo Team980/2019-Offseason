@@ -23,7 +23,7 @@ public class PIDRightDrive extends PIDSubsystem {
    */
   public PIDRightDrive() {
     // Intert a subsystem name and PID values here
-    super("PIDRightDrive", .08 , 0 , 0 , 0);
+    super("PIDRightDrive", .01 , 0 , 0 , 0);
     rightDrive = Robot.robotMap.rightDrive;
     rightEncoder = Robot.robotMap.rightDriveEncoder;
     // Use these to get going:
@@ -31,6 +31,7 @@ public class PIDRightDrive extends PIDSubsystem {
     // to
     // enable() - Enables the PID controller.
     setInputRange(-17.0, 17.0);
+    setAbsoluteTolerance(0.01);
   }
 
   @Override

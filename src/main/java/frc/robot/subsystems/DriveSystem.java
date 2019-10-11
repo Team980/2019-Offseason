@@ -8,14 +8,14 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+//import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.Robot;
 
 public class DriveSystem extends Subsystem {
-	private DifferentialDrive differentialDrive;
+	//private DifferentialDrive differentialDrive;
 
 	public DriveSystem() {
-		differentialDrive = new DifferentialDrive(Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
+		//differentialDrive = new DifferentialDrive(Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class DriveSystem extends Subsystem {
 	}
 
 	public void driveRobot(double move, double turn) {
-		differentialDrive.arcadeDrive(move, turn);
+		//differentialDrive.arcadeDrive(move, turn);
 	}
 
 	public double getLeftDistance() {
@@ -57,7 +57,7 @@ public class DriveSystem extends Subsystem {
 	}
 
 	public void stopMotors() {
-		differentialDrive.arcadeDrive(0 , 0);
+		//differentialDrive.arcadeDrive(0 , 0);
 	}
 
 	public enum Gear {
