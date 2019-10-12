@@ -8,6 +8,7 @@
 package frc.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.DifferentialDrive980;
 import frc.robot.Robot;
 
 public class AutoShift extends Command {
@@ -21,9 +22,11 @@ public class AutoShift extends Command {
 	protected void execute() {
 		if (Math.abs(Robot.driveSystem.getLeftSpeed()) > 4.5 || Math.abs(Robot.driveSystem.getRightSpeed()) > 4.5) { // low to high
 			Robot.driveSystem.setGear(false);
+			Robot.driveSystem.updateP();
 
-		} else if (Math.abs(Robot.driveSystem.getLeftSpeed()) < 1 && Math.abs(Robot.driveSystem.getRightSpeed()) < 1) { // high to low
+		} else if (Math.abs(Robot.driveSystem.getLeftSpeed()) < 4 && Math.abs(Robot.driveSystem.getRightSpeed()) < 4) { // high to low
 			Robot.driveSystem.setGear(true);
+			Robot.driveSystem.updateP();
 		}
 	}
   

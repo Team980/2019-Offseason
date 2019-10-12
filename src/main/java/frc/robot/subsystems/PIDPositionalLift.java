@@ -15,8 +15,8 @@ import frc.robot.commands.lift.HoldLift;
  * Add your docs here.
  */
 public class PIDPositionalLift extends PIDSubsystem {
-  private static final double DEADBAND = 0.05;//ft
-  private static final double EXCLUSION_MIN = 0.03;//ft
+  private static final double DEADBAND = 0.01;//ft
+  private static final double EXCLUSION_MIN = 0.02;//ft
 	private static final double EXCLUSION_MAX = 1.8;
 
   /**
@@ -24,14 +24,14 @@ public class PIDPositionalLift extends PIDSubsystem {
    */
   public PIDPositionalLift() {
     // Intert a subsystem name and PID values here
-    super("SubsystemName", 2, 0, 0);//adjust the P vaue up to give it more speed and have enough power to get to the target positions
+    super("PidPositionalLift", 2, 0.01, 0);//adjust the P vaue up to give it more speed and have enough power to get to the target positions
     // Use these to get going:
     // setSetpoint() - Sets where the PID controller should move the system
     // to
     // enable() - Enables the PID controller.
     setInputRange(EXCLUSION_MIN , EXCLUSION_MAX);
 
-    setAbsoluteTolerance(DEADBAND);
+    //setAbsoluteTolerance(DEADBAND);
 
   }
 

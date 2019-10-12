@@ -21,6 +21,15 @@ public class DriveSystem extends Subsystem {
 		drive980 = new DifferentialDrive980(Robot.robotMap.leftDrive, Robot.robotMap.rightDrive);
 	}
 
+
+	public void updateP() {
+		if (getGear() == Gear.LOW) {
+			drive980.setLowP();
+		} else {
+			drive980.setHighP();
+		}
+	}
+
 	@Override
 	public void initDefaultCommand() {
 		//setDefaultCommand(new TelopDrive());

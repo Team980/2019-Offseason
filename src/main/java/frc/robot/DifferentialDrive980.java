@@ -90,10 +90,14 @@ public class DifferentialDrive980 extends RobotDriveBase{
   private boolean m_reported;
 
   //PID constants and max velocity measured from the robot
-  private static final double P = 0.01;
-  private static final double I = 0;
-  private static final double D = 0;
+  private static final double LOW_P = 0.05;
+  private static final double I = 0.0;
+  private static final double LOW_D = 0;
   private static final double MAX_VELOCITY = 17; 
+
+  private static final double HIGH_P = 0.08;
+  private static final double HIGH_D = .03; 
+
 
   private Encoder leftEncoder; 
   private Encoder rightEncoder; 
@@ -123,8 +127,8 @@ public class DifferentialDrive980 extends RobotDriveBase{
     leftEncoder.setPIDSourceType(PIDSourceType.kRate);
     rightEncoder.setPIDSourceType(PIDSourceType.kRate);
     
-    leftController = new PIDController(P, I, D, leftEncoder, m_leftMotor);
-    rightController = new PIDController(P, I, D, rightEncoder, m_rightMotor);
+    leftController = new PIDController(LOW_P, I, LOW_D, leftEncoder, m_leftMotor);
+    rightController = new PIDController(LOW_P, I, LOW_D, rightEncoder, m_rightMotor);
 
   }
 
@@ -190,7 +194,9 @@ public class DifferentialDrive980 extends RobotDriveBase{
     // while permitting full power.
     if (squareInputs) {
       xSpeed = Math.copySign(xSpeed * xSpeed, xSpeed);
-      zRotation = Math.copySign(zRotation * zRotation, zRotation);
+      if (!Robot.oi.getEnablePIDDrive()){
+        zRotation = Math.copySign(zRotation * zRotation, zRotation);
+      }
     }
 
     double leftMotorOutput;
@@ -220,8 +226,8 @@ public class DifferentialDrive980 extends RobotDriveBase{
 
 
     if (Robot.oi.getEnablePIDDrive()){
-        leftController.setSetpoint(limit(leftMotorOutput) * MAX_VELOCITY);
-        rightController.setSetpoint(limit(rightMotorOutput) * MAX_VELOCITY * m_rightSideInvertMultiplier);
+      leftController.setSetpoint(limit(leftMotorOutput) * MAX_VELOCITY);
+      rightController.setSetpoint(limit(rightMotorOutput) * MAX_VELOCITY * m_rightSideInvertMultiplier);
 
     }
     else{
@@ -283,6 +289,20 @@ public class DifferentialDrive980 extends RobotDriveBase{
   public void disablePID() {
     leftController.disable();
     rightController.disable();
+  }
+
+  public void setLowP() {
+    leftController.setP(LOW_P);
+    leftController.setD(LOW_D);
+    rightController.setP(LOW_P);
+    leftController.setD(LOW_D);
+  }
+
+  public void setHighP() {
+    leftController.setP(HIGH_P);
+    leftController.setD(HIGH_D);
+    rightController.setP(HIGH_P);
+    rightController.setD(HIGH_D);
   }
 
   public boolean isPIDEnabled() {

@@ -20,7 +20,7 @@ public class PIDWrist extends PIDSubsystem {
   private SpeedController wristMotor;
   private Potentiometer wristPot;
 
-  private static final double DEADBAND = 7;
+  private static final double DEADBAND = 3;
 
   private double minWristSpeed = 0.35;// minSpeed for P only control
 
@@ -33,7 +33,7 @@ public class PIDWrist extends PIDSubsystem {
    */
   public PIDWrist() {
     // Intert a subsystem name and PID values here
-    super("SubsystemName", .005 , 0, 0);
+    super("PID Wrist", .008 , 0, 0);
     wristMotor = Robot.robotMap.wristMotor;
     wristPot = Robot.robotMap.wristPotentiometer;
     // Use these to get going:

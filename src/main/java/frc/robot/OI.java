@@ -53,18 +53,18 @@ public class OI {
 		aButton.whenPressed(new SetLiftPosition(0.03)); 
 
 		JoystickButton bButton = new JoystickButton(xBox, 2); // low ball score
-		bButton.whenPressed(new SetWristAngle(124.5)); 
+		bButton.whenPressed(new SetWristAngle(119)); 
 		bButton.whenPressed(new SetLiftPosition(0.03));
 
 
 		JoystickButton xButton = new JoystickButton(xBox, 3); // cargo ship dump
-		xButton.whenPressed(new SetWristAngle(120.2)); // used to be 140.2 
-		xButton.whenPressed(new SetLiftPosition(1.728));
+		xButton.whenPressed(new SetWristAngle( .2)); // used to be 140.2 
+		xButton.whenPressed(new SetLiftPosition(1.8));
 
 
 		JoystickButton yButton = new JoystickButton(xBox, 4); // mid ball score 
-		yButton.whenPressed(new SetWristAngle(101.337));
- 		yButton.whenPressed(new SetLiftPosition(1.75158));
+		yButton.whenPressed(new SetWristAngle(98.337));
+ 		yButton.whenPressed(new SetLiftPosition(1.8));
 
 
 		Trigger povRight = new Trigger() { // low hatch 
@@ -73,7 +73,7 @@ public class OI {
 				return xBox.getPOV() == 90;
 			}
 		};
-		povRight.whenActive(new SetWristAngle(56)); 
+		povRight.whenActive(new SetWristAngle(72)); 
 		povRight.whenActive(new SetLiftPosition(0.03));
 
 
@@ -111,10 +111,10 @@ public class OI {
 
 		// snag & release hatch
 		JoystickButton leftBumper = new JoystickButton(xBox, 5); // snag hatch
-		leftBumper.whenPressed(new IncrementLiftPosition(0.158));
+		leftBumper.whenPressed(new IncrementLiftPosition(0.3));
 
 		JoystickButton rightBumper = new JoystickButton(xBox, 6); // spit out hatch
-		rightBumper.whenPressed(new IncrementLiftPosition(-0.158));
+		rightBumper.whenPressed(new IncrementLiftPosition(-0.3));
 	}
 
 	public double getSuckInSpeed() {
