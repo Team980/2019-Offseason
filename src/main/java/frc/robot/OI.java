@@ -127,10 +127,12 @@ public class OI {
 
 	public double getMove() {
 		return applyDeadband(-throttle.getY(), MOVE_DEADBAND);
+		//return -throttle.getY();
 	}
 
 	public double getTurn() {
 		return applyDeadband(wheel.getX(), TURN_DEADBAND);
+		//return wheel.getX();
 	}
 
 	public double getLiftJoystickValue() {
